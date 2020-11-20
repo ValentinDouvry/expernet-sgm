@@ -7,14 +7,11 @@
         private $channel;
     }
 
-    public function __construct()
-    {
-            $this->id = $id;
-            $this->name = $name;
-            $this->code = $code;
-            $this->channel = $channel;
-    }
 
+    public __construct()
+    {
+
+    }
 
     public function __toString(){
         return $this->id." / ". $this->name." / ".$this->code." / ".$this->channel;
