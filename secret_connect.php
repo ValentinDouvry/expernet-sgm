@@ -13,7 +13,7 @@
         $query->setFetchMode(PDO::FETCH_ASSOC);
         $data = $query->fetch();
         if($data != ""){
-            $_SESSION['userId'] = $data['username'];
+            $_SESSION['userId'] = $data['id'];
             header('Location:index.php');
         }else{
             header('Location:log_in.php?err=Identifiant ou Mot de Passe Incorrecte');
