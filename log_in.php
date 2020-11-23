@@ -9,10 +9,10 @@
 </head>
 <body>
     <?php
-    //  session_start();
-    //      if(isset($_SESSION['userConnected'])){
-    //          header('Location:index.php');
-    //      }
+    session_start();
+        if(isset($_SESSION['userConnected'])){
+            header('Location:index.php');
+        } 
     ?>
     <form  method = "POST" action = "secret_connect.php">
         <div class="form-group">
