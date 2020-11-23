@@ -123,7 +123,7 @@ class User
      */
     public function setUsername($username)
     {
-        $this->userName = $username;
+        $this->username = $username;
         return $this;
     }
 
@@ -151,7 +151,7 @@ class User
     /**
      * Get the value of level
      */
-    public function getlevel()
+    public function getLevel()
     {
         return $this->level;
     }
@@ -161,7 +161,7 @@ class User
      *
      * @return  self
      */
-    public function setlevel($level)
+    public function setLevel($level)
     {
         $this->level = $level;
         return $this;

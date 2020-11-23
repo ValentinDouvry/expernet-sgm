@@ -24,37 +24,37 @@
 
             <div class="form-group">
                 <label for="username">Pseudo</label>
-                <input type="text" class="form-control" id="username" placeholder="pseudo">
+                <input name="username" type="text" class="form-control" id="username" placeholder="pseudo">
             </div>
 
             <div class="form-group">
                 <label for="last-name">Nom</label>
-                <input type="text" class="form-control" id="last-name" placeholder="nom">
+                <input name="last-name" type="text" class="form-control" id="last-name" placeholder="nom">
             </div>
 
             <div class="form-group">
                 <label for="name">Prenom</label>
-                <input type="text" class="form-control" id="name" placeholder="prenom">
+                <input name="name" type="text" class="form-control" id="name" placeholder="prenom">
             </div>
 
             <div class="form-group">
                 <label for="email">Email</label>
-                <input type="email" class="form-control" id="email" placeholder="email">
+                <input name="email" type="email" class="form-control" id="email" placeholder="email">
             </div>
 
             <div class="form-group">
                 <label for="password">Mot de passe</label>
-                <input type="password" class="form-control" id="password" placeholder="Password">
+                <input name="password" type="password" class="form-control" id="password" placeholder="Password">
             </div>
 
             <div class="form-group">
                 <label for="password2">Verification de mot de passe</label>
-                <input type="password" class="form-control" id="password2" placeholder="Password">
+                <input name="password2" type="password" class="form-control" id="password2" placeholder="Password">
             </div>
 
             <div class="form-group">
                 <label for="code">Code</label>
-                <input type="text" class="form-control" id="code" placeholder="code groupe">
+                <input name="code" type="text" class="form-control" id="code" placeholder="code groupe">
             </div>
 
             <button type="submit" class="btn btn-primary">Créer un compte</button>

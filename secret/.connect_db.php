@@ -2,8 +2,8 @@
 
     $host = 'localhost';
     $dbname = 'expernet-sgm';
-    $user = 'david';
-    $pass = 'david';
+    $user = '';
+    $pass = '';
 
 
     $db = new PDO("mysql:host=$host;dbname=$dbname",$user,$pass,array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
