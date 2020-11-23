@@ -1,3 +1,33 @@
+<?php
+include_once("./secret/connect_db.php");
+include_once("classes/User.php");
+include_once("classes/Group.php");
+
+session_start();
+
+
+$userId = $_SESSION["userId"];
+if(!isset($userId)){
+    header('Location:log_in.php');
+}
+else{
+    
+    $query = $db->prepare("SELECT * FROM users WHERE id = :userId");
+    $query->bindParam(":userId",$userId);
+    $query->execute();
+    $user = $query->fetchObject("User");
+
+    if($user->getIsAdmin())
+    {
+        echo "est admin";
+    }
+    
+
+}
+
+
+?>
+
 <!doctype html>
 <html lang="fr">
   <head>
@@ -11,6 +41,9 @@
   </head>
   <body>
       <h1>La liste des groupe</h1>
+
+
+
       
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

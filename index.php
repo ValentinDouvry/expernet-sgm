@@ -1,8 +1,8 @@
 <?php 
    session_start();
    
-   if(isset($_SESSION['userConnected'])) {
-       header('Location: views/list_group.php');
+   if(isset($_SESSION['userId'])) {
+       header('Location: views/profile.php');
    }
 
    else {

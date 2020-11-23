@@ -11,13 +11,13 @@
     <?php
     session_start();
         if(isset($_SESSION['userId'])){
-            header('Location:index.php');
+            header('Location:../index.php');
         } 
     
     ?>
 
     <div class="container">
-    <form method = 'POST' action="../secret_connect.php" class="was-validated">
+    <form method = 'POST' action="../actions/user_connection.php" class="was-validated">
         <div class="form-group">
         <label for="login">Identifiant</label>
         <input type="text" class="form-control" id="login" placeholder="Entrer votre identifiant" name="login" required>
