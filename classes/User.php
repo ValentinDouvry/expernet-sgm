@@ -113,7 +113,7 @@ class User
      */
     public function getUsername()
     {
-        return $this->userName;
+        return $this->username;
     }
 
     /**
