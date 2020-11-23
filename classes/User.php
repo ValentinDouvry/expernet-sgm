@@ -8,7 +8,7 @@ class User
     private $email;
     private $username;
     private $password;
-    private $lvl;
+    private $level;
     private $experience;
     private $money;
     private $isAdmin;
@@ -24,7 +24,7 @@ class User
 
     public function __toString()
     {
-        return $this->id . " / " . $this->lastName . " / " . $this->name . " / " . $this->email . " / " . $this->username . " / " . $this->password . " / " . $this->avatarId . " / " . $this->lvl . " / " . $this->experience . " / " . $this->money . " / " . $this->groupId . " / " . $this->isAdmin;
+        return $this->id . " / " . $this->lastName . " / " . $this->name . " / " . $this->email . " / " . $this->username . " / " . $this->password . " / " . $this->avatarId . " / " . $this->level . " / " . $this->experience . " / " . $this->money . " / " . $this->groupId . " / " . $this->isAdmin;
     }
 
 
@@ -149,21 +149,21 @@ class User
 
 
     /**
-     * Get the value of lvl
+     * Get the value of level
      */
-    public function getLvl()
+    public function getlevel()
     {
-        return $this->lvl;
+        return $this->level;
     }
 
     /**
-     * Set the value of lvl
+     * Set the value of level
      *
      * @return  self
      */
-    public function setLvl($lvl)
+    public function setlevel($level)
     {
-        $this->lvl = $lvl;
+        $this->level = $level;
         return $this;
     }
 
