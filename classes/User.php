@@ -6,7 +6,7 @@ class User
     private $lastName;
     private $name;
     private $email;
-    private $userName;
+    private $username;
     private $password;
     private $lvl;
     private $experience;
@@ -24,7 +24,7 @@ class User
 
     public function __toString()
     {
-        return $this->id . " / " . $this->lastName . " / " . $this->name . " / " . $this->email . " / " . $this->userName . " / " . $this->password . " / " . $this->avatarId . " / " . $this->lvl . " / " . $this->experience . " / " . $this->money . " / " . $this->groupId . " / " . $this->isAdmin;
+        return $this->id . " / " . $this->lastName . " / " . $this->name . " / " . $this->email . " / " . $this->username . " / " . $this->password . " / " . $this->avatarId . " / " . $this->lvl . " / " . $this->experience . " / " . $this->money . " / " . $this->groupId . " / " . $this->isAdmin;
     }
 
 
@@ -111,7 +111,7 @@ class User
     /**
      * Get the value of userName
      */
-    public function getUserName()
+    public function getUsername()
     {
         return $this->userName;
     }
@@ -121,9 +121,9 @@ class User
      *
      * @return  self
      */
-    public function setUserName($userName)
+    public function setUsername($username)
     {
-        $this->userName = $userName;
+        $this->userName = $username;
         return $this;
     }
 
