@@ -5,29 +5,40 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <title>Document</title>
+    <title>Connexion</title>
 </head>
 <body>
     <?php
     session_start();
-        if(isset($_SESSION['userConnected'])){
+        if(isset($_SESSION['userId'])){
             header('Location:index.php');
         } 
+    
     ?>
-    <form  method = "POST" action = "secret_connect.php">
+
+    <div class="container">
+    <form method = 'POST' action="secret_connect.php" class="was-validated">
         <div class="form-group">
-            <label for="login">Identifiant</label><br>
-            <input type="text" id="login" name="login"><br>
-            <label for="password">Mot de Passe</label><br>
-            <input type="password" id="password" name="password"><br>
+        <label for="login">Identifiant</label>
+        <input type="text" class="form-control" id="login" placeholder="Entrer votre identifiant" name="login" required>
+        <div class="valid-feedback"></div>
+        <div class="invalid-feedback">Veuillez remplir ce champ</div>
         </div>
-      <input type="submit" value = "test">
-    </form> 
+        <div class="form-group">
+        <label for="password">Mot de Passe</label>
+        <input type="password" class="form-control" id="password" placeholder="Entrer votre Mot de Passe" name="password" required>
+        <div class="valid-feedback"></div>
+        <div class="invalid-feedback">Veuillez remplir ce champ</div>
+        </div>
+        
+        <button type="submit" class="btn btn-primary">Se Connecter</button>
+    </form>
+    </div>
 
     <?php
         if((isset($_GET['err']))){
             $err = $_GET['err'];
-            echo $err;
+            echo "<p style='text-align: center'>$err</p>";
         }
     ?>
     <!-- Optional JavaScript -->
