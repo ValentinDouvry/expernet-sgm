@@ -17,7 +17,11 @@
     ?>
 
     <div class="container">
+<<<<<<< Updated upstream
     <form method = 'POST' action="../actions/user_connexion.php" class="was-validated">
+=======
+    <form method = 'POST' action="../secret_connect.php" class="was-validated">
+>>>>>>> Stashed changes
         <div class="form-group">
         <label for="login">Identifiant</label>
         <input type="text" class="form-control" id="login" placeholder="Entrer votre identifiant" name="login" required>
