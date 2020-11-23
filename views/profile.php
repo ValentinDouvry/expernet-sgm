@@ -35,12 +35,12 @@ else{
     }
 
 
-    $query = $db->prepare("SELECT * FROM users WHERE id = :userId");
+    $query = $db->prepare("SELECT * FROM `users` WHERE id = :userId");
     $query->bindParam(":userId",$userId);
     $query->execute();
     $user = $query->fetchObject("User");
-    
-    $query = $db->prepare("SELECT * FROM groups WHERE id = :groupId");
+
+    $query = $db->prepare("SELECT * FROM `groups` WHERE id = :groupId");
     $groupId = $user->getGroupId();
     $query->bindParam(":groupId",$groupId);
     $query->execute();

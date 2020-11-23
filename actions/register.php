@@ -1,5 +1,5 @@
 <?php
-// Ne pas oublie  pour les groups et les avatars
+// Ne pas oublie faire quelque chose pour les avatars
 require_once('../secret/connect_db.php');
 require_once('../classes/User.php');
 require_once('../classes/Group.php');
@@ -25,17 +25,42 @@ $pass = $_POST['password'];
 $pass2 = $_POST['password2'];
 $code = $_POST['code'];
 
-if (
-    isset($username) && $username !== ""
-    && isset($lastName) && $lastName !== ""
-    && isset($name) && $name !== ""
-    && isset($email) && $email !== ""
-    && isset($pass) && $pass !== ""
-    && isset($pass2) && $pass2 !== "" 
-    && $pass === $pass2
-    && isset($code) && $code !== "" 
-) 
+if(!isset($username) || $username === "") 
 {
+    header('Location: ../views/form_register.php?err=Pseudo vide');
+} 
+
+else if (!isset($lastName) || $lastName === "") {
+    header('Location: ../views/form_register.php?err=Nom vide');
+
+}
+
+else if (!isset($name) || $name === "") {
+    header('Location: ../views/form_register.php?err=Prenom vide');
+}
+
+else if (!isset($email) || $email === "") {
+    header('Location: ../views/form_register.php?err=email vide');
+}
+
+else if (!isset($pass) || !isset($pass2) ||$pass === "" ||$pass2 === "" || $pass !== $pass) {
+    header('Location: ../views/form_register.php?err=mot de passe vide');
+}
+
+else if (!isset($code) || $code === "") {
+    header('Location: ../views/form_register.php?err=code vide');
+}
+
+else
+{
+    $query = $db->prepare("SELECT * FROM `groups` where code=?");
+    $is_code_valide = $query->execute(array($code));
+    if(!$is_code_valide){
+        header('Location: ../views/form_register.php?err=code incorrect');
+        exit();
+    }
+    $group = $query->fetchObject("Group");
+
     $user = new User;
     $user->setId(NULl);
     $user->setLastName($lastName);
@@ -48,16 +73,17 @@ if (
     $user->setMoney(0);
     $user->setIsAdmin(0);
     $user->setAvatarId(1);
-    $user->setGroupId(1);
+    $user->setGroupId($group->getId());
 
     $sql = "INSERT INTO `users`(`id`, `lastName`, `name`, `email`, `username`, `password`, `level`, `experience`, `money`, `isAdmin`, `avatarId`, `groupId`) VALUES (:id, :lastName, :name, :email, :username, :password, :level, :experience, :money, :isAdmin, :avatarId, :groupId)";
 
     $query = $db->prepare($sql);
-    $data = $query->execute(dismount($user));
+    $is_success = $query->execute(dismount($user));
 
-    header('Location: ../views/list_group.php');
+    if($is_success) {
+        header('Location: ../views/log_in.php');
+    } else {
+        header('Location: ../views/form_register.php?err=une erreur est survenu, veillez recommencer');
+    }
+
 } 
-else 
-{
-    header('Location: ../views/form_register.php');
-}

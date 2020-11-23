@@ -17,6 +17,7 @@
     ?>
 
     <div class="container">
+<a href="form_register.php">S'incrire</a>
     <form method = 'POST' action="../actions/user_connection.php" class="was-validated">
         <div class="form-group">
         <label for="login">Identifiant</label>
