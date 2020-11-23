@@ -9,3 +9,4 @@
        header('Location: views/log_in.php');
    }
    
+?>
