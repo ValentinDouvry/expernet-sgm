@@ -50,16 +50,12 @@ if (
     $user->setAvatarId(1);
     $user->setGroupId(1);
 
-    echo '<pre>' . var_export($user, true) . '</pre>';
-
     $sql = "INSERT INTO `users`(`id`, `lastName`, `name`, `email`, `username`, `password`, `level`, `experience`, `money`, `isAdmin`, `avatarId`, `groupId`) VALUES (:id, :lastName, :name, :email, :username, :password, :level, :experience, :money, :isAdmin, :avatarId, :groupId)";
 
     $query = $db->prepare($sql);
     $data = $query->execute(dismount($user));
-    echo "<br/> ---------------------- <br/>";
 
-    var_dump($data);
-
+    header('Location: ../views/list_group.php');
 } 
 else 
 {

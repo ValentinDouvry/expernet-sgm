@@ -1,7 +1,7 @@
 <?php
 
     session_start();
-    include ("secret/connect_db.php");
+    include ("../secret/connect_db.php");
 
     $login = $_POST['login'];
     $password = $_POST['password'];
@@ -14,7 +14,7 @@
         $data = $query->fetch();
         if($data != ""){
             $_SESSION['userId'] = $data['id'];
-            header('Location:index.php');
+            header('Location:../views/list_group.php');
         }else{
             header('Location:log_in.php?err=Identifiant ou Mot de Passe Incorrecte');
         }

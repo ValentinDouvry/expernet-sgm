@@ -20,7 +20,7 @@
 
         <h1 class="text-center">S'incrire</h1>
 
-        <form method="post" action="/actions/register.php">
+        <form method="post" action="../actions/register.php">
 
             <div class="form-group">
                 <label for="username">Pseudo</label>
