@@ -76,7 +76,7 @@ else{
 <!doctype html>
 <html lang="fr">
   <head>
-    <title>Groupe liste</title>
+    <title>Expernet-sgm</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -97,7 +97,8 @@ else{
 
       
     <div class="container-fluid">
-    <h2>Liste des groupes</h2>
+      <a class="btn btn-outline-primary" role="button" href="create_group.php">Créer un groupe</a>
+      <h2>Liste des groupes</h2>
       <div class="container-fluid row">
         <div class="container-fuild col-sm-10">
           <?php
@@ -124,7 +125,7 @@ else{
                             <p class="card-text">'.$group->getCode().'</p>
                           </div>
                           <div class="col-sm-10">
-                            <button type="button" class="btn btn-outline-secondary" onclick="showForm('.$group->getId().','.'\''.$group->getName().'\''.','.'\''.$group->getChannel().'\''.')">Modifier</button>
+                            <button type="button" class="btn btn-outline-info" onclick="showForm('.$group->getId().','.'\''.$group->getName().'\''.','.'\''.$group->getChannel().'\''.')">Modifier</button>
                             <button type="button" class="btn btn-outline-danger" onclick="submitDeleteForm('.$group->getId().')">Supprimer</button>                           
                             <form action="list_group.php" method="POST" id="form-delete-group-'.$group->getId().'">                                                              
                               <input id="inputIdGroupDelete" name="inputIdGroupDelete" type="hidden" value="'.$group->getId().'">                                              
