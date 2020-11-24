@@ -25,7 +25,7 @@ if(!isset($_GET['id'])) {
     exit;
 }
 
-$sql = "UPDATE `items` SET `isDesactivated`=1 WHERE `id`=?";
+$sql = "UPDATE `items` SET `isDesactivated`=0 WHERE `id`=?";
 $query = $db->prepare($sql);
 $is_success = $query->execute(array($_GET['id']));
 

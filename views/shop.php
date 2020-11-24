@@ -105,7 +105,7 @@ $query = $db->prepare($sql);
                                                 <a class="btn btn-outline-warning" href="#?id=<?= $item->getId();?>">Modifier</a>
                                                 <a class="btn btn-outline-secondary" href="../actions/item_deactivate.php?id=<?= $item->getId();?>">Désactiver</a>
                                             <?php else : ?>
-                                                <a class="btn btn-outline-success" href="../actions/item_deactivate.php?id=<?= $item->getId();?>">Réactiver</a>
+                                                <a class="btn btn-outline-success" href="../actions/item_reactivate.php?id=<?= $item->getId();?>">Réactiver</a>
                                                 <a class="btn btn-outline-danger" href="../actions/item_delete.php?id=<?= $item->getId();?>">Supprimer</a>
                                             <?php endif; ?>
                                         <?php else :?>
