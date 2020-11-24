@@ -68,7 +68,7 @@ $categories = $query->fetchAll(PDO::FETCH_CLASS, "Category");
             <div class="row">
                 <?php
                 foreach ($items as $item) :
-                    if ($item->getcategoryId() === $category->getId()) :
+                    if ($item->getcategoryId() === $category->getId() && ($user->getIsAdmin()||!$item->getIsDesactivated())) : 
                         $countItem++;
                 ?>
                         <div class="col-md-4">
@@ -78,11 +78,27 @@ $categories = $query->fetchAll(PDO::FETCH_CLASS, "Category");
                                     <h3 class="card-title text-center font-weight-bold"><?= $item->getName(); ?></h3>
                                     <p class="card-text font-weight-bold"><?= $item->getPrice(); ?></p>
                                     <div class="d-flex justify-content-around align-items-center">
-                                        <?php if($user->getIsAdmin()) :?>
-                                            <a class="btn btn-outline-warning" href="">Modifier</a>
-                                            <a class="btn btn-outline-danger" href="">Supprimer</a>
+                                        <?php if($user->getIsAdmin()) : ?>
+                                            <?php if(!$item->getIsDesactivated()) : ?>
+                                                <a class="btn btn-outline-warning" href="#?id=<?= $user->getId();?>">Modifier</a>
+                                                <a class="btn btn-outline-secondary" href="../actions/item_deactivade.php?id=<?= $user->getId();?>">Désactiver</a>
+                                            <?php else : ?>
+                                                <a class="btn btn-outline-success" href="../actions/item_deactivade.php?id=<?= $user->getId();?>">Réactiver</a>
+                                                <a class="btn btn-outline-danger" href="../actions/item_deactivade.php?id=<?= $user->getId();?>">Supprimer</a>
+                                            <?php endif; ?>
                                         <?php else :?>
-                                            <a class="btn btn-outline-primary" href="">Acheter</a>
+                                            <?php if($category->getIsBuyableMultiple()) :?>
+                                                <form action="../actions/item_buy.php" method="post">
+                                                    <input style="width: 4rem;" type="number" name="quantity">
+                                                    <input type="submit" nane="submit" class="btn btn-outline-primary" value="Acheter">
+                                                </form>
+
+                                            <?php else :?>
+                                                <form action="../actions/item_buy.php" method="post">
+                                                    <input type="submit" nane="submit" class="btn btn-outline-primary" value="Acheter">
+                                                </form>
+                                            <?php endif?>
+
                                         <?php endif; ?>
                                     </div>
                                 </div>

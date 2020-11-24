@@ -6,6 +6,7 @@ class Item
     private $name;
     private $price;
     private $imageName;
+    private $isDesactivated;
     private $categoryId;
 
     
@@ -98,6 +99,26 @@ class Item
     public function setImageName($imageName)
     {
         $this->imageName = $imageName;
+        return $this;
+    }
+
+
+    /**
+     * Get the value of isDesactivated
+     */
+    public function getIsDesactivated()
+    {
+        return $this->isDesactivated;
+    }
+
+    /**
+     * Set the value of isDesactivated
+     *
+     * @return  self
+     */
+    public function setIsDesactivated($isDesactivated)
+    {
+        $this->isDesactivated = $isDesactivated;
         return $this;
     }
 
