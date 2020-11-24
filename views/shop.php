@@ -74,7 +74,7 @@ $query = $db->prepare($sql);
 
 
         <?php if($user->getIsAdmin()) :?>
-        <a class="btn btn-outline-primary" href="">Ajouter un objet</a>
+        <a class="btn btn-outline-primary" href="form_add_item.php">Ajouter un objet</a>
         <?php endif; ?>
 
         <?php
