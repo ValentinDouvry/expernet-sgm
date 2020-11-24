@@ -53,7 +53,11 @@ $categories = $query->fetchAll(PDO::FETCH_CLASS, "Category");
 
     <div class="container">
         <div class="h2 font-weight-bold float-right"><?= $user->getMoney(); ?> €</div>
+
         <h1 class="text-center">Boutique</h1>
+        <?php if($user->getIsAdmin()) :?>
+        <a class="btn btn-outline-primary" href="">Ajouter un objet</a>
+        <?php endif; ?>
 
         <?php
         foreach ($categories as $category) :
@@ -74,7 +78,12 @@ $categories = $query->fetchAll(PDO::FETCH_CLASS, "Category");
                                     <h3 class="card-title text-center font-weight-bold"><?= $item->getName(); ?></h3>
                                     <p class="card-text font-weight-bold"><?= $item->getPrice(); ?></p>
                                     <div class="d-flex justify-content-around align-items-center">
-                                        <a type="button" class="btn btn-outline-primary" href="">Acheter</a>
+                                        <?php if($user->getIsAdmin()) :?>
+                                            <a class="btn btn-outline-warning" href="">Modifier</a>
+                                            <a class="btn btn-outline-danger" href="">Supprimer</a>
+                                        <?php else :?>
+                                            <a class="btn btn-outline-primary" href="">Acheter</a>
+                                        <?php endif; ?>
                                     </div>
                                 </div>
                             </div>
