@@ -1,76 +1,61 @@
 <?php
-include_once("../secret/connect_db.php");
-include_once("../classes/User.php");
-include_once("../classes/Group.php");
+require_once("../secret/connect_db.php");
+require_once("../classes/User.php");
+require_once("../classes/Group.php");
 
 session_start();
 
-
 $userId = $_SESSION["userId"];
-if(!isset($userId)){
-    header('Location:log_in.php');
+if (!isset($userId)) {
+  header('Location:log_in.php');
+  exit;
 }
-else{
-    
-    $query = $db->prepare("SELECT * FROM users WHERE id = :userId");
-    $query->bindParam(":userId",$userId);
+
+$query = $db->prepare("SELECT * FROM users WHERE id = :userId");
+$query->bindParam(":userId", $userId);
+$query->execute();
+$user = $query->fetchObject("User");
+
+if (!$user->getIsAdmin()) {
+  header('Location: ../index.php');
+  exit;
+}
+
+
+if (isset($_POST["inputIdGroupDelete"])) {
+  $groupId = $_POST["inputIdGroupDelete"];
+  $query = $db->prepare("SELECT COUNT(*) FROM users WHERE groupId = :groupId");
+  $query->bindParam(":groupId", $groupId, PDO::PARAM_INT);
+  $query->execute();
+  $nbUser = $query->fetchColumn();
+  if ($nbUser != 0) {
+    // AFFICHER ALERTE/MODAL ?
+    echo "Can't delete";
+  } else {
+    $query = $db->prepare("DELETE FROM `groups` WHERE `id`= :groupId");
+    $query->bindParam(":groupId", $groupId, PDO::PARAM_STR);
     $query->execute();
-    $user = $query->fetchObject("User");
+  }
+}
 
-    if(!$user->getIsAdmin()){
-      header('Location: ../index.php');
-    }
-    else{
-      if(isset($_POST["inputIdGroupDelete"]))
-      {
-        $groupId = $_POST["inputIdGroupDelete"];
-        $query = $db->prepare("SELECT COUNT(*) FROM users WHERE groupId = :groupId");
-        $query->bindParam(":groupId",$groupId, PDO::PARAM_INT);
-        $query->execute();
-        $nbUser = $query->fetchColumn();
-        if($nbUser != 0)
-        {
-          // AFFICHER ALERTE/MODAL ?
-          echo "Can't delete";
-        }
-        else
-        {
-          $query = $db->prepare("DELETE FROM groups WHERE id= :groupId");
-          $query->bindParam(":groupId",$groupId, PDO::PARAM_STR);
-          $query->execute();
-        }
+if (isset($_POST["inputGroupId"]) && isset($_POST["inputGroupName"]) && isset($_POST["inputGroupChannel"])) {
+  $groupName = $_POST["inputGroupName"];
+  $groupChannel = $_POST["inputGroupChannel"];
+  $groupId = $_POST["inputGroupId"];
 
 
-      }
-      if(isset($_POST["inputGroupId"]) && isset($_POST["inputGroupName"]) && isset($_POST["inputGroupChannel"]))
-      {
-          $groupName = $_POST["inputGroupName"];
-          $groupChannel = $_POST["inputGroupChannel"];
-          $groupId = $_POST["inputGroupId"];
-  
-          
-          $query = $db->prepare("UPDATE groups SET name = :groupName, channel = :groupChannel WHERE id = :groupId");
-  
-          $query->bindParam(":groupName",$groupName, PDO::PARAM_STR);
-          $query->bindParam(":groupChannel",$groupChannel, PDO::PARAM_STR);
-          $query->bindParam(":groupId",$groupId, PDO::PARAM_INT);
-          $query->execute();
-  
-      }
+  $query = $db->prepare("UPDATE `groups` SET `name` = :groupName, `channel` = :groupChannel WHERE `id` = :groupId");
 
-
-      $query = $db->prepare("SELECT * FROM groups");
-      $query->execute();
-      $listGroups = $query->fetchAll(PDO::FETCH_CLASS,"Group");
-      
-
-
-
-    }
-
+  $query->bindParam(":groupName", $groupName, PDO::PARAM_STR);
+  $query->bindParam(":groupChannel", $groupChannel, PDO::PARAM_STR);
+  $query->bindParam(":groupId", $groupId, PDO::PARAM_INT);
+  $query->execute();
 }
 
 
+$query = $db->prepare("SELECT * FROM `groups`");
+$query->execute();
+$listGroups = $query->fetchAll(PDO::FETCH_CLASS, "Group");
 ?>
 
 <!doctype html>
@@ -85,17 +70,11 @@ else{
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   </head>
   <body>
-
-    <div class="container">
-      <a class="btn btn-outline-secondary" role="button" href="">Accueil</a>
-      <a class="btn btn-outline-secondary" role="button" href="profile.php">Mon profil</a>
-      <a class="btn btn-outline-secondary" role="button" href="">Boutique</a>
-      <a class="btn btn-outline-secondary" role="button" href="">Se déconnecter</a>
-    </div>
-
-    
-
       
+    <?php 
+      require_once('components/navbar.php');
+    ?>
+
     <div class="container-fluid">
       <a class="btn btn-outline-primary" role="button" href="create_group.php">Créer un groupe</a>
       <h2>Liste des groupes</h2>

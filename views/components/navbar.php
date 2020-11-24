@@ -19,7 +19,7 @@ $currentUser = $query->fetchObject('User');
 
             <?php else : ?>
 
-                <li class="nav-item mx-2"><a class="nav-link" href="goup.php">Mon groupe</a></li>
+                <li class="nav-item mx-2"><a class="nav-link" href="group.php">Mon groupe</a></li>
 
             <?php endif; ?> 
 

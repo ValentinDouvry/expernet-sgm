@@ -17,6 +17,7 @@ function dismount($object)
     return $array;
 }
 
+
 $username = $_POST['username'];
 $lastName = $_POST['last-name'];
 $name = $_POST['name'];
@@ -24,6 +25,7 @@ $email = $_POST['email'];
 $pass = $_POST['password'];
 $pass2 = $_POST['password2'];
 $code = $_POST['code'];
+$avatar = $_POST['avatar'];
 
 if(!isset($username) || $username === "") 
 {
@@ -51,9 +53,13 @@ else if (!isset($code) || $code === "") {
     header('Location: ../views/form_register.php?err=code vide');
 }
 
+else if (!isset($avatar) || $avatar === "") {
+    header('Location: ../views/form_register.php?err=avatar non choisie');
+}
+
 else
 {
-    $query = $db->prepare("SELECT COUNT(*) FROM groups WHERE code = :groupCode");
+    $query = $db->prepare("SELECT COUNT(*) FROM `groups` WHERE `code` = :groupCode");
     $query->bindParam(":groupCode",$code, PDO::PARAM_STR);
     $query->execute();
     $nbGroupWithName = $query->fetchColumn();
@@ -76,22 +82,25 @@ else
         $user->setExperience(0);
         $user->setMoney(0);
         $user->setIsAdmin(0);
-        $user->setAvatarId(1);
+        $user->setAvatarId($avatar);
         $user->setGroupId($group->getId());
     
         $sql = "INSERT INTO `users`(`id`, `lastName`, `name`, `email`, `username`, `password`, `level`, `experience`, `money`, `isAdmin`, `avatarId`, `groupId`) VALUES (:id, :lastName, :name, :email, :username, :password, :level, :experience, :money, :isAdmin, :avatarId, :groupId)";
     
         $query = $db->prepare($sql);
         $is_success = $query->execute(dismount($user));
-    
+
         if($is_success) {
             header('Location: ../views/log_in.php');
-        } else {
+
+        } 
+        else {
             header('Location: ../views/form_register.php?err=une erreur est survenu, veillez recommencer');
         }
 
         
     }
+
     else
     {
         header('Location: ../views/form_register.php?err=code incorrect');

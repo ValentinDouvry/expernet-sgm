@@ -1,3 +1,7 @@
+<?php 
+    require_once("../secret/connect_db.php");
+?>
+
 <!doctype html>
 <html lang="fr">
 
@@ -11,14 +15,14 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="/src/css/register.css">
 
-    <script src="/src/js/app.js"></script>
 </head>
 
 <body>
 
     <div class="container">
-
-        <h1 class="text-center">S'incrire</h1>
+    <a href="log_in.php">Se connecter</a>
+        
+    <h1 class="text-center">S'incrire</h1>
 
 <?php 
     if(isset($_GET['err'])) :
@@ -72,9 +76,30 @@
                 <input name="code" type="text" class="form-control" id="code" placeholder="code groupe" required>
             </div>
 
+            <div class="form-group"> 
+                <label for="avatar">Code</label>
+                <select class="custom-select" id="avatar" name="avatar">
+
+                    <option value="" selected>Choissez un avatar</option>
+
+                <?php 
+                
+                    $sql = "SELECT * FROM avatars";
+                    $query = $db->prepare($sql);
+                    $query->execute(array());
+                    $avatars = $query->fetchAll();
+                    
+                    foreach($avatars as $avatar) {
+                        echo "<option value='".$avatar["id"]."'>".$avatar["imageName"]."</option>";
+                    }
+                ?>
+                
+                </select>
+
+            </div>
+
             <button type="submit" class="btn btn-primary">Créer un compte</button>
         </form>
-
     </div>
 
     <!-- Optional JavaScript -->

@@ -11,7 +11,7 @@ if(!isset($userId)){
     header('Location:log_in.php');
 }
 else{
-    $query = $db->prepare("SELECT * FROM users WHERE id = :userId");
+    $query = $db->prepare("SELECT * FROM `users` WHERE `id` = :userId");
     $query->bindParam(":userId",$userId);
     $query->execute();
     $user = $query->fetchObject("User");

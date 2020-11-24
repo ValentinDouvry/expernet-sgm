@@ -9,17 +9,19 @@
 </head>
 <body>
     <?php
+    require_once("../secret/connect_db.php");
+    require_once("../classes/User.php");
+    require_once("../classes/Group.php");
     session_start();
-    include("../secret/connect_db.php");
-    include("../classes/User.php");
-    include("../classes/Group.php");
         
     if(!isset($_SESSION['userId'])){
         header('Location:log_in.php');
-    }else{
+    }
+
+    else{
         $userId = $_SESSION['userId'];
         //requete pour récuperer le id du groupe dans lequel est l'utilisateur
-        $query = $db->prepare("SELECT groupId FROM users where id = :id");
+        $query = $db->prepare("SELECT `groupId` FROM `users` where `id` = :id");
         $query->bindParam(":id",$userId,PDO::PARAM_INT);
         $query->execute();
         $query->setFetchMode(PDO::FETCH_CLASS,'User');
@@ -27,13 +29,15 @@
         $groupId = $data->getGroupId();
  
         //requete pour recupérer le nom du groupe associer à l'id du groupe récupérer juste avant
-        $query = $db->prepare("SELECT name FROM groups where id = :id");
+        $query = $db->prepare("SELECT `name` FROM `groups` where `id` = :id");
         $query->bindParam(":id",$groupId);
         $query->execute();
         $query->setFetchMode(PDO::FETCH_CLASS,'Group');
         $data = $query->fetch();
         $groupName = $data->getName();
     ?>
+
+    <?php require_once('components/navbar.php'); ?>
 
     <div class="container-fluid">
         <?php
@@ -56,7 +60,7 @@
                     <div class="col-md-4">
                     <?php
                         $avatarId = $user->getAvatarId();
-                        $query = $db->prepare("SELECT imageName FROM avatars where id = :id");
+                        $query = $db->prepare("SELECT `imageName` FROM `avatars` where id = :id");
                         $query->bindParam(":id",$avatarId); 
                         $query->execute();
                         $query->setFetchMode(PDO::FETCH_ASSOC);
