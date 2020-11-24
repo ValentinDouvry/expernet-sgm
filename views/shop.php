@@ -55,6 +55,21 @@ $categories = $query->fetchAll(PDO::FETCH_CLASS, "Category");
         <div class="h2 font-weight-bold float-right"><?= $user->getMoney(); ?> €</div>
 
         <h1 class="text-center">Boutique</h1>
+        <?php if(isset($_GET['status']) && isset($_GET['text'])) :?>
+
+            <div class="alert alert-<?= $_GET['status']; ?> alert-dismissible fade show" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <strong><?= $_GET['text']; ?> </strong> 
+            </div>
+        
+        <?php endif; ?>
+        <script>
+          $(".alert").alert();
+        </script>
+
+
         <?php if($user->getIsAdmin()) :?>
         <a class="btn btn-outline-primary" href="">Ajouter un objet</a>
         <?php endif; ?>
@@ -89,12 +104,15 @@ $categories = $query->fetchAll(PDO::FETCH_CLASS, "Category");
                                         <?php else :?>
                                             <?php if($category->getIsBuyableMultiple()) :?>
                                                 <form action="../actions/item_buy.php" method="post">
-                                                    <input style="width: 4rem;" type="number" name="quantity">
+                                                    <input style="width: 4rem;" type="number" min="1" name="quantity" value="1">
+                                                    <input type="hidden" name="id" value="<?= $item->getId(); ?>">
                                                     <input type="submit" nane="submit" class="btn btn-outline-primary" value="Acheter">
                                                 </form>
 
                                             <?php else :?>
                                                 <form action="../actions/item_buy.php" method="post">
+                                                    <input type="hidden" name="quantity" max="1" value="1">
+                                                    <input type="hidden" name="id" value="<?= $item->getId(); ?>">
                                                     <input type="submit" nane="submit" class="btn btn-outline-primary" value="Acheter">
                                                 </form>
                                             <?php endif?>
