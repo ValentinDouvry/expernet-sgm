@@ -28,14 +28,14 @@
         $query->bindParam(":isDesactivated",$isDesactivated);
         $query->bindParam(":categoryId",$categoryId);
         $result = $query->execute();
-        // if(!$result){
-        //     header('Location : ../views/form_add_item.php?err=erreur lors de votre ajout');
+         if(!$result){
+            header('Location: ../views/form_add_item.php?err=erreur lors de votre ajout');
             
-        // }else{
-        //     header('Location : ../views/shop.php');
-        // }
+        }else{
+            header('Location: ../views/shop.php');
+        }
         
     }else{
-        //header('Location : ../views/form_add_item.php?err=erreur lors de votre ajout');
+        header('Location: ../views/form_add_item.php?err=erreur lors de votre ajout');
     }
 ?>
