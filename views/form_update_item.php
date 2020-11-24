@@ -12,57 +12,91 @@
         if((!isset($_GET['id']))){
             echo "<p style='text-align: center'>erreur lors de la récupération de l'id de l'item</p>";
         }else{
-            include("../secret/connect_db.php");
-            $query = $db->prepare("SELECT * FROM items WHERE id = :id");
-            $query->bindParam
-    ?>
-        <div class="container">
-        <form method = 'POST' action="../actions/add_item.php" class="was-validated">
-            <!--liste déroulante des categories-->
-            <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                    <label class="input-group-text" for="categoryName">Categorie de l'objet</label>
-                </div>
-                <select class="custom-select" id="categoryName" name = "categoryName">
-                    <option disabled selected>Choisissez une categorie</option>
-                    <?php
-                    foreach($data as $category){
-                    ?>  
-                    <option value = "<?php echo $category->getName();?>"><?php echo $category->getName(); ?></option>
-                    <?php
-                    }
-                    ?>
-                </select>
-            </div>
-            <!--form classique-->
-            <div class="form-group">
-            <label for="itemName">Nom de l'objet</label>
-            <input type="text" class="form-control" id="itemName" placeholder="Entrer le nom de l'objet" name="itemName" required>
-            <div class="valid-feedback"></div>
-            <div class="invalid-feedback">Veuillez remplir ce champ</div>
-            </div>
-            <div class="form-group">
-            <label for="itemPrice">Prix de l'objet</label>
-            <input type="number" class="form-control" id="itemPrice" placeholder="Entrer le prix de l'objet" name="itemPrice" required>
-            <div class="valid-feedback"></div>
-            <div class="invalid-feedback">champ vide ou contient un nombre à virgule</div>
-            </div>
-            <div class="form-group">
-            <!--image de l'objet-->
-            <div class="input-group">
-                <div class="custom-file">
-                    <input type="file" class="custom-file-input" id="itemImage" name = "itemImage">
-                    <label class="custom-file-label" for="itemImage">Image de l'objet</label>
-                </div>
-                <div class="valid-feedback"></div>
-                <div class="invalid-feedback">Veuillez remplir ce champ</div>
-            </div>
-            <!--submit-->
-            </br><button type="submit" class="btn btn-success">Ajouter l'objet</button></br>
-        </form>
+            $itemId = $_GET['id'];
+            include ("../secret/connect_db.php");
+            include ("../classes/Item.php");
+            include ("../classes/Category.php");
 
-        <a href = "shop.php"></br><button type="submit" class="btn btn-danger">Annuler</button></a>
-        </div>
+            $query = $db->prepare("SELECT categoryId FROM items WHERE id = :id");
+            $query->bindParam(":id",$itemId);
+            $query->execute();
+            $query->setFetchMode(PDO::FETCH_CLASS,'Item');
+            $data = $query->fetch();
+            $categoryId = $data->getCategoryId();
+
+            $query = $db->prepare("SELECT name FROM categories WHERE id = :id");
+            $query->bindParam(":id",$categoryId);
+            $query->execute();
+            $query->setFetchMode(PDO::FETCH_CLASS,'Category');
+            $data = $query->fetch();
+            $categoryName = $data->getName();
+            
+    ?>
+            <div class="container">
+                <form method = 'POST' action="../actions/update_item.php" class="was-validated">
+                    <!--liste déroulante des categories-->
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" for="categoryName">Categorie de l'objet</label>
+                        </div>
+                        <select class="custom-select" id="categoryName" name = "categoryName">
+                            <option disabled selected><?php echo $categoryName ?></option>
+                            <?php
+                            $query = $db->prepare("SELECT name FROM categories");
+                            $query->execute();
+                            $query->setFetchMode(PDO::FETCH_CLASS,'Category');
+                            $data = $query->fetchall();
+
+                            foreach($data as $category){
+                            ?>  
+                            <option value = "<?php echo $category->getName();?>"><?php echo $category->getName(); ?></option>
+                            <?php
+                            }
+                            ?>
+                        </select>
+                    </div>
+                    <?php
+
+                    $query = $db->prepare("SELECT * FROM items WHERE id = :id");
+                    $query->bindParam(":id",$itemId);
+                    $query->execute();
+                    $query->setFetchMode(PDO::FETCH_CLASS,'Item');
+                    $data = $query->fetch();
+
+                    $itemName = $data->getName();
+                    $itemPrice = $data->getPrice();
+                    $itemImage = $data->getImageName();
+
+                    ?>
+                    <!--form classique-->
+                    <div class="form-group">
+                    <label for="itemName">Nom de l'objet</label>
+                    <input type="text" class="form-control" id="itemName" placeholder="<?php echo $itemName ?>" name="itemName" required>
+                    <div class="valid-feedback"></div>
+                    <div class="invalid-feedback">Veuillez remplir ce champ</div>
+                    </div>
+                    <div class="form-group">
+                    <label for="itemPrice">Prix de l'objet</label>
+                    <input type="number" class="form-control" id="itemPrice" placeholder="<?php echo $itemPrice ?>" name="itemPrice" required>
+                    <div class="valid-feedback"></div>
+                    <div class="invalid-feedback">champ vide ou contient un nombre à virgule</div>
+                    </div>
+                    <div class="form-group">
+                    <!--image de l'objet-->
+                    <div class="input-group">
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" id="itemImage" name = "itemImage">
+                            <label class="custom-file-label" for="itemImage"><?php echo $itemImage ?></label>
+                        </div>
+                        <div class="valid-feedback"></div>
+                        <div class="invalid-feedback">Veuillez remplir ce champ</div>
+                    </div>
+                    <!--submit-->
+                    </br><button type="submit" class="btn btn-success">Modifier l'objet</button></br>
+                </form>
+
+                <a class="btn btn-danger" href="shop.php">Annuler</a>
+            </div>
     <?php
     }
     ?>
