@@ -53,37 +53,50 @@ else if (!isset($code) || $code === "") {
 
 else
 {
-    $query = $db->prepare("SELECT * FROM `groups` where code=?");
-    $is_code_valide = $query->execute(array($code));
-    if(!$is_code_valide){
+    $query = $db->prepare("SELECT COUNT(*) FROM groups WHERE code = :groupCode");
+    $query->bindParam(":groupCode",$code, PDO::PARAM_STR);
+    $query->execute();
+    $nbGroupWithName = $query->fetchColumn();
+
+    if($nbGroupWithName != 0)
+    {
+        $query = $db->prepare("SELECT * FROM `groups` WHERE code = :groupCode");
+        $query->bindParam(":groupCode",$code);
+        $query->execute();
+        $group = $query->fetchObject("Group");
+    
+        $user = new User;
+        $user->setId(NULl);
+        $user->setLastName($lastName);
+        $user->setName($name);
+        $user->setEmail($email);
+        $user->setUsername($username);
+        $user->setPassword($pass);
+        $user->setLevel(0);
+        $user->setExperience(0);
+        $user->setMoney(0);
+        $user->setIsAdmin(0);
+        $user->setAvatarId(1);
+        $user->setGroupId($group->getId());
+    
+        $sql = "INSERT INTO `users`(`id`, `lastName`, `name`, `email`, `username`, `password`, `level`, `experience`, `money`, `isAdmin`, `avatarId`, `groupId`) VALUES (:id, :lastName, :name, :email, :username, :password, :level, :experience, :money, :isAdmin, :avatarId, :groupId)";
+    
+        $query = $db->prepare($sql);
+        $is_success = $query->execute(dismount($user));
+    
+        if($is_success) {
+            header('Location: ../views/log_in.php');
+        } else {
+            header('Location: ../views/form_register.php?err=une erreur est survenu, veillez recommencer');
+        }
+
+        
+    }
+    else
+    {
         header('Location: ../views/form_register.php?err=code incorrect');
         exit();
     }
-    $group = $query->fetchObject("Group");
-
-    $user = new User;
-    $user->setId(NULl);
-    $user->setLastName($lastName);
-    $user->setName($name);
-    $user->setEmail($email);
-    $user->setUsername($username);
-    $user->setPassword($pass);
-    $user->setLevel(0);
-    $user->setExperience(0);
-    $user->setMoney(0);
-    $user->setIsAdmin(0);
-    $user->setAvatarId(1);
-    $user->setGroupId($group->getId());
-
-    $sql = "INSERT INTO `users`(`id`, `lastName`, `name`, `email`, `username`, `password`, `level`, `experience`, `money`, `isAdmin`, `avatarId`, `groupId`) VALUES (:id, :lastName, :name, :email, :username, :password, :level, :experience, :money, :isAdmin, :avatarId, :groupId)";
-
-    $query = $db->prepare($sql);
-    $is_success = $query->execute(dismount($user));
-
-    if($is_success) {
-        header('Location: ../views/log_in.php');
-    } else {
-        header('Location: ../views/form_register.php?err=une erreur est survenu, veillez recommencer');
-    }
+    
 
 } 
