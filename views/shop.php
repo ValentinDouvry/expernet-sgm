@@ -102,7 +102,7 @@ $query = $db->prepare($sql);
                                     <div class="d-flex justify-content-around align-items-center">
                                         <?php if($user->getIsAdmin()) : ?>
                                             <?php if(!$item->getIsDesactivated()) : ?>
-                                                <a class="btn btn-outline-warning" href="#?id=<?= $item->getId();?>">Modifier</a>
+                                                <a class="btn btn-outline-warning" href="form_update_item.php?id=<?= $item->getId();?>">Modifier</a>
                                                 <a class="btn btn-outline-secondary" href="../actions/item_deactivate.php?id=<?= $item->getId();?>">Désactiver</a>
                                             <?php else : ?>
                                                 <a class="btn btn-outline-success" href="../actions/item_reactivate.php?id=<?= $item->getId();?>">Réactiver</a>
