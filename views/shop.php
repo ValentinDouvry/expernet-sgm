@@ -102,11 +102,11 @@ $query = $db->prepare($sql);
                                     <div class="d-flex justify-content-around align-items-center">
                                         <?php if($user->getIsAdmin()) : ?>
                                             <?php if(!$item->getIsDesactivated()) : ?>
-                                                <a class="btn btn-outline-warning" href="#?id=<?= $user->getId();?>">Modifier</a>
-                                                <a class="btn btn-outline-secondary" href="../actions/item_deactivade.php?id=<?= $user->getId();?>">Désactiver</a>
+                                                <a class="btn btn-outline-warning" href="#?id=<?= $item->getId();?>">Modifier</a>
+                                                <a class="btn btn-outline-secondary" href="../actions/item_deactivate.php?id=<?= $item->getId();?>">Désactiver</a>
                                             <?php else : ?>
-                                                <a class="btn btn-outline-success" href="../actions/item_deactivade.php?id=<?= $user->getId();?>">Réactiver</a>
-                                                <a class="btn btn-outline-danger" href="../actions/item_deactivade.php?id=<?= $user->getId();?>">Supprimer</a>
+                                                <a class="btn btn-outline-success" href="../actions/item_deactivate.php?id=<?= $item->getId();?>">Réactiver</a>
+                                                <a class="btn btn-outline-danger" href="../actions/item_delete.php?id=<?= $item->getId();?>">Supprimer</a>
                                             <?php endif; ?>
                                         <?php else :?>
                                             <?php if($category->getIsBuyableMultiple()) :?>
