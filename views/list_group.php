@@ -21,6 +21,43 @@ else{
       header('Location: ../index.php');
     }
     else{
+      if(isset($_POST["inputIdGroupDelete"]))
+      {
+        $groupId = $_POST["inputIdGroupDelete"];
+        $query = $db->prepare("SELECT COUNT(*) FROM users WHERE groupId = :groupId");
+        $query->bindParam(":groupId",$groupId, PDO::PARAM_INT);
+        $query->execute();
+        $nbUser = $query->fetchColumn();
+        if($nbUser != 0)
+        {
+          // AFFICHER ALERTE/MODAL ?
+          echo "Can't delete";
+        }
+        else
+        {
+          $query = $db->prepare("DELETE FROM groups WHERE id= :groupId");
+          $query->bindParam(":groupId",$groupId, PDO::PARAM_STR);
+          $query->execute();
+        }
+
+
+      }
+      if(isset($_POST["inputGroupId"]) && isset($_POST["inputGroupName"]) && isset($_POST["inputGroupChannel"]))
+      {
+          $groupName = $_POST["inputGroupName"];
+          $groupChannel = $_POST["inputGroupChannel"];
+          $groupId = $_POST["inputGroupId"];
+  
+          
+          $query = $db->prepare("UPDATE groups SET name = :groupName, channel = :groupChannel WHERE id = :groupId");
+  
+          $query->bindParam(":groupName",$groupName, PDO::PARAM_STR);
+          $query->bindParam(":groupChannel",$groupChannel, PDO::PARAM_STR);
+          $query->bindParam(":groupId",$groupId, PDO::PARAM_INT);
+          $query->execute();
+  
+      }
+
 
       $query = $db->prepare("SELECT * FROM groups");
       $query->execute();
@@ -61,60 +98,74 @@ else{
       
     <div class="container-fluid">
     <h2>Liste des groupes</h2>
-      <?php
-        foreach($listGroups as $group)
-        {
-          $groupId = $group->getId();
-          $query = $db->prepare("SELECT COUNT(*) FROM users WHERE groupId = :groupId");
-          $query->bindParam(":groupId",$groupId, PDO::PARAM_STR);
-          $query->execute();
-          $nbUser = $query->fetchColumn();
+      <div class="container-fluid row">
+        <div class="container-fuild col-sm-10">
+          <?php
+            foreach($listGroups as $group)
+            {
+              $groupId = $group->getId();
+              $query = $db->prepare("SELECT COUNT(*) FROM users WHERE groupId = :groupId");
+              $query->bindParam(":groupId",$groupId, PDO::PARAM_STR);
+              $query->execute();
+              $nbUser = $query->fetchColumn();
 
-          echo '
-          <div class="row">
-            <div class="card mb-3 col-sm-9" style="max-width: 540px;">
-              <div class="row no-gutters">
-                <div class="col-sm-12">
-                  <div class="card-body">
-                    <h5 class="card-title">'.$group->getName().'</h5>
-                    <div class="row">
-                      <div class="col-sm-9">
-                        <p class="card-text">'.$nbUser.' Utilisateurs</p>
-                      </div>
-                      <div class="col-sm-3">
-                      <p class="card-text">'.$group->getCode().'</p>
-                      </div>
-                    </div>                  
+              echo '
+              <div class="row">
+                <div class="card mb-3 col-sm-9" style="max-width: 540px;">
+                  <div class="row no-gutters">
+                    <div class="col-sm-12">
+                      <div class="card-body">
+                        <h5 class="card-title">'.$group->getName().'</h5>
+                        <div class="row">
+                          <div class="col-sm-9">
+                            <p class="card-text">'.$nbUser.' Utilisateurs</p>
+                          </div>
+                          <div class="col-sm-3">
+                            <p class="card-text">'.$group->getCode().'</p>
+                          </div>
+                          <div class="col-sm-10">
+                            <button type="button" class="btn btn-outline-secondary" onclick="showForm('.$group->getId().','.'\''.$group->getName().'\''.','.'\''.$group->getChannel().'\''.')">Modifier</button>
+                            <button type="button" class="btn btn-outline-danger" onclick="submitDeleteForm('.$group->getId().')">Supprimer</button>                           
+                            <form action="list_group.php" method="POST" id="form-delete-group-'.$group->getId().'">                                                              
+                              <input id="inputIdGroupDelete" name="inputIdGroupDelete" type="hidden" value="'.$group->getId().'">                                              
+                            </form>
+                          </div>
+                        </div>
+                      </div>                  
+                    </div>
                   </div>
                 </div>
+              </div>';
+            } 
+          ?>
+        </div>
+        <div class="container-fluid col">
+          <div id="container-form-modify-group" style="display: none;">
+            <form id="form-modify-group" method="POST" action="list_group.php">
+              <div class="form-group">
+                <label for="inputGroupName">Nom du groupe</label>
+                <input type="text" class="form-control" id="inputGroupName" name="inputGroupName">
               </div>
-            </div>
-            <div class="col-sm-3">
-              <div class="row">
-                  <button class="btn btn-outline-secondary btn-lg btn-block" onclick="showForm()">Modifier</button>
+              <div class="form-group">
+                <label for="inputGroupChannel">Channel du groupe</label>
+                <input type="text" class="form-control" id="inputGroupChannel" name="inputGroupChannel">
               </div>
-              <div class="row">
-                <button class="btn btn-outline-secondary btn-lg btn-block">Supprimer</button>
-              </div>
-            </div>
+              <input type="hidden" id="inputGroupId" name="inputGroupId" value="">
+              <button type="submit" class="btn btn-outline-primary">Modifier</button>
+              <button class="btn btn-outline-secondary" onclick="hideForm()">Cacher</button>
+            </form>        
           </div>
-          ';
-        }     
-      
-
-      
-      ?>
-
-
-      <div id="container-form-modify-group">
-        
+        </div>
       </div>
+
+
+      
 
 
       
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="../js/show_form_modify_group.js"></script>
+    <script src="../js/form_modify_group.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
