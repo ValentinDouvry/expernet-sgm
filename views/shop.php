@@ -2,6 +2,7 @@
 require_once('../classes/User.php');
 require_once('../classes/Item.php');
 require_once('../classes/Category.php');
+require_once('../classes/Inventory.php');
 require_once('../secret/connect_db.php');
 
 session_start();
@@ -26,6 +27,8 @@ $query = $db->prepare($sql);
 $query->execute();
 $categories = $query->fetchAll(PDO::FETCH_CLASS, "Category");
 
+$sql = "SELECT * FROM inventories WHERE userId=:userID and itemId=:itemId";
+$query = $db->prepare($sql);
 
 ?>
 
@@ -83,6 +86,10 @@ $categories = $query->fetchAll(PDO::FETCH_CLASS, "Category");
             <div class="row">
                 <?php
                 foreach ($items as $item) :
+
+                    $query->execute(array(':userID'=>$user->getId(),':itemId'=>$item->getId()));
+                    $inventory = $query->fetchObject('Inventory');
+                    
                     if ($item->getcategoryId() === $category->getId() && ($user->getIsAdmin()||!$item->getIsDesactivated())) : 
                         $countItem++;
                 ?>
@@ -108,6 +115,9 @@ $categories = $query->fetchAll(PDO::FETCH_CLASS, "Category");
                                                     <input type="hidden" name="id" value="<?= $item->getId(); ?>">
                                                     <input type="submit" nane="submit" class="btn btn-outline-primary" value="Acheter">
                                                 </form>
+
+                                            <?php elseif(!$inventory===false) :?>
+                                                <button class="btn btn-outline-secondary" disabled="disabled">Posseder</button>
 
                                             <?php else :?>
                                                 <form action="../actions/item_buy.php" method="post">
