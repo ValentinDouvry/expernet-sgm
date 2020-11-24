@@ -70,20 +70,7 @@ else{
 </head>
 <body>
 
-    <div class="container">
-        
-        <a class="btn btn-outline-secondary" role="button" href="profile.php">Mon profil</a>
-        <?php 
-            if($user->getIsAdmin()){
-                echo '<a class="btn btn-outline-secondary" role="button" href="list_group.php">Groupes</a>';
-            }else{
-                echo '<a class="btn btn-outline-secondary" role="button" href="">Mon Groupe</a>';
-            }
-        ?>
-        <a class="btn btn-outline-secondary" role="button" href="shop.php">Boutique</a>
-        <a class="btn btn-outline-secondary" role="button" href="">Se déconnecter</a>
-        
-    </div>
+<?php require_once('components/navbar.php'); ?>
 
     <div class="container">
         <div class="row">

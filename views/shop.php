@@ -46,13 +46,7 @@ $query = $db->prepare($sql);
 </head>
 
 <body>
-
-    <div class="container">
-        <a class="btn btn-outline-secondary" role="button" href="">Accueil</a>
-        <a class="btn btn-outline-secondary" role="button" href="profile.php">Mon profil</a>
-        <a class="btn btn-outline-secondary" role="button" href="shop.php">Boutique</a>
-        <a class="btn btn-outline-secondary" role="button" href="">Se déconnecter</a>
-    </div>
+    <?php require_once('components/navbar.php'); ?>
 
     <div class="container">
         <div class="h2 font-weight-bold float-right"><?= $user->getMoney(); ?> €</div>
