@@ -66,7 +66,7 @@
             </br><button type="submit" class="btn btn-success">Ajouter l'objet</button></br>
         </form>
 
-        <a href = "shop.php"></br><button type="submit" class="btn btn-danger">Annuler</button></a>
+        <a class="btn btn-danger" href="shop.php">Annuler</a>
     </div>             
 
     <!-- Optional JavaScript -->
