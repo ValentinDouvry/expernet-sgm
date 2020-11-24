@@ -11,6 +11,12 @@ if(!isset($userId)){
     header('Location:log_in.php');
 }
 else{
+
+    $query = $db->prepare("SELECT * FROM users WHERE id = :userId");
+    $query->bindParam(":userId",$userId);
+    $query->execute();
+    $user = $query->fetchObject("User");
+
     if(isset($_POST["inputLastName"]) && isset($_POST["inputName"]) && isset($_POST["inputUsername"]) && isset($_POST["inputEmail"]))
     {
         $lastName = $_POST["inputLastName"];
@@ -65,10 +71,18 @@ else{
 <body>
 
     <div class="container">
-        <a class="btn btn-outline-secondary" role="button" href="">Accueil</a>
+        
         <a class="btn btn-outline-secondary" role="button" href="profile.php">Mon profil</a>
+        <?php 
+            if($user->getIsAdmin()){
+                echo '<a class="btn btn-outline-secondary" role="button" href="list_group.php">Groupes</a>';
+            }else{
+                echo '<a class="btn btn-outline-secondary" role="button" href="">Mon Groupe</a>';
+            }
+        ?>
         <a class="btn btn-outline-secondary" role="button" href="shop.php">Boutique</a>
         <a class="btn btn-outline-secondary" role="button" href="">Se déconnecter</a>
+        
     </div>
 
     <div class="container">
