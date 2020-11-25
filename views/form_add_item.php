@@ -8,11 +8,13 @@
 </head>
 <body>
     <?php
+        include_once("../secret/connect_db.php");
 
         session_start();
         if(!isset($_SESSION['userId'])){
             header('Location:../index.php');
         }
+        require_once('components/navbar.php');
 
         if((isset($_GET['err']))){
             $err = $_GET['err'];
