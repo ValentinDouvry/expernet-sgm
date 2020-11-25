@@ -66,9 +66,9 @@
     
     <div class="container-fluid">
     <?php
-        echo '<h1 style="text-align: center">'.$groupName.'</h1>';
+        echo '<h1 class="mt-3 mb-5"style="text-align: center;">'.$groupName.'</h1>';
     ?>
-        <div class="row">
+        <div class="row justify-content-md-center">
         <!-- Content here -->
         <?php
             $query = $db->prepare("SELECT * FROM users where groupId = :groupId");
@@ -80,10 +80,10 @@
             foreach($data as $user){
         ?>
         
-            <div class="card mb-3 col-sm-9" style="max-width: 540px; margin: 15px;">
+            <div class="card mb-3 mr-5 col-sm-9" style="max-width: 400px;">
                 <a href="profile.php?profileId=<?php echo $user->getId();?>" class="stretched-link"></a>
                 <div class="row no-gutters">
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <?php
                             $avatarId = $user->getAvatarId();
                             $query = $db->prepare("SELECT `imageName` FROM `avatars` where id = :id");
@@ -95,7 +95,7 @@
                         ?>
                         <img src="../img/avatars/<?php echo $imageName ?>" class="card-img" alt="<?php echo $imageName ?>">
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <div class="card-body">
                             <h5 class="card-title"><?php echo $user->getLastName()." ",$user->getName(); ?></h5>
                             <p class="card-text"><?php echo $user->getUsername();?></p>
