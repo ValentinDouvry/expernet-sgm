@@ -9,10 +9,15 @@
 <body>
 
     <?php
+        require_once("../secret/connect_db.php");
+
         session_start();
-            if(!isset($_SESSION['userId'])){
-                header('Location:../index.php');
-            } 
+        if(!isset($_SESSION['userId'])){
+            header('Location:../index.php');
+        }
+
+        require_once('components/navbar.php');
+
         if((!isset($_GET['id']))){
             echo "<p style='text-align: center'>erreur lors de la récupération de l'id de l'item</p>";
         }else{
