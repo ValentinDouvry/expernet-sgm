@@ -8,7 +8,7 @@ session_start();
 
 $userId = $_SESSION["userId"];
 if(!isset($userId)){
-    header('Location:log_in.php');
+    header('Location:../views/log_in.php');
 }
 else{
     $query = $db->prepare("SELECT * FROM `users` WHERE id = :userId");
