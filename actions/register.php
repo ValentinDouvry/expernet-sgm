@@ -32,39 +32,50 @@ if(!isset($username) || $username === "")
     header('Location: ../views/form_register.php?err=Pseudo vide');
 } 
 
-else if (!isset($lastName) || $lastName === "") {
+elseif(!isset($lastName) || $lastName === "") {
     header('Location: ../views/form_register.php?err=Nom vide');
 
 }
 
-else if (!isset($name) || $name === "") {
+elseif(!isset($name) || $name === "") {
     header('Location: ../views/form_register.php?err=Prenom vide');
 }
 
-else if (!isset($email) || $email === "") {
+elseif(!isset($email) || $email === "") {
     header('Location: ../views/form_register.php?err=email vide');
 }
 
-else if (!isset($pass) || !isset($pass2) ||$pass === "" ||$pass2 === "" || $pass !== $pass) {
+elseif(!isset($pass) || !isset($pass2) ||$pass === "" ||$pass2 === "" || $pass !== $pass) {
     header('Location: ../views/form_register.php?err=mot de passe vide');
 }
 
-else if (!isset($code) || $code === "") {
+elseif(!isset($code) || $code === "") {
     header('Location: ../views/form_register.php?err=code vide');
 }
 
-else if (!isset($avatar) || $avatar === "") {
+elseif(!isset($avatar) || $avatar === "") {
     header('Location: ../views/form_register.php?err=avatar non choisie');
 }
 
+
 else
 {
-    $query = $db->prepare("SELECT COUNT(*) FROM `groups` WHERE `code` = :groupCode");
+    $query = $db->prepare("SELECT * FROM `users` WHERE `username`=?");
+    $query->execute(array($username));
+    $is_exit = $query->fetch();
+
+    if(!$is_exit===false) {
+        header('Location: ../views/form_register.php?err=le pseudo exite deja, veillez choisir un autre');
+        exit();
+    }
+
+
+    $query = $db->prepare("SELECT * FROM `groups` WHERE `code` = :groupCode");
     $query->bindParam(":groupCode",$code, PDO::PARAM_STR);
     $query->execute();
-    $nbGroupWithName = $query->fetchColumn();
+    $nbGroupWithName = $query->fetch();
 
-    if($nbGroupWithName != 0)
+    if(!$nbGroupWithName === false)
     {
         $query = $db->prepare("SELECT * FROM `groups` WHERE code = :groupCode");
         $query->bindParam(":groupCode",$code);
@@ -77,7 +88,7 @@ else
         $user->setName($name);
         $user->setEmail($email);
         $user->setUsername($username);
-        $user->setPassword(password_hash($pass, PASSWORD_DEFAULT));
+        $user->setPassword(password_hash($pass, PASSWORD_ARGON2I));
         $user->setLevel(0);
         $user->setExperience(0);
         $user->setMoney(0);
@@ -96,7 +107,6 @@ else
 
         } 
         else {
-            die('fin');
             header('Location: ../views/form_register.php?err=une erreur est survenu, veillez recommencer');
         }
 
