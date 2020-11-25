@@ -77,7 +77,7 @@ else
         $user->setName($name);
         $user->setEmail($email);
         $user->setUsername($username);
-        $user->setPassword($pass);
+        $user->setPassword(password_hash($pass, PASSWORD_DEFAULT));
         $user->setLevel(0);
         $user->setExperience(0);
         $user->setMoney(0);
@@ -90,11 +90,13 @@ else
         $query = $db->prepare($sql);
         $is_success = $query->execute(dismount($user));
 
+
         if($is_success) {
             header('Location: ../views/log_in.php');
 
         } 
         else {
+            die('fin');
             header('Location: ../views/form_register.php?err=une erreur est survenu, veillez recommencer');
         }
 

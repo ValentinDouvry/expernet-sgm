@@ -58,10 +58,10 @@ $categories = $query->fetchAll(PDO::FETCH_CLASS, "Category");
             <strong><?= $_GET['text']; ?> </strong> 
             </div>
         
-        <?php endif; ?>
         <script>
           $(".alert").alert();
         </script>
+        <?php endif; ?>
 
 
         <?php if($user->getIsAdmin()) :?>

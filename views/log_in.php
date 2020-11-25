@@ -18,6 +18,23 @@
 
     <div class="container">
 <a href="form_register.php">S'incrire</a>
+        <h1 class="text-center">Connexion</h1>
+
+        <?php if(isset($_GET['status']) && isset($_GET['text'])) :?>
+
+            <div class="alert alert-<?= $_GET['status']; ?> alert-dismissible fade show" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <strong><?= $_GET['text']; ?> </strong> 
+            </div>
+
+            <script>
+            $(".alert").alert();
+            </script>
+        <?php endif; ?>
+
+
     <form method = 'POST' action="../actions/user_connection.php" class="was-validated">
         <div class="form-group">
         <label for="login">Identifiant</label>
@@ -36,12 +53,7 @@
     </form>
     </div>
 
-    <?php
-        if((isset($_GET['err']))){
-            $err = $_GET['err'];
-            echo "<p style='text-align: center'>$err</p>";
-        }
-    ?>
+
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

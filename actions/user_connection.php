@@ -1,22 +1,35 @@
 <?php
 
-    session_start();
-    include ("../secret/connect_db.php");
+require_once("../secret/connect_db.php");
+require_once("../classes/User.php");
+session_start();
 
-    $login = $_POST['login'];
-    $password = $_POST['password'];
-    if((isset($login) && ($login != "")) && (isset($password) && ($password != ""))){
-        $query = $db->prepare("SELECT * FROM users WHERE username = :username AND password = :password");
+    if((isset($_POST['login']) && ($_POST['login'] !== "")) && (isset($_POST['password']) && ($_POST['password'] !== ""))){
+        $login = $_POST['login'];
+        $password = $_POST['password'];
+
+
+        $query = $db->prepare("SELECT * FROM users WHERE username = :username");
         $query->bindParam(":username",$login);
-        $query->bindParam(":password",$password);
         $query->execute();
-        $query->setFetchMode(PDO::FETCH_ASSOC);
-        $data = $query->fetch();
-        if($data != ""){
-            $_SESSION['userId'] = $data['id'];
-            header('Location: ../views/profile.php');
-        }else{
-            header('Location:../views/log_in.php?err=Identifiant ou Mot de Passe Incorrecte');
+        $user = $query->fetchObject("User");
+        
+        if($user===false) {
+            header('Location:../views/log_in.php?status=danger&text=ce pseudo n\'existe pas');
+            exit;
         }
+
+        if(password_verify($password, $user->getPassword())){
+            $_SESSION['userId'] = $user->getId();
+            header('Location: ../views/profile.php');
+            exit;
+        }
+
+        else{
+            header('Location:../views/log_in.php?status=danger&text=Mot de passe incorrecte');
+            exit;
+        }
+
+    } else {
+        header('Location:../views/log_in.php?status=danger&text=Mot de passe ou nom d\'utilisateur vide');
     }
-?>
