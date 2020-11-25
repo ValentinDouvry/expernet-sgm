@@ -124,6 +124,21 @@ else{
 <?php require_once('components/navbar.php'); ?>
 
     <div class="container">
+
+        <?php if(isset($_GET['status']) && isset($_GET['text'])) :?>
+
+            <div class="alert alert-<?= $_GET['status']; ?> alert-dismissible fade show" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <strong><?= $_GET['text']; ?> </strong> 
+            </div>
+
+            <script>
+            $(".alert").alert();
+            </script>
+        <?php endif; ?>
+        
         <div class="row">
             <div class="col-sm">
                 <div class="row">
@@ -180,10 +195,28 @@ else{
                 </div>
                 </form>';
             }
-                
-            ?>
 
             
+            ?>
+
+            <form action="../actions/user_update_password.php" method="post">
+                <div class="form-group">
+                    <label for="old-password">Ancien Mot de passe</label>
+                    <input name="oldPassword" type="password" class="form-control" id="old-password" placeholder="Ancien Mot de passe">
+                </div>
+                <div class="form-group">
+                    <label for="password1">Nouveau mot de passe</label>
+                    <input name="password1" type="password" class="form-control" id="password1" placeholder="Nouveau Mot de passe">
+                </div>
+
+                <div class="form-group">
+                    <label for="password2">Verifier le mot de passe</label>
+                    <input name="password2" type="password" class="form-control" id="password2" placeholder="Nouveau Mot de passe">
+                </div>
+                <input name="id" type="hidden" value="<?= $profileUser->getId(); ?>" >
+
+                <button type="submit" class="btn btn-primary">Valider</button>
+            </form>
         </div>
         <div class="row">
             <div class="row">
