@@ -33,6 +33,8 @@
         $query->bindParam(":categoryId",$categoryId);
         $query->execute();
 
+        header('Location: ../views/shop.php');
+
     //si il n'a pas chanegr d'image :
     }elseif((isset($itemId) && $itemId != 0) && (isset($itemName) && $itemName!="") && (isset($itemPrice)) && (isset($itemImage) && $itemImage == "") && (isset($categoryName) && $categoryName !="")){
 
