@@ -40,7 +40,7 @@
                             <label class="input-group-text" for="categoryName">Categorie de l'objet</label>
                         </div>
                         <select class="custom-select" id="categoryName" name = "categoryName">
-                            <option disabled selected><?php echo $categoryName ?></option>
+                            <option selected><?php echo $categoryName ?></option>
                             <?php
                             $query = $db->prepare("SELECT name FROM categories");
                             $query->execute();
@@ -93,11 +93,16 @@
                     </div>
                     <!--submit-->
                     </br><button type="submit" class="btn btn-success">Modifier l'objet</button></br>
+                    <input type = "hidden" id = "itemId" name = "itemId" value = "<?php echo $itemId ?>" >
                 </form>
 
                 <a class="btn btn-danger" href="shop.php">Annuler</a>
             </div>
     <?php
+    }
+    if((isset($_GET['err']))){
+        $err = $_GET['err'];
+        echo "<p style='text-align: center'>$err</p>";
     }
     ?>
 
