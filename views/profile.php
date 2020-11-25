@@ -154,17 +154,21 @@ else{
                     <div class="col-sm">
                         <div class="row">                        
                             <div class="col-sm form-group">
+                                <label for="inputLastName">Nom</label>
                                 <input type="text" class="form-control" name="inputLastName" placeholder="Nom" value="'.$profileUser->getLastName().'">
                             </div>
                             <div class="col-sm form-group">
+                                <label for="inputName">Prénom</label>
                                 <input type="text" class="form-control" name="inputName" placeholder="Prenom" value="'.$profileUser->getName().'">
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-sm form-group">
+                                <label for="inputUsername">Pseudo</label>
                                 <input type="text" class="form-control" name="inputUsername" placeholder="Username" value="'.$profileUser->getUsername().'">
                             </div>
                             <div class="col-sm form-group">
+                                <label for="inputEmail">Email</label>
                                 <input type="text" class="form-control" name="inputEmail" placeholder="Email" value="'.$profileUser->getEmail().'">
                             </div>
                         </div>
