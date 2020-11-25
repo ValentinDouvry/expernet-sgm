@@ -33,7 +33,7 @@ else{
             if($nbGroupWithName != 0)
             {
             // AFFICHER ALERTE/MODAL ?
-            header('Location: ../views/create_group.php?create=nameAlreadyExisting');
+            header('Location: ../views/create_group.php?err=Ce groupe existe déjà !');
             }
             else
             {

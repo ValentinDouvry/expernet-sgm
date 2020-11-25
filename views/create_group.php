@@ -18,12 +18,6 @@ else{
 
     if(!$user->getIsAdmin()){
       header('Location: ../index.php');
-    }
-    else{
-        if(isset($_GET["create"]))
-        {
-            
-        }
     } 
 }
 
@@ -46,15 +40,25 @@ else{
 </head>
 
 <body>
-
+    <?php require_once('components/navbar.php'); ?>
+    
     <div class="container">
-      <a class="btn btn-outline-secondary" role="button" href="">Accueil</a>
-      <a class="btn btn-outline-secondary" role="button" href="profile.php">Mon profil</a>
-      <a class="btn btn-outline-secondary" role="button" href="">Boutique</a>
-      <a class="btn btn-outline-secondary" role="button" href="">Se déconnecter</a>
+
+
+    <?php 
+        if(isset($_GET['err'])) :
+    ?>
+
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <strong><?= $_GET['err']; ?></strong>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
     </div>
 
-    <div class="container">
+    <?php
+        endif;
+    ?>
     
 
         <h1 class="text-center">Créer un groupe</h1>
@@ -73,7 +77,9 @@ else{
             </div>
 
             <button type="submit" class="btn btn-primary">Valider</button>
+            <a class="btn btn-outline-secondary" role="button" href="list_group.php">Retour</a>
         </form>
+        
 
     </div>
 
