@@ -77,7 +77,7 @@
             </div>
 
             <div class="form-group"> 
-                <label for="avatar">Code</label>
+                <label for="avatar">Avatar</label>
                 <select class="custom-select" id="avatar" name="avatar">
 
                     <option value="" selected>Choissez un avatar</option>

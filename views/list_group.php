@@ -30,7 +30,14 @@ if (isset($_POST["inputIdGroupDelete"])) {
   $nbUser = $query->fetchColumn();
   if ($nbUser != 0) {
     // AFFICHER ALERTE/MODAL ?
-    echo "Can't delete";
+    echo'
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+      <strong>Impossible de supprimer un groupe contenant des utilisateurs</strong>
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+      </button>
+    </div>';
+
   } else {
     $query = $db->prepare("DELETE FROM `groups` WHERE `id`= :groupId");
     $query->bindParam(":groupId", $groupId, PDO::PARAM_STR);
@@ -95,7 +102,11 @@ $listGroups = $query->fetchAll(PDO::FETCH_CLASS, "Group");
                   <div class="row no-gutters">
                     <div class="col-sm-12">
                       <div class="card-body">
-                        <h5 class="card-title">'.$group->getName().'</h5>
+                        <div>
+                          <a class="card-link text-dark" href="group.php?groupId='.$group->getId().'">
+                            <h5 class="card-title">'.$group->getName().'</h5>
+                          </a>
+                        </div>                       
                         <div class="row">
                           <div class="col-sm-9">
                             <p class="card-text">'.$nbUser.' Utilisateurs</p>
@@ -103,7 +114,7 @@ $listGroups = $query->fetchAll(PDO::FETCH_CLASS, "Group");
                           <div class="col-sm-3">
                             <p class="card-text">'.$group->getCode().'</p>
                           </div>
-                          <div class="col-sm-10">
+                          <div class="col-sm-10" style="padding-top: 15px">
                             <button type="button" class="btn btn-outline-info" onclick="showForm('.$group->getId().','.'\''.$group->getName().'\''.','.'\''.$group->getChannel().'\''.')">Modifier</button>
                             <button type="button" class="btn btn-outline-danger" onclick="submitDeleteForm('.$group->getId().')">Supprimer</button>                           
                             <form action="list_group.php" method="POST" id="form-delete-group-'.$group->getId().'">                                                              

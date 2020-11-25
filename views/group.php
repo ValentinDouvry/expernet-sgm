@@ -1,14 +1,4 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <title>Mon Groupe</title>
-</head>
-<body>
-    <?php
+<?php
     require_once("../secret/connect_db.php");
     require_once("../classes/User.php");
     require_once("../classes/Group.php");
@@ -19,23 +9,59 @@
     }
 
     else{
+        //SI ADMIN
+            //SI GET
         $userId = $_SESSION['userId'];
+        $query = $db->prepare("SELECT * FROM users WHERE id = :userId");
+        $query->bindParam(":userId", $userId);
+        $query->execute();
+        $user = $query->fetchObject("User");
+
+        if($user->getIsAdmin()){
+            $groupId = $_GET["groupId"];
+
+            $query = $db->prepare("SELECT * FROM `groups` where `id` = :groupId");
+            $query->bindParam(":groupId",$groupId);
+            $query->execute();
+            $query->setFetchMode(PDO::FETCH_CLASS,'Group');
+            $data = $query->fetch();
+            $groupName = $data->getName();
+
+        }
+        else
+        {
+            $groupId = $user->getGroupId();
+ 
+            //requete pour recupérer le nom du groupe associer à l'id du groupe récupérer juste avant
+            $query = $db->prepare("SELECT * FROM `groups` where `id` = :groupId");
+            $query->bindParam(":groupId",$groupId);
+            $query->execute();
+            $query->setFetchMode(PDO::FETCH_CLASS,'Group');
+            $data = $query->fetch();
+            $groupName = $data->getName();
+        }
+
+
+
         //requete pour récuperer le id du groupe dans lequel est l'utilisateur
-        $query = $db->prepare("SELECT `groupId` FROM `users` where `id` = :id");
+        /* $query = $db->prepare("SELECT `groupId` FROM `users` where `id` = :id");
         $query->bindParam(":id",$userId,PDO::PARAM_INT);
         $query->execute();
         $query->setFetchMode(PDO::FETCH_CLASS,'User');
-        $data = $query->fetch();
-        $groupId = $data->getGroupId();
- 
-        //requete pour recupérer le nom du groupe associer à l'id du groupe récupérer juste avant
-        $query = $db->prepare("SELECT `name` FROM `groups` where `id` = :id");
-        $query->bindParam(":id",$groupId);
-        $query->execute();
-        $query->setFetchMode(PDO::FETCH_CLASS,'Group');
-        $data = $query->fetch();
-        $groupName = $data->getName();
-    ?>
+        $data = $query->fetch(); */
+        
+?>
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>Mon Groupe</title>
+</head>
+<body>
 
     <?php require_once('components/navbar.php'); ?>
 
