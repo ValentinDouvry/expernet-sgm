@@ -27,9 +27,6 @@ $query = $db->prepare($sql);
 $query->execute();
 $categories = $query->fetchAll(PDO::FETCH_CLASS, "Category");
 
-$sql = "SELECT * FROM inventories WHERE userId=:userID and itemId=:itemId";
-$query = $db->prepare($sql);
-
 ?>
 
 <!doctype html>
@@ -80,7 +77,9 @@ $query = $db->prepare($sql);
             <div class="row">
                 <?php
                 foreach ($items as $item) :
-
+                    
+                    $sql = "SELECT * FROM inventories WHERE userId=:userID and itemId=:itemId";
+                    $query = $db->prepare($sql);
                     $query->execute(array(':userID'=>$user->getId(),':itemId'=>$item->getId()));
                     $inventory = $query->fetchObject('Inventory');
                     
