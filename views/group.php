@@ -9,8 +9,6 @@
     }
 
     else{
-        //SI ADMIN
-            //SI GET
         $userId = $_SESSION['userId'];
         $query = $db->prepare("SELECT * FROM users WHERE id = :userId");
         $query->bindParam(":userId", $userId);
@@ -49,6 +47,7 @@
         $query->execute();
         $query->setFetchMode(PDO::FETCH_CLASS,'User');
         $data = $query->fetch(); */
+    }
         
 ?>
 
@@ -64,12 +63,12 @@
 <body>
 
     <?php require_once('components/navbar.php'); ?>
-
+    
     <div class="container-fluid">
-        <?php
-            echo"<h1>".$groupName."</h1>";
-        ?>
-        
+    <?php
+        echo '<h1 style="text-align: center">'.$groupName.'</h1>';
+    ?>
+        <div class="row">
         <!-- Content here -->
         <?php
             $query = $db->prepare("SELECT * FROM users where groupId = :groupId");
@@ -80,37 +79,35 @@
 
             foreach($data as $user){
         ?>
-        <div class = "row">
-            <div class="card mb-3 col-sm-9" style="max-width: 540px;">
+        
+            <div class="card mb-3 col-sm-9" style="max-width: 540px; margin: 15px;">
                 <a href="profile.php?profileId=<?php echo $user->getId();?>" class="stretched-link"></a>
                 <div class="row no-gutters">
                     <div class="col-md-4">
-                    <?php
-                        $avatarId = $user->getAvatarId();
-                        $query = $db->prepare("SELECT `imageName` FROM `avatars` where id = :id");
-                        $query->bindParam(":id",$avatarId); 
-                        $query->execute();
-                        $query->setFetchMode(PDO::FETCH_ASSOC);
-                        $data = $query->fetch();
-                        $imageName = $data['imageName'];
-                    ?>
-                    <img src="<?php $imageName ?>" class="card-img" alt="<?php echo $imageName ?>">
+                        <?php
+                            $avatarId = $user->getAvatarId();
+                            $query = $db->prepare("SELECT `imageName` FROM `avatars` where id = :id");
+                            $query->bindParam(":id",$avatarId); 
+                            $query->execute();
+                            $query->setFetchMode(PDO::FETCH_ASSOC);
+                            $data = $query->fetch();
+                            $imageName = $data['imageName'];
+                        ?>
+                        <img src="../img/avatars/<?php echo $imageName ?>" class="card-img" alt="<?php echo $imageName ?>">
                     </div>
                     <div class="col-md-4">
-                    <div class="card-body">
-                        <h5 class="card-title"><?php echo $user->getLastName()." ",$user->getName(); ?></h5>
-                        <p class="card-text"><?php echo $user->getUsername();?></p>
-                        <p class="card-text"><small class="text-muted"><?php echo"Level : ".$user->getLevel();?></small></p>
-                    </div>
+                        <div class="card-body">
+                            <h5 class="card-title"><?php echo $user->getLastName()." ",$user->getName(); ?></h5>
+                            <p class="card-text"><?php echo $user->getUsername();?></p>
+                            <p class="card-text"><small class="text-muted"><?php echo"Level : ".$user->getLevel();?></small></p>
+                        </div>
                     </div>
                 </div>
             </div>
+        
+        <?php } ?>
         </div>
-    </div>
-    <?php
-            } 
-    }
-    ?>   
+    </div> 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
