@@ -196,7 +196,7 @@ else{
                 </form>';
             }
 
-            
+            if($profileUser->getId() === $userId || $user->getIsAdmin()) :
             ?>
 
             <form action="../actions/user_update_password.php" method="post">
@@ -217,6 +217,10 @@ else{
 
                 <button type="submit" class="btn btn-primary">Valider</button>
             </form>
+
+            <?php 
+                endif;
+            ?>
         </div>
         <div class="row">
             <div class="row">
