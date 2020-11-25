@@ -82,6 +82,7 @@
         ?>
         <div class = "row">
             <div class="card mb-3 col-sm-9" style="max-width: 540px;">
+                <a href="profile.php?profileId=<?php echo $user->getId();?>" class="stretched-link"></a>
                 <div class="row no-gutters">
                     <div class="col-md-4">
                     <?php

@@ -12,46 +12,97 @@ if(!isset($userId)){
 }
 else{
 
-    $query = $db->prepare("SELECT * FROM users WHERE id = :userId");
-    $query->bindParam(":userId",$userId);
-    $query->execute();
-    $user = $query->fetchObject("User");
-
-    if(isset($_POST["inputLastName"]) && isset($_POST["inputName"]) && isset($_POST["inputUsername"]) && isset($_POST["inputEmail"]))
+    if(isset($_GET["profileId"]))
     {
-        $lastName = $_POST["inputLastName"];
-        $name = $_POST["inputName"];
-        $username = $_POST["inputUsername"];
-        $email = $_POST["inputEmail"];
+        $profileId = $_GET["profileId"];
 
-        
-        $query = $db->prepare("UPDATE users SET lastName = :lastName,
-            name = :name, 
-            email = :email, 
-            username = :username
-            WHERE id = :userId");
+        /********************************************************************************************************/
+        //UPDATE USER
+        if(isset($_POST["inputLastName"]) && isset($_POST["inputName"]) && isset($_POST["inputUsername"]) && isset($_POST["inputEmail"]))
+        {
+            $lastName = $_POST["inputLastName"];
+            $name = $_POST["inputName"];
+            $username = $_POST["inputUsername"];
+            $email = $_POST["inputEmail"];
 
-        $query->bindParam(":lastName",$lastName, PDO::PARAM_STR);
-        $query->bindParam(":name",$name, PDO::PARAM_STR);
-        $query->bindParam(":username",$username, PDO::PARAM_STR);
-        $query->bindParam(":email",$email, PDO::PARAM_STR);
-        $query->bindParam(":userId",$userId, PDO::PARAM_INT);
+            
+            $query = $db->prepare("UPDATE users SET lastName = :lastName,
+                name = :name, 
+                email = :email, 
+                username = :username
+                WHERE id = :userId");
+
+            $query->bindParam(":lastName",$lastName, PDO::PARAM_STR);
+            $query->bindParam(":name",$name, PDO::PARAM_STR);
+            $query->bindParam(":username",$username, PDO::PARAM_STR);
+            $query->bindParam(":email",$email, PDO::PARAM_STR);
+            $query->bindParam(":userId",$profileId, PDO::PARAM_INT);
+            $query->execute();
+        }
+        /********************************************************************************************************/
+
+        $query = $db->prepare("SELECT * FROM users WHERE id = :userId");
+        $query->bindParam(":userId",$profileId);
         $query->execute();
+        $profileUser = $query->fetchObject("User");
+
+        $query = $db->prepare("SELECT * FROM `users` WHERE id = :userId");
+        $query->bindParam(":userId",$userId);
+        $query->execute();
+        $user = $query->fetchObject("User");
 
     }
+    else
+    {
+        $profileId = $userId;
 
+        /********************************************************************************************************/
+        //UPDATE USER
+        if(isset($_POST["inputLastName"]) && isset($_POST["inputName"]) && isset($_POST["inputUsername"]) && isset($_POST["inputEmail"]))
+        {
+            $lastName = $_POST["inputLastName"];
+            $name = $_POST["inputName"];
+            $username = $_POST["inputUsername"];
+            $email = $_POST["inputEmail"];
 
-    $query = $db->prepare("SELECT * FROM `users` WHERE id = :userId");
-    $query->bindParam(":userId",$userId);
-    $query->execute();
-    $user = $query->fetchObject("User");
+            
+            $query = $db->prepare("UPDATE users SET lastName = :lastName,
+                name = :name, 
+                email = :email, 
+                username = :username
+                WHERE id = :userId");
+
+            $query->bindParam(":lastName",$lastName, PDO::PARAM_STR);
+            $query->bindParam(":name",$name, PDO::PARAM_STR);
+            $query->bindParam(":username",$username, PDO::PARAM_STR);
+            $query->bindParam(":email",$email, PDO::PARAM_STR);
+            $query->bindParam(":userId",$profileId, PDO::PARAM_INT);
+            $query->execute();
+        }
+        /********************************************************************************************************/
+
+        $query = $db->prepare("SELECT * FROM users WHERE id = :userId");
+        $query->bindParam(":userId",$profileId);
+        $query->execute();
+        $profileUser = $query->fetchObject("User");
+        
+        $query = $db->prepare("SELECT * FROM `users` WHERE id = :userId");
+        $query->bindParam(":userId",$userId);
+        $query->execute();
+        $user = $query->fetchObject("User");
+    }
+    
+
+        
+
+    
+
 
     $query = $db->prepare("SELECT * FROM `groups` WHERE id = :groupId");
-    $groupId = $user->getGroupId();
+    $groupId = $profileUser->getGroupId();
     $query->bindParam(":groupId",$groupId);
     $query->execute();
-    $group = $query->fetchObject("Group");
-    
+    $group = $query->fetchObject("Group");    
 
 }
 
@@ -82,34 +133,62 @@ else{
                     <p>Image</p>
                 </div>
             </div>
-            <form method="POST" action="profile.php">
+            <?php if($user->getIsAdmin() || $profileId === $userId){
+                echo '
+                <form method="POST" action="profile.php?profileId='.$profileUser->getId().'">
+                    <div class="col-sm">
+                        <div class="row">                        
+                            <div class="col-sm form-group">
+                                <input type="text" class="form-control" name="inputLastName" placeholder="Nom" value="'.$profileUser->getLastName().'">
+                            </div>
+                            <div class="col-sm form-group">
+                                <input type="text" class="form-control" name="inputName" placeholder="Prenom" value="'.$profileUser->getName().'">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm form-group">
+                                <input type="text" class="form-control" name="inputUsername" placeholder="Username" value="'.$profileUser->getUsername().'">
+                            </div>
+                            <div class="col-sm form-group">
+                                <input type="text" class="form-control" name="inputEmail" placeholder="Email" value="'.$profileUser->getEmail().'">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <button type="submit" class="btn btn-outline-secondary">Modifier</button>
+                        </div>
+                    </div>
+                </form>';
+            }else{
+                echo '
                 <div class="col-sm">
                     <div class="row">                        
-                        <div class="col-sm form-group">
-                            <input type="text" class="form-control" name="inputLastName" placeholder="Nom" value="<?php echo $user->getLastName();?>">
+                        <div class="col-sm">
+                            <p>'.$profileUser->getLastName().'</p>
                         </div>
-                        <div class="col-sm form-group">
-                            <input type="text" class="form-control" name="inputName" placeholder="Prenom" value="<?php echo $user->getName();?>">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm form-group">
-                            <input type="text" class="form-control" name="inputUsername" placeholder="Username" value="<?php echo $user->getUsername();?>">
-                        </div>
-                        <div class="col-sm form-group">
-                            <input type="text" class="form-control" name="inputEmail" placeholder="Email" value="<?php echo $user->getEmail();?>">
+                        <div class="col-sm">
+                            <p>'.$profileUser->getName().'</p>
                         </div>
                     </div>
                     <div class="row">
-                        <button type="submit" class="btn btn-outline-secondary">Modifier</button>
+                        <div class="col-sm">
+                            <p>'.$profileUser->getUsername().'</p>
+                        </div>
+                        <div class="col-sm">
+                            <p>'.$profileUser->getEmail().'</p>
+                        </div>
                     </div>
                 </div>
-            </form>
+                </form>';
+            }
+                
+            ?>
+
+            
         </div>
         <div class="row">
             <div class="row">
                 <div class="col-sm">
-                    <h5> LVL.<?php echo $user->getLevel();?></h5>
+                    <h5> LVL.<?php echo $profileUser->getLevel();?></h5>
                 </div>
                 <div class="col-sm">
                     <p>Progress bar XP</p>
@@ -118,7 +197,7 @@ else{
         </div>
         <div class="row">
                 <div class="col-sm">
-                    <h5>Portefeuille: <?php echo $user->getMoney();?> €</h5>
+                    <h5>Portefeuille: <?php echo $profileUser->getMoney();?> €</h5>
                 </div>
             </div>
 
