@@ -200,10 +200,14 @@ else{
             ?>
 
             <form action="../actions/user_update_password.php" method="post">
+            <?php if(!$user->getIsAdmin()) : ?>
                 <div class="form-group">
                     <label for="old-password">Ancien Mot de passe</label>
                     <input name="oldPassword" type="password" class="form-control" id="old-password" placeholder="Ancien Mot de passe">
                 </div>
+            <?php endif; ?>
+
+            
                 <div class="form-group">
                     <label for="password1">Nouveau mot de passe</label>
                     <input name="password1" type="password" class="form-control" id="password1" placeholder="Nouveau Mot de passe">
