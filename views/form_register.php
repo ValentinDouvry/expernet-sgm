@@ -1,5 +1,5 @@
-<?php 
-    require_once("../secret/connect_db.php");
+<?php
+require_once("../secret/connect_db.php");
 ?>
 
 <!doctype html>
@@ -13,100 +13,81 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="/src/css/register.css">
+    <link rel="stylesheet" href="../css/form.css">
 
 </head>
 
-<body>
+<body class="text-center">
 
-    <div class="container">
-    <a href="log_in.php">Se connecter</a>
-        
-    <h1 class="text-center">S'incrire</h1>
+    <?php
+    if (isset($_GET['err'])) :
+    ?>
 
-<?php 
-    if(isset($_GET['err'])) :
-?>
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <strong><?= $_GET['err']; ?></strong>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
 
-<div class="alert alert-danger alert-dismissible fade show" role="alert">
-  <strong><?= $_GET['err']; ?></strong>
-  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-    <span aria-hidden="true">&times;</span>
-  </button>
-</div>
-
-<?php
+    <?php
     endif;
-?>
+    ?>
 
-        <form method="post" action="../actions/register.php">
+    <div class="form-div border border-dark bg-custum-color shadow">
+        <h1 class="h2 mb-3 font-weight-normal form-title">S'inscrire</h1>
+        <form class="mt-3" method="post" action="../actions/register.php">
+            <div class="d-flex flex-column align-items-center">
+                <input type="text" class="form-control input-custum" placeholder="Identifiant de connexion" name="username" required autofocus />
 
-            <div class="form-group">
-                <label for="username">Pseudo</label>
-                <input name="username" type="text" class="form-control" id="username" placeholder="pseudo" required>
-            </div>
+                <input name="last-name" type="text" class="form-control input-custum" placeholder="Nom" required />
 
-            <div class="form-group">
-                <label for="last-name">Nom</label>
-                <input name="last-name" type="text" class="form-control" id="last-name" placeholder="nom" required>
-            </div>
+                <input name="name" type="text" class="form-control input-custum" placeholder="Prenom" required />
 
-            <div class="form-group">
-                <label for="name">Prenom</label>
-                <input name="name" type="text" class="form-control" id="name" placeholder="prenom" required>
-            </div>
+                <input name="email" type="email" class="form-control input-custum" placeholder="email" required />
 
-            <div class="form-group">
-                <label for="email">Email</label>
-                <input name="email" type="email" class="form-control" id="email" placeholder="email" required>
-            </div>
+                <input name="password" type="password" class="form-control input-custum" placeholder="Mot de passe" required />
 
-            <div class="form-group">
-                <label for="password">Mot de passe</label>
-                <input name="password" type="password" class="form-control" id="password" placeholder="Password" required>
-            </div>
+                <input name="password2" type="password" class="form-control input-custum" placeholder="Verification du mot de passe" required />
 
-            <div class="form-group">
-                <label for="password2">Verification de mot de passe</label>
-                <input name="password2" type="password" class="form-control" id="password2" placeholder="Password" required>
-            </div>
+                <input name="code" type="text" class="form-control input-custum" placeholder="Code accès au groupe" required />
 
-            <div class="form-group">
-                <label for="code">Code</label>
-                <input name="code" type="text" class="form-control" id="code" placeholder="code groupe" required>
-            </div>
+                <select class="custom-select input-custum" id="avatars" name="avatar">
 
-            <div class="form-group"> 
-                <label for="avatar">Avatar</label>
-                <select class="custom-select" id="avatar" name="avatar">
+                    <?php
 
-                    <option value="" selected>Choissez un avatar</option>
-
-                <?php 
-                
                     $sql = "SELECT * FROM avatars";
                     $query = $db->prepare($sql);
                     $query->execute(array());
                     $avatars = $query->fetchAll();
-                    
-                    foreach($avatars as $avatar) {
-                        echo "<option value='".$avatar["id"]."'>".$avatar["imageName"]."</option>";
+                    $count = 0;
+                    foreach ($avatars as $avatar) {
+                        $count++;
+                        echo "<option value='" . $avatar["id"] . "' data-image='". $avatar["imageName"] . "' >Avatar ". $count ."</option>";
                     }
-                ?>
-                
+                    ?>
                 </select>
 
-            </div>
+                <div id="form-container-img" class="text-center">
+                    <img src="" class="form-avatars-img">
+                </div>
 
-            <button type="submit" class="btn btn-primary">Créer un compte</button>
+                <button type="submit" class="btn btn-outline-primary my-2 mb-3">Creer le compte</button>
         </form>
+        <p>Dejà un compte? <a href="log_in.php">Connectez vous, ici</a></p>
+
+        <p class="mt-2 mb-2 text-muted">&copy; Expernet-sgm 2020</p>
     </div>
+
+
+
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script defer src="../js/form_register.js"></script>
 </body>
 
 </html>
