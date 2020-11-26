@@ -66,6 +66,7 @@ $categories = $query->fetchAll(PDO::FETCH_CLASS, "Category");
 
         <?php if($user->getIsAdmin()) :?>
         <a class="btn btn-outline-primary" href="form_add_item.php">Ajouter un objet</a>
+        <a class="btn btn-outline-primary" href="form_add_category.php">Ajouter une catégorie</a>
         <?php endif; ?>
 
         <?php
