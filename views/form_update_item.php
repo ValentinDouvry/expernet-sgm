@@ -18,8 +18,9 @@
 
         require_once('components/navbar.php');
 
-        if((!isset($_GET['id']))){
+        if((!isset($_GET['id']) || $_GET['id'] == 0)){
             echo "<p style='text-align: center'>erreur lors de la récupération de l'id de l'item</p>";
+            header('Location: shop.php');
         }else{
             $itemId = $_GET['id'];
             include ("../secret/connect_db.php");

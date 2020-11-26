@@ -72,9 +72,9 @@ $categories = $query->fetchAll(PDO::FETCH_CLASS, "Category");
         <?php
         foreach ($categories as $category) :
             $countItem = 0;
-            echo "<h1>" . $category->getName() . "</h1>";
+            $categoryId = $category->getId();
+            echo "<h1>" . $category->getName() ."<a class='btn btn-outline-info' href='form_update_category.php?categoryId=$categoryId'>Modifier</a></h1>";
         ?>
-
             <div class="row">
                 <?php
                 foreach ($items as $item) :
