@@ -12,6 +12,29 @@ if (!isset($_SESSION['userId'])) {
     exit;
 }
 
+if (isset($_POST["inputIdCategoryDelete"])) {
+    $categoryId = $_POST["inputIdCategoryDelete"];
+    $query = $db->prepare("SELECT COUNT(*) FROM items WHERE categoryId = :categoryId");
+    $query->bindParam(":categoryId", $categoryId, PDO::PARAM_INT);
+    $query->execute();
+    $nbitem = $query->fetchColumn();
+    if ($nbitem != 0) {
+      // AFFICHER ALERTE/MODAL ?
+      echo'
+      <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <strong>Impossible de supprimer une categorie contenant des objets</strong>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+      </div>';
+  
+    } else {
+      $query = $db->prepare("DELETE FROM `categories` WHERE `id`= :categoryId");
+      $query->bindParam(":categoryId", $categoryId, PDO::PARAM_STR);
+      $query->execute();
+    }
+}
+
 $sql = "SELECT * FROM `users` WHERE id=?";
 $query = $db->prepare($sql);
 $query->execute(array($_SESSION['userId']));
@@ -21,6 +44,7 @@ $sql = "SELECT * FROM `items`";
 $query = $db->prepare($sql);
 $query->execute();
 $items = $query->fetchAll(PDO::FETCH_CLASS, "Item");
+
 
 $sql = "SELECT * FROM `categories`";
 $query = $db->prepare($sql);
@@ -73,7 +97,12 @@ $categories = $query->fetchAll(PDO::FETCH_CLASS, "Category");
         foreach ($categories as $category) :
             $countItem = 0;
             $categoryId = $category->getId();
-            echo "<h1>" . $category->getName() ."<a class='btn btn-outline-info' href='form_update_category.php?categoryId=$categoryId'>Modifier</a></h1>";
+            echo '<h1>'.$category->getName().'<a class="btn btn-outline-info" href="form_update_category.php?categoryId='.$categoryId.'">Modifier</a>
+                        <button type ="button" class="btn btn-outline-danger" onclick= "submitDeleteForm('.$categoryId.')">Supprimer</button>
+                 </h1>';
+            echo'<form action="shop.php" method="POST" id="form-delete-category'.$categoryId.'">                                                              
+                 <input id="inputIdCategoryDelete" name="inputIdCategoryDelete" type="hidden" value="'.$categoryId.'">                                              
+                 </form>';
         ?>
             <div class="row">
                 <?php
@@ -145,6 +174,7 @@ $categories = $query->fetchAll(PDO::FETCH_CLASS, "Category");
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="../js/form_delete_category.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
