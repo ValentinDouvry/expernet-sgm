@@ -9,16 +9,66 @@
 <body>
     <?php
         
-        // session_start();
-        // if(!isset($_SESSION['userId'])){
-        //     header('Location:../index.php');
-        // }
-        // require_once("../secret/connect_db.php");
-        // require_once('components/navbar.php');
+        session_start();
+        if(!isset($_SESSION['userId'])){
+            header('Location:../index.php');
+        }
+        require_once("../secret/connect_db.php");
+        require_once('components/navbar.php');
 
-        // if(!isset($_GET['categoryId'])){
+        if(!isset($_GET['categoryId']) || $_GET['categoryId'] == 0){
+            echo "<p style='text-align: center'>erreur lors de la récupération de l'id de l'item</p>";
+            header('Location: shop.php');
+        }else{
+            require_once("../classes/Category.php");
+            $categoryId = $_GET['categoryId'];
 
-        // }
+            $query = $db->prepare("SELECT * FROM categories where id = :id");
+            $query->bindParam(":id",$categoryId);
+            $query->execute();
+            $query->setFetchMode(PDO::FETCH_CLASS,'Category');
+            $data = $query->fetch();
+
+            $categoryName = $data->getName();
+            $isBuyableMultiple = $data->getIsBuyableMultiple();
+
+        ?>
+            <div class="container">
+                <form method = 'POST' action="../actions/update_category.php" class="was-validated">
+                    <!--form classique-->
+                    <div class="form-group">
+                        <label for="categoryName">Nom de la categorie</label>
+                        <input type="text" class="form-control" id="categoryName" placeholder="<?php echo $categoryName ?>" name="categoryName" required>
+                        <div class="valid-feedback"></div>
+                        <div class="invalid-feedback">Veuillez remplir ce champ</div>
+                    </div>
+                    <?php
+                        if($isBuyableMultiple == 1){
+                    ?>
+                            <input type="checkbox" id="isBuyableMultiple" name="isBuyableMultiple" value="yes"checked>
+                    <?php
+                        }else{
+                    ?>
+                            <input type="checkbox" id="isBuyableMultiple" name="isBuyableMultiple" value="yes">
+                    <?php
+                        }
+                        
+                    ?>
+                    <label for="isBuyableMultiple">Achat multiple possible</label><br>
+                    <input type = "hidden" id = "categoryId" name = "categoryId" value = "<?php echo $categoryId ?>" >
+                    <!--submit-->
+                    </br><button type="submit" class="btn btn-success">Ajouter l'objet</button></br>
+                </form>
+
+                <a class="btn btn-danger" href="shop.php">Annuler</a>
+            </div>
+    <?php
+        }
+
+        if((isset($_GET['err']))){
+            $err = $_GET['err'];
+            echo "<p style='text-align: center'>$err</p>";
+        }
     ?>
 
 
