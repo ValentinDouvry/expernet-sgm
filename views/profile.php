@@ -2,6 +2,10 @@
 require_once("../secret/connect_db.php");
 require_once("../classes/User.php");
 require_once("../classes/Group.php");
+require_once("../classes/Inventory.php");
+require_once("../classes/Item.php");
+require_once('../classes/Category.php');
+require_once('../classes/Avatar.php');
 
 session_start();
 
@@ -90,19 +94,34 @@ else{
         $query->bindParam(":userId",$userId);
         $query->execute();
         $user = $query->fetchObject("User");
-    }
-    
-
         
-
-    
+    }
+        
 
 
     $query = $db->prepare("SELECT * FROM `groups` WHERE id = :groupId");
     $groupId = $profileUser->getGroupId();
     $query->bindParam(":groupId",$groupId);
     $query->execute();
-    $group = $query->fetchObject("Group");    
+    $group = $query->fetchObject("Group");  
+    
+    /* $sql = "SELECT * FROM `items`";
+    $query = $db->prepare($sql);
+    $query->execute();
+    $items = $query->fetchAll(PDO::FETCH_CLASS, "Item"); */
+
+    $sql = "SELECT * FROM `categories`";
+    $query = $db->prepare($sql);
+    $query->execute();
+    $categories = $query->fetchAll(PDO::FETCH_CLASS, "Category");
+
+    $query = $db->prepare("SELECT * FROM `avatars` WHERE id = :avatarId");
+    $avatarId = $profileUser->getAvatarId();
+    $query->bindParam(":avatarId",$avatarId);
+    $query->execute();
+    $avatar = $query->fetchObject("Avatar");   
+
+    
 
 }
 
@@ -144,8 +163,9 @@ else{
                 <div class="row">
                     <h3><?php echo $group->getName();?></h3>
                 </div>
-                <div class="row">
-                    <p>Image</p>
+                <div class="row ">
+                    <canvas class="" id="canvasAvatar" width="250" height="250" style="border:1px solid #000000; border-radius: 25px;">            
+                    </canvas>
                 </div>
             </div>
             <?php if($user->getIsAdmin() || $profileId === $userId){
@@ -245,8 +265,80 @@ else{
                     <h5>Portefeuille: <?php echo $profileUser->getMoney();?> €</h5>
                 </div>
             </div>
+            <script src="../js/customisationAvatar.js"></script>
+            <script>make_base("<?php echo $avatar->getImageName();?>");</script>
+            
+            <?php
 
-    
+            if($profileUser->getId() === $userId){
+                
+                $listItemEqquiped =[];
+                $query = $db->prepare("SELECT * FROM `inventories` WHERE userId = :userId");
+                $query->bindParam(":userId",$userId);
+                $query->execute();
+                $inventory = $query->fetchAll(PDO::FETCH_CLASS, "Inventory");
+
+                /* foreach ($inventory as $row){
+                    if($row->getIsEquipped()){
+                        $rowId = $row->getItemId();
+                        $query = $db->prepare("SELECT * FROM `items` WHERE id = :itemId");
+                        $query->bindParam(":itemId",$rowId);
+                        $query->execute();
+                        $item = $query->fetchObject("Item");
+
+                    }
+                    
+                    
+                } */
+                
+                foreach ($categories as $category)
+                {
+                    $countItem = 0;
+                    echo '
+                    <h1>'.$category->getName().'</h1>
+                    <div class="row">';
+                        foreach ($inventory as $row){
+                            $rowId = $row->getItemId();
+                            $query = $db->prepare("SELECT * FROM `items` WHERE id = :itemId");
+                            $query->bindParam(":itemId",$rowId);
+                            $query->execute();
+                            $item = $query->fetchObject("Item");                       
+                            
+                                                        
+                            if ($item->getcategoryId() === $category->getId())
+                            {
+                                $countItem++;
+                                echo '
+                                <div class="col-md-4 card-deck">
+                                    <div class="card mb-4 box-shadow">
+                                        <img style="width: 8rem;"class="card-img-top mx-auto d-block" src="../img/items/'.$item->getImageName().'">
+                                        <div class="card-body">
+                                            <h3 class="card-title text-center font-weight-bold">'.$item->getName().'</h3>
+                                            <div class="d-flex justify-content-around align-items-center">'; 
+                                            
+                                                if(!$row->getIsEquipped()){
+                                                    echo '<button onclick="equipper'.$category->getName().'('.'\''.$item->getImageName().'\''.')" class="btn btn-outline-success">Equipper</button>';
+                                                }else{
+                                                    /* echo '<script>equipper'.$category->getName().'('.'\''.$item->getImageName().'\''.')</script>'; */
+                                                    echo '<button onclick="desequipper'.$category->getName().'()"class="btn btn-outline-warning">Déséquipper</button> ';
+                                                }                                            
+                                            echo '
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>';
+                            };
+                        }
+                        if($countItem <1) {
+                            echo "Vous ne possédez pas encore d'item de cette catégorie !";
+                        }                      
+
+                    echo '</div>';
+                }
+                
+                
+            }
+            ?>          
     </div>
     
 
@@ -257,6 +349,7 @@ else{
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
