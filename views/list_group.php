@@ -82,11 +82,12 @@ $listGroups = $query->fetchAll(PDO::FETCH_CLASS, "Group");
       require_once('components/navbar.php');
     ?>
 
-    <div class="container-fluid">
+    <div class="container-fluid ml-3">
       <a class="btn btn-outline-primary" role="button" href="create_group.php">Créer un groupe</a>
       <h2>Liste des groupes</h2>
+
       <div class="container-fluid row">
-        <div class="container-fuild col-sm-10">
+        <div class="col-lg-6">
           <?php
             foreach($listGroups as $group)
             {
@@ -96,9 +97,8 @@ $listGroups = $query->fetchAll(PDO::FETCH_CLASS, "Group");
               $query->execute();
               $nbUser = $query->fetchColumn();
 
-              echo '
-              <div class="row">
-                <div class="card mb-3 col-sm-9" style="max-width: 540px;">
+              echo '  
+                <div class="card mb-3" style="max-width: 30rem;">
                   <div class="row no-gutters">
                     <div class="col-sm-12">
                       <div class="card-body">
@@ -114,8 +114,8 @@ $listGroups = $query->fetchAll(PDO::FETCH_CLASS, "Group");
                           <div class="col-sm-3">
                             <p class="card-text">'.$group->getCode().'</p>
                           </div>
-                          <div class="col-sm-10" style="padding-top: 15px">
-                            <button type="button" class="btn btn-outline-info" onclick="showForm('.$group->getId().','.'\''.$group->getName().'\''.','.'\''.$group->getChannel().'\''.')">Modifier</button>
+                          <div class="col-sm-10 pt-2">
+                            <button type="button" class="btn btn-outline-warning mr-2" onclick="showForm('.$group->getId().','.'\''.$group->getName().'\''.','.'\''.$group->getChannel().'\''.')">Modifier</button>
                             <button type="button" class="btn btn-outline-danger" onclick="submitDeleteForm('.$group->getId().')">Supprimer</button>                           
                             <form action="list_group.php" method="POST" id="form-delete-group-'.$group->getId().'">                                                              
                               <input id="inputIdGroupDelete" name="inputIdGroupDelete" type="hidden" value="'.$group->getId().'">                                              
@@ -126,11 +126,11 @@ $listGroups = $query->fetchAll(PDO::FETCH_CLASS, "Group");
                     </div>
                   </div>
                 </div>
-              </div>';
+              ';
             } 
           ?>
         </div>
-        <div class="container-fluid col">
+        <div class="col-lg-3">
           <div id="container-form-modify-group" style="display: none;">
             <form id="form-modify-group" method="POST" action="list_group.php">
               <div class="form-group">
@@ -142,7 +142,7 @@ $listGroups = $query->fetchAll(PDO::FETCH_CLASS, "Group");
                 <input type="text" class="form-control" id="inputGroupChannel" name="inputGroupChannel">
               </div>
               <input type="hidden" id="inputGroupId" name="inputGroupId" value="">
-              <button type="submit" class="btn btn-outline-primary">Modifier</button>
+              <button type="submit" class="btn btn-outline-primary mr-2">Modifier</button>
               <button class="btn btn-outline-secondary" onclick="hideForm()">Cacher</button>
             </form>        
           </div>
