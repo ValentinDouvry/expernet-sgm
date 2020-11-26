@@ -22,19 +22,19 @@ if(!$currentUser->getIsAdmin()){
     exit;
 } 
 
-if(!isset($_GET['id'])) {
+if(!isset($_GET['inputUserIdDelete'])) {
     header('Location:../views/profile.php');
     exit;
 }
 
 $sql = "SELECT * FROM users WHERE id=?";
 $query = $db->prepare($sql);
-$query->execute(array($_GET['id']));
+$query->execute(array($_GET['inputUserIdDelete']));
 $userToDelete = $query->fetchObject('User');
 
 $sql = "SELECT * FROM inventories WHERE userId=?";
 $query = $db->prepare($sql);
-$query->execute(array($_GET['id']));
+$query->execute(array($_GET['inputUserIdDelete']));
 $inventories = $query->fetchAll(PDO::FETCH_CLASS, "Inventory");
 
 if(!$inventories === false) {
@@ -57,7 +57,7 @@ if(!$inventories === false) {
 
 $sql = "DELETE FROM `users` WHERE `id`=?";
 $query = $db->prepare($sql);
-$is_success = $query->execute(array($_GET['id']));
+$is_success = $query->execute(array($_GET['inputUserIdDelete']));
 
 if($is_success) {
     header('Location: ../views/group.php?groupId='.$userToDelete->getGroupId());
