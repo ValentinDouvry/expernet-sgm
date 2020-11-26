@@ -70,9 +70,10 @@ $categories = $query->fetchAll(PDO::FETCH_CLASS, "Category");
     <?php require_once('components/navbar.php'); ?>
 
     <div class="container">
-        <div class="h2 font-weight-bold float-right"><?= $user->getMoney(); ?> €</div>
+        <h1 class="text-center mt-3 mb-5">Boutique</h1>
+        <div class="h2 font-weight-bold float-right"><?= $user->getMoney(); ?> pièces</div>
 
-        <h1 class="text-center">Boutique</h1>
+        
         <?php if(isset($_GET['status']) && isset($_GET['text'])) :?>
 
             <div class="alert alert-<?= $_GET['status']; ?> alert-dismissible fade show" role="alert">
@@ -89,27 +90,37 @@ $categories = $query->fetchAll(PDO::FETCH_CLASS, "Category");
 
 
         <?php if($user->getIsAdmin()) :?>
-        <a class="btn btn-outline-primary" href="form_add_item.php">Ajouter un objet</a>
-        <a class="btn btn-outline-primary" href="form_add_category.php">Ajouter une catégorie</a>
+        <div class="mb-5">
+            <a class="btn btn-outline-primary" href="form_add_item.php">Ajouter un objet</a>
+            <a class="btn btn-outline-primary" href="form_add_category.php">Ajouter une catégorie</a>
+        </div>
         <?php endif; ?>
 
         <?php
         foreach ($categories as $category) :
             $countItem = 0;
             $categoryId = $category->getId();
-            echo '<h1>'.$category->getName().'</h1>';
+            if($user->getIsAdmin()){
+                echo '<div class="container-fluid row align-items-center mb-4">';
+            }
+            echo '<h2 class="mr-2">'.$category->getName().'</h2>';
 
             if($user->getIsAdmin()){
-                echo'<a class="btn btn-outline-info" href="form_update_category.php?categoryId='.$categoryId.'">Modifier</a>';
-                echo'<button type ="button" class="btn btn-outline-danger" onclick= "submitDeleteForm('.$categoryId.')">Supprimer</button>';
-                echo'<form action="shop.php" method="POST" id="form-delete-category'.$categoryId.'">                                                              
-                <input id="inputIdCategoryDelete" name="inputIdCategoryDelete" type="hidden" value="'.$categoryId.'">                                              
-                </form>';
+                echo'
+                <div>
+                    <a class="btn btn-outline-warning ml-2" href="form_update_category.php?categoryId='.$categoryId.'" role="button">Modifier</a>
+                    <button type="button" class="btn btn-outline-danger ml-2" onclick="submitDeleteForm('.$categoryId.')" >Supprimer</button>
+                    <form action="shop.php" method="POST" id="form-delete-category'.$categoryId.'">                                                              
+                        <input id="inputIdCategoryDelete" name="inputIdCategoryDelete" type="hidden" value="'.$categoryId.'">                                              
+                    </form>
+                </div>
+                </div>
+                ';
             }
             
             
         ?>
-            <div class="row">
+            <div class="row mb-4">
                 <?php
                 foreach ($items as $item) :
                     
@@ -123,10 +134,10 @@ $categories = $query->fetchAll(PDO::FETCH_CLASS, "Category");
                 ?>
                         <div class="col-md-4">
                             <div class="card mb-4 box-shadow">
-                                <img class="card-img-top" src="http://www.africansportsmonthly.com/uploads/1/2/4/4/12440788/img1_orig.jpg">
+                                <img style="max-width: 8rem;" class="card-img-top mx-auto d-block" src="../img/items/<?= $item->getImageName(); ?>">
                                 <div class="card-body">
                                     <h3 class="card-title text-center font-weight-bold"><?= $item->getName(); ?></h3>
-                                    <p class="card-text font-weight-bold"><?= $item->getPrice(); ?></p>
+                                    <p class="card-text text-center font-weight-bold"><?= $item->getPrice(); ?> pièces</p>
                                     <div class="d-flex justify-content-around align-items-center">
                                         <?php if($user->getIsAdmin()) : ?>
                                             <?php if(!$item->getIsDesactivated()) : ?>

@@ -61,7 +61,7 @@ else{
     ?>
     
 
-        <h1 class="text-center">Créer un groupe</h1>
+        <h1 class="text-center mb-4">Créer un groupe</h1>
 
 
         <form method="POST" action="../actions/group_add.php">
@@ -76,8 +76,8 @@ else{
                 <input name="inputGroupChannel" type="text" class="form-control" id="inputGroupChannel" placeholder="Channel du groupe" required>
             </div>
 
-            <button type="submit" class="btn btn-primary">Valider</button>
-            <a class="btn btn-outline-secondary" role="button" href="list_group.php">Retour</a>
+            <button type="submit" class="btn btn-outline-success">Valider</button>
+            <a class="btn btn-outline-secondary" role="button" href="list_group.php">Annuler</a>
         </form>
         
 
