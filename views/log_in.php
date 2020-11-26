@@ -22,12 +22,12 @@ if (isset($_SESSION['userId'])) {
 
 <?php if (isset($_GET['status']) && isset($_GET['text'])) : ?>
 
-<div class="alert alert-<?= $_GET['status']; ?> alert-dismissible fade show" role="alert">
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-    </button>
-    <strong><?= $_GET['text']; ?> </strong>
-</div>
+    <div class="form-alert-login alert alert-<?= $_GET['status']; ?> alert-dismissible fade show" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <strong><?= $_GET['text']; ?> </strong>
+    </div>
 <?php endif; ?> 
 
     <div class="form-div border border-dark bg-custum-color shadow">
