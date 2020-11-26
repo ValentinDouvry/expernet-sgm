@@ -23,6 +23,11 @@
             $query->execute();
             $query->setFetchMode(PDO::FETCH_CLASS,'Group');
             $data = $query->fetch();
+            if(!$data)
+            {
+                header('Location: list_group.php');
+                exit();
+            }
             $groupName = $data->getName();
 
         }

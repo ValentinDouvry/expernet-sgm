@@ -18,6 +18,7 @@ else{
 
     if(isset($_GET["profileId"]))
     {
+        
         $profileId = $_GET["profileId"];
 
         /********************************************************************************************************/
@@ -45,10 +46,16 @@ else{
         }
         /********************************************************************************************************/
 
+
         $query = $db->prepare("SELECT * FROM users WHERE id = :userId");
         $query->bindParam(":userId",$profileId);
         $query->execute();
         $profileUser = $query->fetchObject("User");
+        if(!$profileUser)
+        {
+            header('Location: profile.php');
+            exit();
+        }
 
         $query = $db->prepare("SELECT * FROM `users` WHERE id = :userId");
         $query->bindParam(":userId",$userId);
@@ -162,8 +169,13 @@ else{
             <div class="col-sm">
                 <div class="row">
                     <h3><?php echo $group->getName();?></h3>
+                    <?php 
+                    if($user->getIsAdmin() && $profileId != $userId){
+                        echo '<a class="btn btn-outline-danger ml-2" href="../actions/user_delete.php?id='.$profileUser->getId().'">Supprimer</a>';
+                    }
+                    ?>           
                 </div>
-                <div class="row ">
+                <div class="row">
                     <canvas class="" id="canvasAvatar" width="250" height="250" style="border:1px solid #000000; border-radius: 25px;">            
                     </canvas>
                 </div>
@@ -256,7 +268,7 @@ else{
                     <h5> LVL.<?php echo $profileUser->getLevel();?></h5>
                 </div>
                 <div class="col-sm">
-                    <p>Progress bar XP</p>
+                    <p>Bar XP</p>
                 </div>
             </div>
         </div>
@@ -291,11 +303,15 @@ else{
                     
                 } */
                 
+                echo '<div class="container-fluid">';
+                echo '<h2 class="text-center">Inventaire</h2>';
+                echo '<div class="container">';
+
                 foreach ($categories as $category)
                 {
                     $countItem = 0;
                     echo '
-                    <h1>'.$category->getName().'</h1>
+                    <h3>'.$category->getName().'</h3>
                     <div class="row">';
                         foreach ($inventory as $row){
                             $rowId = $row->getItemId();
@@ -311,7 +327,7 @@ else{
                                 echo '
                                 <div class="col-md-4 card-deck">
                                     <div class="card mb-4 box-shadow">
-                                        <img style="width: 8rem;"class="card-img-top mx-auto d-block" src="../img/items/'.$item->getImageName().'">
+                                        <img style="max-width: 8rem;"class="card-img-top mx-auto d-block" src="../img/items/'.$item->getImageName().'">
                                         <div class="card-body">
                                             <h3 class="card-title text-center font-weight-bold">'.$item->getName().'</h3>
                                             <div class="d-flex justify-content-around align-items-center">'; 
@@ -335,7 +351,8 @@ else{
 
                     echo '</div>';
                 }
-                
+                echo '</div>';
+                echo '</div>';
                 
             }
             ?>          
