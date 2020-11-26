@@ -97,12 +97,17 @@ $categories = $query->fetchAll(PDO::FETCH_CLASS, "Category");
         foreach ($categories as $category) :
             $countItem = 0;
             $categoryId = $category->getId();
-            echo '<h1>'.$category->getName().'<a class="btn btn-outline-info" href="form_update_category.php?categoryId='.$categoryId.'">Modifier</a>
-                        <button type ="button" class="btn btn-outline-danger" onclick= "submitDeleteForm('.$categoryId.')">Supprimer</button>
-                 </h1>';
-            echo'<form action="shop.php" method="POST" id="form-delete-category'.$categoryId.'">                                                              
-                 <input id="inputIdCategoryDelete" name="inputIdCategoryDelete" type="hidden" value="'.$categoryId.'">                                              
-                 </form>';
+            echo '<h1>'.$category->getName().'</h1>';
+
+            if($user->getIsAdmin()){
+                echo'<a class="btn btn-outline-info" href="form_update_category.php?categoryId='.$categoryId.'">Modifier</a>';
+                echo'<button type ="button" class="btn btn-outline-danger" onclick= "submitDeleteForm('.$categoryId.')">Supprimer</button>';
+                echo'<form action="shop.php" method="POST" id="form-delete-category'.$categoryId.'">                                                              
+                <input id="inputIdCategoryDelete" name="inputIdCategoryDelete" type="hidden" value="'.$categoryId.'">                                              
+                </form>';
+            }
+            
+            
         ?>
             <div class="row">
                 <?php
