@@ -117,7 +117,7 @@ $listGroups = $query->fetchAll(PDO::FETCH_CLASS, "Group");
                           <div class="col-sm-10 pt-2">
                             <button type="button" class="btn btn-outline-warning mr-2" onclick="showForm('.$group->getId().','.'\''.$group->getName().'\''.','.'\''.$group->getChannel().'\''.')">Modifier</button>
                             <button type="button" class="btn btn-outline-danger" onclick="submitDeleteForm('.$group->getId().')">Supprimer</button>                           
-                            <form action="list_group.php" method="POST" id="form-delete-group-'.$group->getId().'">                                                              
+                            <form action="list_group.php" method="POST" id="form-delete-group'.$group->getId().'">                                                              
                               <input id="inputIdGroupDelete" name="inputIdGroupDelete" type="hidden" value="'.$group->getId().'">                                              
                             </form>
                           </div>
