@@ -128,7 +128,11 @@ else{
     $query->execute();
     $avatar = $query->fetchObject("Avatar");   
 
-    
+    /**
+     * Pour afficher correctement l'avatar
+     */
+    $AvatarObj = new stdClass();
+    $AvatarObj->base = '../img/avatars/'.$avatar->getImageName();
 
 }
 
@@ -281,32 +285,19 @@ else{
                     <h5>Portefeuille: <?php echo $profileUser->getMoney();?> €</h5>
                 </div>
             </div>
-            <script src="../js/customisationAvatar.js"></script>
-            <script>make_base("<?php echo $avatar->getImageName();?>");</script>
+            <!-- <script src="../js/customisationAvatar.js"></script>
+            <script>make_base("");</script> -->
             
             <?php
 
-            if($profileUser->getId() === $userId){
-                
-                $listItemEqquiped =[];
-                $query = $db->prepare("SELECT * FROM `inventories` WHERE userId = :userId");
-                $query->bindParam(":userId",$userId);
-                $query->execute();
-                $inventory = $query->fetchAll(PDO::FETCH_CLASS, "Inventory");
-
-                /* foreach ($inventory as $row){
-                    if($row->getIsEquipped()){
-                        $rowId = $row->getItemId();
-                        $query = $db->prepare("SELECT * FROM `items` WHERE id = :itemId");
-                        $query->bindParam(":itemId",$rowId);
-                        $query->execute();
-                        $item = $query->fetchObject("Item");
-
-                    }
-                    
-                    
-                } */
-                
+        if($profileUser->getId() === $userId){
+            $listItemEqquiped =[];
+            $query = $db->prepare("SELECT * FROM `inventories` WHERE userId = :userId");
+            $query->bindParam(":userId",$userId);
+            $query->execute();
+            $inventory = $query->fetchAll(PDO::FETCH_CLASS, "Inventory");
+            
+                        
                 echo '<div class="container-fluid">';
                 echo '<h2 class="text-center">Inventaire</h2>';
                 echo '<div class="container">';
@@ -341,6 +332,16 @@ else{
                                                 }else{
                                                     /* echo '<script>equipper'.$category->getName().'('.'\''.$item->getImageName().'\''.')</script>'; */
                                                     echo '<button onclick="desequipper'.$category->getName().'()"class="btn btn-outline-warning">Déséquipper</button> ';
+                                                    
+                                                    switch($category->getName()) {
+                                                        case ("Chapeau"):
+                                                            $AvatarObj->hat = '../img/items/'.$item->getImageName();
+                                                        break;
+
+                                                        case ("Lunettes"):
+                                                            $AvatarObj->glase = '../img/items/'.$item->getImageName();
+                                                        break;
+                                                    }
                                                 }                                            
                                             echo '
                                             </div>
@@ -358,6 +359,47 @@ else{
                 echo '</div>';
                 echo '</div>';
                 
+            } else {
+                $query = $db->prepare("SELECT * FROM `inventories` WHERE userId = :userId");
+                $query->bindParam(":userId",$profileId);
+                $query->execute();
+                $inventories = $query->fetchAll(PDO::FETCH_CLASS, "Inventory");
+         
+
+                foreach ($categories as $category)
+                {
+
+                    
+                    foreach ($inventories as $inventory)
+                    {
+                        $inventoryId = $inventory->getItemId();
+                        $query = $db->prepare("SELECT * FROM `items` WHERE id = :itemId ");
+                        $query->bindParam(":itemId",$inventoryId);
+                        $query->execute();
+                        $item = $query->fetchObject("Item");
+                        
+                        echo "<pre>";
+                        var_dump($inventory);
+                        echo "</pre>";
+
+                        if(!$inventory->getIsEquipped()){
+                            switch($category->getName()) {
+                                case ("Chapeau"):
+                                    $AvatarObj->hat = '../img/items/'.$item->getImageName();
+                                break;
+
+                                case ("Lunettes"):
+                                    $AvatarObj->glase = '../img/items/'.$item->getImageName();
+                                break;
+                            }
+                        }
+                    }
+                        
+                }                
+                            
+                                                        
+                        
+
             }
             ?>          
     </div>
@@ -374,5 +416,70 @@ else{
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+
+ 
+
+    <script type="text/javascript">
+    // pass PHP variable declared above to JavaScript variable
+    var phpsource = <?= json_encode($AvatarObj); ?>;
+
+    $(document).ready(function(){
+
+
+        const canvas = document.getElementById('canvasAvatar');
+        context = canvas.getContext('2d');
+
+
+        function loadImages(sources, callback) {
+            var images = {};
+            var loadedImages = 0;
+            var numImages = 0;
+            // get num of sources
+            for(var src in sources) {
+            numImages++;
+            }
+            for(var src in sources) {
+            images[src] = new Image();
+            images[src].onload = function() {
+                if(++loadedImages >= numImages) {
+                callback(images);
+                }
+            };
+            images[src].src = sources[src];
+            }
+        }
+
+        // sources = {
+        //     base: '../img/avatars/avatar1.png',
+        //     image1: '../img/items/chapeauDeBob.png',
+        //     image2: '../img/items/lunettes3D.png'
+        // }
+
+        // context.drawImage(images.base, 25, 50,200,200);
+        // context.drawImage(images.image1, 35, -30,180,180);
+        // context.drawImage(images.image2, 75, 70,100,100);
+
+        loadImages(phpsource, function(images) {
+            for (const property in phpsource) {
+                if(property=="base") {
+                    context.drawImage(images.base, 25, 50,200,200);
+                } 
+
+                if(property=="hat") {
+                    context.drawImage(images.hat, 35, -30,180,180);
+                }
+
+                if(property=="glase") {
+                    context.drawImage(images.glase, 75, 70,100,100);
+                }
+            }
+
+        });
+
+    });
+
+    </script>
+        
 </body>
 </html>
