@@ -331,7 +331,7 @@ else{
                                                     echo '<a href="../actions/inventory_equiped.php?id='.$item->getId().'" class="btn btn-outline-success">Equipper</a>';
                                                 }else{
                                                     /* echo '<script>equipper'.$category->getName().'('.'\''.$item->getImageName().'\''.')</script>'; */
-                                                    echo '<a href="../actions/inventory_equiped.php?id='.$item->getId().'" class="btn btn-outline-warning">Déséquipper</a> ';
+                                                    echo '<a href="../actions/inventory_unequiped.php?id='.$item->getId().'" class="btn btn-outline-warning">Déséquipper</a> ';
                                                     
                                                     switch($category->getName()) {
                                                         case ("Chapeau"):
