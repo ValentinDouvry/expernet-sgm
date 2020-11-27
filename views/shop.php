@@ -132,7 +132,7 @@ $categories = $query->fetchAll(PDO::FETCH_CLASS, "Category");
                     if ($item->getcategoryId() === $category->getId() && ($user->getIsAdmin()||!$item->getIsDesactivated())) : 
                         $countItem++;
                 ?>
-                        <div class="col-md-4">
+                        <div class="col-md-4 card-group">
                             <div class="card mb-4 box-shadow">
                                 <img style="max-width: 8rem;" class="card-img-top mx-auto d-block" src="../img/items/<?= $item->getImageName(); ?>">
                                 <div class="card-body">

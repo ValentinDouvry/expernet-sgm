@@ -62,7 +62,16 @@ if ($uploadOk == 0) {
         $itemPrice = $_POST['itemPrice'];
         $itemImage = $_FILES['inputItemImage']['name'];
         $isDesactivated = 0;
-        $categoryName = $_POST['categoryName'];
+        if(isset($_POST['categoryName']))
+        {
+            $categoryName = $_POST['categoryName'];
+        }
+        else
+        {
+            header("Location: ../views/form_add_item.php?err=Veuillez choisir une catégorie !");
+            exit();
+        }
+        
 
         if((isset($itemName) && $itemName!="") && (isset($itemPrice)) && (isset($itemImage) && $itemImage !="") && (isset($categoryName) && $categoryName !="")){
             //récupération de l'id de la catégorie
@@ -87,7 +96,7 @@ if ($uploadOk == 0) {
                 exit();
                 
             }else{
-                header('Location: ../views/shop.php');
+                header('Location: ../views/shop.php?status=success&text=Item ajouté !');
                 exit();
             }
             
