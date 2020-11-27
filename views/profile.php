@@ -241,17 +241,18 @@ $AvatarObj->base = '../img/avatars/' . $avatar->getImageName();
         
         <div class="row no-gutters align-items-center">            
             <h5 class="mt-2">Portefeuille: <?= $profileUser->getMoney(); ?></h5>     
-            <img style="width=2em;height:2em" src="../img/money.png"/>     
+            <img style="width:2em;height:2em;" src="../img/money.png"/>     
         </div>
 
         <?php
 
+        $query = $db->prepare("SELECT * FROM `inventories` WHERE userId = :userId");
+        $query->bindParam(":userId", $profileId);
+        $query->execute();
+        $inventories = $query->fetchAll(PDO::FETCH_CLASS, "Inventory");
+
         if ($profileUser->getId() === $userId) :
 
-            $query = $db->prepare("SELECT * FROM `inventories` WHERE userId = :userId");
-            $query->bindParam(":userId", $userId);
-            $query->execute();
-            $inventories = $query->fetchAll(PDO::FETCH_CLASS, "Inventory");
         ?>
 
         <div class="container-fluid">
@@ -322,6 +323,31 @@ $AvatarObj->base = '../img/avatars/' . $avatar->getImageName();
                 </div>
         </div>
             <?php
+            else:
+
+                foreach($inventories as $inventory):
+
+                    if($inventory->getIsEquipped()) :
+
+                        $sql = "SELECT `categories`.`name` as categoryName, `items`.`imageName` as itemsImageName FROM `items` INNER JOIN `categories` ON `items`.`categoryId` = `categories`.`id` WHERE `items`.`id`=?";
+                        $query = $db->prepare($sql);
+                        $query->execute(array($inventory->getItemId()));
+                        $item = $query->fetch();
+                        
+                        switch ($item['categoryName']) {
+                            case ("Chapeaux"):
+                                $AvatarObj->hat = '../img/items/'. $item['itemsImageName'];
+                                break;
+
+                            case ("Lunettes"):
+                                $AvatarObj->glase = '../img/items/'. $item['itemsImageName'] ;
+                                break;
+                        }
+
+                    endif;
+
+                endforeach;
+
             endif;
             ?>
     </div>
