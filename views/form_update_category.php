@@ -57,10 +57,11 @@
                     <label for="isBuyableMultiple">Achat multiple possible</label><br>
                     <input type = "hidden" id = "categoryId" name = "categoryId" value = "<?php echo $categoryId ?>" >
                     <!--submit-->
-                    </br><button type="submit" class="btn btn-success">Ajouter l'objet</button></br>
+                    <button type="submit" class="btn btn-outline-success">Ajouter l'objet</button>
+                    <a class="btn btn-outline-secondary" href="shop.php">Annuler</a>
                 </form>
 
-                <a class="btn btn-danger" href="shop.php">Annuler</a>
+                
             </div>
     <?php
         }

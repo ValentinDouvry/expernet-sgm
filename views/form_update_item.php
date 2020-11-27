@@ -43,14 +43,13 @@
             
     ?>
             <div class="container">
-                <form method = 'POST' action="../actions/update_item.php" class="was-validated">
+                <form method = 'POST' action="../actions/update_item.php" class="was-validated" enctype="multipart/form-data">
                     <!--liste déroulante des categories-->
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <label class="input-group-text" for="categoryName">Categorie de l'objet</label>
                         </div>
                         <select class="custom-select" id="categoryName" name = "categoryName">
-                            <option selected><?php echo $categoryName ?></option>
                             <?php
                             $query = $db->prepare("SELECT name FROM categories");
                             $query->execute();
@@ -58,9 +57,19 @@
                             $data = $query->fetchall();
 
                             foreach($data as $category){
-                            ?>  
-                            <option value = "<?php echo $category->getName();?>"><?php echo $category->getName(); ?></option>
+                                if($categoryName === $category->getName()){
+
+                                
+                            ?>
+                                <option selected><?php echo $categoryName ?></option>
+                            
                             <?php
+                                }
+                                else{
+                            ?>
+                                <option value = "<?php echo $category->getName(); ?>"><?php echo $category->getName(); ?></option>
+                            <?php
+                                }
                             }
                             ?>
                         </select>
@@ -92,21 +101,27 @@
                     <div class="invalid-feedback">champ vide ou contient un nombre à virgule</div>
                     </div>
                     <div class="form-group">
-                    <!--image de l'objet-->
-                    <div class="input-group">
-                        <div class="custom-file">
-                            <input type="file" class="custom-file-input" id="itemImage" name = "itemImage">
-                            <label class="custom-file-label" for="itemImage"><?php echo $itemImage ?></label>
+                        <!--image de l'objet-->
+                        <div class="input-group">
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input" id="inputItemImage" name = "inputItemImage" value="<?php echo $itemImage ?>">
+                                <label class="custom-file-label" for="inputItemImage"><?php echo $itemImage ?></label>
+                            </div>
+                            <div class="valid-feedback"></div>
+                            <div class="invalid-feedback">Veuillez remplir ce champ</div>
                         </div>
-                        <div class="valid-feedback"></div>
-                        <div class="invalid-feedback">Veuillez remplir ce champ</div>
-                    </div>
                     <!--submit-->
-                    </br><button type="submit" class="btn btn-success">Modifier l'objet</button></br>
-                    <input type = "hidden" id = "itemId" name = "itemId" value = "<?php echo $itemId ?>" >
+                    </div>
+                    <input type = "hidden" id = "itemId" name = "itemId" value = "<?php echo $itemId ?>">
+                    <div id="img-preview">
+                
+                    </div>
+
+                    <button type="submit" class="btn btn-outline-success">Modifier l'objet</button>                    
+                    <a class="btn btn-outline-secondary" href="shop.php">Annuler</a>
                 </form>
 
-                <a class="btn btn-danger" href="shop.php">Annuler</a>
+                
             </div>
     <?php
     }

@@ -3,6 +3,7 @@
 session_start();
 if(!isset($_SESSION['userId'])){
     header('Location:../index.php');
+    exit();
 }
 
 require_once("../secret/connect_db.php");
@@ -16,38 +17,38 @@ $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
 
 // Check if image file is a actual image or fake image
 if(isset($_POST["inputItemImage"])) {
-$check = getimagesize($_FILES["inputItemImage"]["tmp_name"]);
-if($check !== false) {
-    echo "File is an image - " . $check["mime"] . ".";
-    $uploadOk = 1;
-} else {
-    echo "File is not an image.";
-    $uploadOk = 0;
-}
-}
+    $check = getimagesize($_FILES["inputItemImage"]["tmp_name"]);
+    if($check !== false) {
+        echo "File is an image - " . $check["mime"] . ".";
+        $uploadOk = 1;
+    } else {
+        header("Location: ../views/form_add_item.php?err=Erreur, le fichier n'est pas une image !");
+        $uploadOk = 0;
+    }
+    }
 
 // Check if file already exists
 if (file_exists($target_file)) {
-echo "Sorry, file already exists.";
-$uploadOk = 0;
+    header("Location: ../views/form_add_item.php?err=Erreur, le fichier existe déjà !");
+    $uploadOk = 0;
 }
 
 // Check file size
 if ($_FILES["inputItemImage"]["size"] > 500000) {
-echo "Sorry, your file is too large.";
-$uploadOk = 0;
+    header("Location: ../views/form_add_item.php?err=Erreur, le fichier est trop lourd !");
+    $uploadOk = 0;
 }
 
 // Allow certain file formats
 if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
 && $imageFileType != "gif" ) {
-echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
-$uploadOk = 0;
+    header("Location: ../views/form_add_item.php?err=Erreur, seuls les fichiers JPG, JPEG, PNG OU GIF sont acceptés !");
+    $uploadOk = 0;
 }
 
 // Check if $uploadOk is set to 0 by an error
 if ($uploadOk == 0) {
-echo "Sorry, your file was not uploaded.";
+    header("Location: ../views/form_add_item.php?err=Erreur, le fichier n'a pas été upload !");
 // if everything is ok, try to upload file
 } else {
     if (move_uploaded_file($_FILES["inputItemImage"]["tmp_name"], $target_file)) {
@@ -77,17 +78,20 @@ echo "Sorry, your file was not uploaded.";
             $query->bindParam(":categoryId",$categoryId);
             $result = $query->execute();
             if(!$result){
-                header('Location: ../views/form_add_item.php?err=erreur lors de votre ajout 1');
+                header('Location: ../views/form_add_item.php?err=Erreur lors de votre ajout !');
+                exit();
                 
             }else{
                 header('Location: ../views/shop.php');
+                exit();
             }
             
         }
     }
     else{
 
-        header('Location: ../views/form_add_item.php?err=erreur lors de votre ajout 2');
+        header('Location: ../views/form_add_item.php?err=Erreur lors de votre ajout !');
+        exit();
     }
 
 }
