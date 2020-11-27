@@ -328,10 +328,10 @@ else{
                                             <div class="d-flex justify-content-around align-items-center">'; 
                                             
                                                 if(!$row->getIsEquipped()){
-                                                    echo '<button onclick="equipper'.$category->getName().'('.'\''.$item->getImageName().'\''.')" class="btn btn-outline-success">Equipper</button>';
+                                                    echo '<a href="../actions/inventory_equiped.php?id='.$item->getId().'" class="btn btn-outline-success">Equipper</a>';
                                                 }else{
                                                     /* echo '<script>equipper'.$category->getName().'('.'\''.$item->getImageName().'\''.')</script>'; */
-                                                    echo '<button onclick="desequipper'.$category->getName().'()"class="btn btn-outline-warning">Déséquipper</button> ';
+                                                    echo '<a href="../actions/inventory_equiped.php?id='.$item->getId().'" class="btn btn-outline-warning">Déséquipper</a> ';
                                                     
                                                     switch($category->getName()) {
                                                         case ("Chapeau"):
