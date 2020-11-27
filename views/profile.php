@@ -154,25 +154,25 @@ $AvatarObj->base = '../img/avatars/' . $avatar->getImageName();
             <?php
             else :
             ?>
-                <div class="col-sm">
-                    <div class="row">
-                        <div class="col-sm">
-                            <p><?= $profileUser->getLastName(); ?></p>
+                <div class="col-md mt-4 row flex-column w-50">
+                        <div class="col-md d-flex justify-content-between align-items-baseline">
+                            <h3> Nom : </h3>
+                            <p class="h5"><?= $profileUser->getLastName(); ?></p>
                         </div>
-                        <div class="col-sm">
-                            <p><?= $profileUser->getName(); ?></p>
+                        <div class="col-md d-flex justify-content-between align-items-baseline">
+                            <h3> Prenom : </h3>
+                            <p class="h5"><?= $profileUser->getName(); ?></p>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm">
-                            <p><?= $profileUser->getUsername(); ?></p>
+                        <div class="col-md d-flex justify-content-between align-items-baseline">
+                            <h3> Pseudonyme : </h3>
+                            <p class="h5"><?= $profileUser->getUsername(); ?></p>
                         </div>
-                        <div class="col-sm">
-                            <p><?= $profileUser->getEmail(); ?></p>
+                        <div class="col-md d-flex justify-content-between align-items-baseline">
+                            <h3> Email : </h3>
+                            <p class="h5"><?= $profileUser->getEmail(); ?></p>
                         </div>
-                    </div>
                 </div>
-                </form>
+                <div class="col-md-2"></div>
             <?php
             endif;
 

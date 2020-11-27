@@ -61,7 +61,7 @@ $categories = $query->fetchAll(PDO::FETCH_CLASS, "Category");
         <h1 class="text-center mt-3 mb-5">Boutique</h1>
         <div class="row no-gutters align-items-center justify-content-end">
             <div class="h2 font-weight-bold mt-3"><?= $user->getMoney(); ?></div>                
-            <img style="width=4em;height:4em" src="../img/money.png"/>     
+            <img style="width:4em;height:4em" src="../img/money.png"/>     
         </div>
 
         
