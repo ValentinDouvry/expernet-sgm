@@ -27,9 +27,5 @@ function hideForm() {
 
 function submitDeleteForm(groupId) {
     var formDelete = document.getElementById("form-delete-group-" + groupId);
-    if (confirm('Voulez-vous vraiment supprimer ce groupe ?')) {
-        formDelete.submit();
-    } else {
-        return false;
-    }
+    formDelete.submit();
 }

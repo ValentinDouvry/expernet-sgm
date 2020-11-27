@@ -88,7 +88,7 @@ $categories = $query->fetchAll(PDO::FETCH_CLASS, "Category");
                 echo'
                 <div>
                     <a class="btn btn-outline-dark ml-2" href="form_update_category.php?categoryId='.$categoryId.'" role="button">Modifier</a>
-                    <button type="button" class="btn btn-outline-danger ml-2" data-toggle="modal" data-target="#deleteModal-'.$categoryId.'">Supprimer</button>
+                    <button type="button" class="btn btn-outline-danger ml-2" data-toggle="modal" data-target="#modalDeleteCategory-'.$categoryId.'">Supprimer</button>
                     <form action="../actions/category_delete.php" method="POST" id="form-delete-category'.$categoryId.'">                                                              
                         <input id="inputIdCategoryDelete" name="inputIdCategoryDelete" type="hidden" value="'.$categoryId.'">                                              
                     </form>
@@ -99,11 +99,11 @@ $categories = $query->fetchAll(PDO::FETCH_CLASS, "Category");
             
             
             
-            echo '<div class="modal fade" id="deleteModal-'.$categoryId.'" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+            echo '<div class="modal fade" id="modalDeleteCategory-'.$categoryId.'" tabindex="-1" role="dialog" aria-labelledby="modalDeleteCategoryLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="deleteModalLabel">Suppression d\'une catégorie</h5>
+                                <h5 class="modal-title" id="modalDeleteCategoryLabel">Suppression d\'une catégorie</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                                 </button>
@@ -112,8 +112,8 @@ $categories = $query->fetchAll(PDO::FETCH_CLASS, "Category");
                                 Voulez-vous vraiment supprimer la catégorie ?
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
-                                <button type="button" class="btn btn-primary"  onclick="submitDeleteForm('.$categoryId.')">Supprimer</button>
+                                <button type="button" class="btn btn-outline-dark" data-dismiss="modal">Annuler</button>
+                                <button type="button" class="btn btn-outline-danger" onclick="submitDeleteForm('.$categoryId.')">Supprimer</button>
                             </div>
                         </div>
                     </div>

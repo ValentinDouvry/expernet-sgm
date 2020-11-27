@@ -98,36 +98,57 @@ $listGroups = $query->fetchAll(PDO::FETCH_CLASS, "Group");
               $query->execute();
               $nbUser = $query->fetchColumn();
           ?>
-
-              
-                <div class="card mb-3" style="max-width: 30rem;">
-                  <div class="row no-gutters">
-                    <div class="col-sm-12">
-                      <div class="card-body">
-                        <div>
-                          <a class="card-link text-dark" href="group.php?groupId=<?=$group->getId();?>">
-                            <h5 class="card-title"><?= $group->getName(); ?></h5>
-                          </a>
-                        </div>                       
-                        <div class="row">
-                          <div class="col-sm-9">
-                            <p class="card-text"><?= $nbUser; ?> Utilisateurs</p>
-                          </div>
-                          <div class="col-sm-3">
-                            <p class="card-text"><?= $group->getCode(); ?></p>
-                          </div>
-                          <div class="col-sm-10 pt-2">
-                            <button type="button" class="btn btn-outline-dark mr-2" onclick="showForm('<?=$group->getId();?>','<?=$group->getName();?>','<?=$group->getChannel();?>')">Modifier</button>
-                            <button type="button" class="btn btn-outline-dark" onclick="submitDeleteForm('<?=$group->getId();?>')">Supprimer</button>                           
-                            <form action="../actions/group_delete.php" method="POST" id="form-delete-group-<?= $group->getId();?>">                                                              
-                              <input id="inputIdGroupDelete" name="inputIdGroupDelete" type="hidden" value="<?= $group->getId();?>">                                              
-                            </form>
-                          </div>
-                        </div>
-                      </div>                  
-                    </div>
+            <!-- Modal -->
+            <div class="modal fade" id="modalDeleteGroup-<?=$group->getId();?>" tabindex="-1" role="dialog" aria-labelledby="modalDeleteGroupLabel" aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="modalDeleteGroupLabel">Suppression d'un groupe</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    Voulez-vous vraiment supprimer ce groupe?
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Annuler</button>
+                    <button type="button" class="btn btn-outline-danger" onclick="submitDeleteForm(<?=$group->getId();?>)">Supprimer</button>
                   </div>
                 </div>
+              </div>
+            </div>
+            <!-- ----------------------------------------- -->
+
+              <div class="card mb-3" style="max-width: 30rem;">
+                <div class="row no-gutters">
+                  <div class="col-sm-12">
+                    <div class="card-body">
+                      <div>
+                        <a class="card-link text-dark" href="group.php?groupId=<?=$group->getId();?>">
+                          <h5 class="card-title"><?= $group->getName(); ?></h5>
+                        </a>
+                      </div>                       
+                      <div class="row">
+                        <div class="col-sm-9">
+                          <p class="card-text"><?= $nbUser; ?> Utilisateurs</p>
+                        </div>
+                        <div class="col-sm-3">
+                          <p class="card-text"><?= $group->getCode(); ?></p>
+                        </div>
+                        <div class="col-sm-10 pt-2">
+                          <button type="button" class="btn btn-outline-dark mr-2" onclick="showForm('<?=$group->getId();?>','<?=$group->getName();?>','<?=$group->getChannel();?>')">Modifier</button>
+                          <!-- Button trigger modal -->
+                          <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#modalDeleteGroup-<?=$group->getId();?>">Supprimer</button>                          
+                          <form action="../actions/group_delete.php" method="POST" id="form-delete-group-<?= $group->getId();?>">                                                              
+                            <input id="inputIdGroupDelete" name="inputIdGroupDelete" type="hidden" value="<?= $group->getId();?>">                                              
+                          </form>
+                        </div>
+                      </div>
+                    </div>                  
+                  </div>
+                </div>
+              </div>
             <?php
             endforeach; 
             ?>
@@ -150,6 +171,10 @@ $listGroups = $query->fetchAll(PDO::FETCH_CLASS, "Group");
           </div>
         </div>
       </div>
+
+      
+
+      
 
     </div>
       

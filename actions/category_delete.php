@@ -12,7 +12,7 @@
         $query->execute();
         $nbitem = $query->fetchColumn();
         if ($nbitem != 0) {
-            header("Location: ../views/shop.php?status=danger&text=Impossible de supprimer une categorie contenant des objets !");
+            header("Location: ../views/shop.php?status=danger&text=Erreur, impossible de supprimer une categorie contenant des objets !");
             exit();
       
         } else {

@@ -35,7 +35,7 @@ if(!isset($userId)){
             if($nbGroupWithName != 0)
             {
             
-            header('Location: ../views/form_add_group.php?err=Erreur, ce groupe existe déjà !');
+            header('Location: ../views/form_add_group.php?err=Erreur, ce nom de groupe existe déjà !');
             }
             else
             {
