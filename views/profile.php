@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <?php
 require_once("../secret/connect_db.php");
 require_once("../classes/User.php");
@@ -271,12 +272,35 @@ else{
             ?>
         </div>
         <div class="row">
-            <div class="row">
-                <div class="col-sm">
+            <div class="row container-fluid align-items-center">
+                <div class="col-1">
                     <h5> LVL.<?php echo $profileUser->getLevel();?></h5>
                 </div>
-                <div class="col-sm">
-                    <p>Bar XP</p>
+                <div class="col-2">
+                <?php
+                $query = $db->prepare("SELECT experience FROM users WHERE id = :id");
+                $query->bindParam(":id",$userId);
+                $query->execute();
+                $data = $query->setFetchMode(PDO::FETCH_ASSOC);
+                $data = $query->fetch();
+                $userExperience = $data['experience'];
+                
+                if($userExperience <= 1000){
+                ?>
+                        <div class="progress">
+                            <div class="progress-bar bg-info" role="progressbar" style="width: <?php echo $userExperience/10; ?>%" aria-valuenow="<?php $userExperience/10 ?>" aria-valuemin="0" aria-valuemax="1000"><i class="fa fa-fw fa-star-o"></i></div>
+                        </div>
+                <?php
+                }else{
+                    $userExperience -=1000;
+                    //on devrai augmente son lvl de 1
+                    ?>
+                    <div class="progress">
+                        <div class="progress-bar bg-info" role="progressbar" style="width: <?php echo $userExperience/10; ?>%" aria-valuenow="<?php $userExperience/10 ?>" aria-valuemin="0" aria-valuemax="1000"></div>
+                    </div>
+                <?php
+                }
+                ?>
                 </div>
             </div>
         </div>
