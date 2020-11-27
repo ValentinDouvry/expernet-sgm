@@ -205,7 +205,7 @@ else{
                         </div>
                         <div class="row">
                             <div class="col-sm form-group">
-                                <label for="inputUsername">Pseudo</label>
+                                <label for="inputUsername">Pseudonyme</label>
                                 <input type="text" class="form-control" name="inputUsername" placeholder="Username" value="'.$profileUser->getUsername().'">
                             </div>
                             <div class="col-sm form-group">
@@ -259,7 +259,7 @@ else{
                 </div>
 
                 <div class="form-group">
-                    <label for="password2">Verifier le mot de passe</label>
+                    <label for="password2">Vérifier le mot de passe</label>
                     <input name="password2" type="password" class="form-control" id="password2" placeholder="Nouveau Mot de passe">
                 </div>
                 <input name="id" type="hidden" value="<?= $profileUser->getId(); ?>" >
