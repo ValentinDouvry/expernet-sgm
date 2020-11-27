@@ -9,8 +9,10 @@ session_start();
 $userId = $_SESSION["userId"];
 if(!isset($userId)){
     header('Location:../views/log_in.php');
+    exit;
 }
-else{
+
+
     $query = $db->prepare("SELECT * FROM `users` WHERE id = :userId");
     $query->bindParam(":userId",$userId);
     $query->execute();
@@ -32,8 +34,8 @@ else{
 
             if($nbGroupWithName != 0)
             {
-            // AFFICHER ALERTE/MODAL ?
-            header('Location: ../views/create_group.php?err=Erreur, ce groupe existe déjà !');
+            
+            header('Location: ../views/form_add_group.php?err=Erreur, ce groupe existe déjà !');
             }
             else
             {
@@ -66,8 +68,7 @@ else{
         }
     }
     
-    
-}
+
 
 
 ?>

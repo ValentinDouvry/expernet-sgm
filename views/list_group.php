@@ -21,45 +21,6 @@ if (!$user->getIsAdmin()) {
   exit;
 }
 
-
-if (isset($_POST["inputIdGroupDelete"])) {
-  $groupId = $_POST["inputIdGroupDelete"];
-  $query = $db->prepare("SELECT COUNT(*) FROM users WHERE groupId = :groupId");
-  $query->bindParam(":groupId", $groupId, PDO::PARAM_INT);
-  $query->execute();
-  $nbUser = $query->fetchColumn();
-  if ($nbUser != 0) {
-    // AFFICHER ALERTE/MODAL ?
-    echo'
-    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-      <strong>Impossible de supprimer un groupe contenant des utilisateurs</strong>
-      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-      </button>
-    </div>';
-
-  } else {
-    $query = $db->prepare("DELETE FROM `groups` WHERE `id`= :groupId");
-    $query->bindParam(":groupId", $groupId, PDO::PARAM_STR);
-    $query->execute();
-  }
-}
-
-if (isset($_POST["inputGroupId"]) && isset($_POST["inputGroupName"]) && isset($_POST["inputGroupChannel"])) {
-  $groupName = $_POST["inputGroupName"];
-  $groupChannel = $_POST["inputGroupChannel"];
-  $groupId = $_POST["inputGroupId"];
-
-
-  $query = $db->prepare("UPDATE `groups` SET `name` = :groupName, `channel` = :groupChannel WHERE `id` = :groupId");
-
-  $query->bindParam(":groupName", $groupName, PDO::PARAM_STR);
-  $query->bindParam(":groupChannel", $groupChannel, PDO::PARAM_STR);
-  $query->bindParam(":groupId", $groupId, PDO::PARAM_INT);
-  $query->execute();
-}
-
-
 $query = $db->prepare("SELECT * FROM `groups`");
 $query->execute();
 $listGroups = $query->fetchAll(PDO::FETCH_CLASS, "Group");
@@ -110,6 +71,18 @@ $listGroups = $query->fetchAll(PDO::FETCH_CLASS, "Group");
     <?php
     endif;
     ?>
+
+<?php if (isset($_GET['status']) && isset($_GET['text'])) : ?>
+
+<div class="form-alert-login alert alert-<?= $_GET['status']; ?> alert-dismissible fade show" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    <strong><?= $_GET['text']; ?> </strong>
+</div>
+<?php endif; ?> 
+
+
     <h1 class="text-center">Liste des groupes</h1>
     <a class="btn btn-outline-dark mb-4" role="button" href="form_add_group.php">Créer un groupe</a>
       
@@ -117,36 +90,37 @@ $listGroups = $query->fetchAll(PDO::FETCH_CLASS, "Group");
       <div class="container-fluid row">
         <div class="col-lg-6">
           <?php
-            foreach($listGroups as $group)
-            {
+            foreach($listGroups as $group) :
+            
               $groupId = $group->getId();
               $query = $db->prepare("SELECT COUNT(*) FROM users WHERE groupId = :groupId");
               $query->bindParam(":groupId",$groupId, PDO::PARAM_STR);
               $query->execute();
               $nbUser = $query->fetchColumn();
+?>
 
-              echo '  
+              
                 <div class="card mb-3" style="max-width: 30rem;">
                   <div class="row no-gutters">
                     <div class="col-sm-12">
                       <div class="card-body">
                         <div>
-                          <a class="card-link text-dark" href="group.php?groupId='.$group->getId().'">
-                            <h5 class="card-title">'.$group->getName().'</h5>
+                          <a class="card-link text-dark" href="group.php?groupId='<?= $group->getId(); ?>">
+                            <h5 class="card-title"><?= $group->getName(); ?></h5>
                           </a>
                         </div>                       
                         <div class="row">
                           <div class="col-sm-9">
-                            <p class="card-text">'.$nbUser.' Utilisateurs</p>
+                            <p class="card-text"><?= $nbUser; ?> Utilisateurs</p>
                           </div>
                           <div class="col-sm-3">
-                            <p class="card-text">'.$group->getCode().'</p>
+                            <p class="card-text"><?= $group->getCode(); ?></p>
                           </div>
                           <div class="col-sm-10 pt-2">
-                            <button type="button" class="btn btn-outline-dark mr-2" onclick="showForm('.$group->getId().','.'\''.$group->getName().'\''.','.'\''.$group->getChannel().'\''.')">Modifier</button>
-                            <button type="button" class="btn btn-outline-dark" onclick="submitDeleteForm('.$group->getId().')">Supprimer</button>                           
-                            <form action="list_group.php" method="POST" id="form-delete-group-'.$group->getId().'">                                                              
-                              <input id="inputIdGroupDelete" name="inputIdGroupDelete" type="hidden" value="'.$group->getId().'">                                              
+                            <button type="button" class="btn btn-outline-dark mr-2" onclick="showForm('<?=$group->getId();?>','<?=$group->getName();?>','<?=$group->getChannel();?>')">Modifier</button>
+                            <button type="button" class="btn btn-outline-dark" onclick="submitDeleteForm('<?=$group->getId();?>')">Supprimer</button>                           
+                            <form action="../actions/group_delete.php" method="POST" id="form-delete-group-<?= $group->getId();?>">                                                              
+                              <input id="inputIdGroupDelete" name="inputIdGroupDelete" type="hidden" value="<?= $group->getId();?>">                                              
                             </form>
                           </div>
                         </div>
@@ -154,13 +128,13 @@ $listGroups = $query->fetchAll(PDO::FETCH_CLASS, "Group");
                     </div>
                   </div>
                 </div>
-              ';
-            } 
-          ?>
+            <?php
+            endforeach; 
+            ?>
         </div>
         <div class="col-lg-3">
           <div id="container-form-modify-group" class="group-modify-block" style="display: none;">
-            <form id="form-modify-group" method="POST" action="list_group.php">
+            <form id="form-modify-group" method="POST" action="../actions/group_update.php">
               <div class="form-group">
                 <label for="inputGroupName">Nom du groupe</label>
                 <input type="text" class="form-control" id="inputGroupName" name="inputGroupName">
@@ -177,7 +151,7 @@ $listGroups = $query->fetchAll(PDO::FETCH_CLASS, "Group");
         </div>
       </div>
 
-
+    </div>
       
 
 
