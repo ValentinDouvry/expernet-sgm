@@ -38,7 +38,7 @@
                     <!--form classique-->
                     <div class="form-group">
                         <label for="categoryName">Nom de la categorie</label>
-                        <input type="text" class="form-control" id="categoryName" placeholder="<?php echo $categoryName ?>" name="categoryName" required>
+                        <input type="text" class="form-control" id="categoryName" value="<?php echo $categoryName ?>" name="categoryName" required>
                         <div class="valid-feedback"></div>
                         <div class="invalid-feedback">Veuillez remplir ce champ</div>
                     </div>
