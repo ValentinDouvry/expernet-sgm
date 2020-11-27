@@ -74,7 +74,20 @@ $listGroups = $query->fetchAll(PDO::FETCH_CLASS, "Group");
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
+    
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    
+    <style>
+      .group-modify-block {
+        position: fixed;
+      }
+    </style> 
+
+    <style media="all and (max-width: 1000px)">
+      .group-modify-block {
+        position: static;
+      }
+  </style> 
   </head>
   <body>
       
@@ -131,7 +144,7 @@ $listGroups = $query->fetchAll(PDO::FETCH_CLASS, "Group");
           ?>
         </div>
         <div class="col-lg-3">
-          <div id="container-form-modify-group" style="display: none;">
+          <div id="container-form-modify-group" class="group-modify-block" style="display: none;">
             <form id="form-modify-group" method="POST" action="list_group.php">
               <div class="form-group">
                 <label for="inputGroupName">Nom du groupe</label>
