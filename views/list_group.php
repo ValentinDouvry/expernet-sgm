@@ -83,7 +83,7 @@ $listGroups = $query->fetchAll(PDO::FETCH_CLASS, "Group");
     ?>
 
     <div class="container-fluid ml-3">
-      <a class="btn btn-outline-primary" role="button" href="create_group.php">Créer un groupe</a>
+      <a class="btn btn-outline-primary" role="button" href="form_add_group.php">Créer un groupe</a>
       <h2>Liste des groupes</h2>
 
       <div class="container-fluid row">

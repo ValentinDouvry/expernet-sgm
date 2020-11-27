@@ -36,8 +36,10 @@
             <input type="checkbox" id="isBuyableMultiple" name="isBuyableMultiple" value="yes">
             <label for="isBuyableMultiple">Achat multiple possible</label><br>
             <!--submit-->
-            <button type="submit" class="btn btn-outline-success">Ajouter l'objet</button>
-            <a class="btn btn-outline-secondary" href="shop.php">Annuler</a>
+            <div class="text-center">
+                <button type="submit" class="btn btn-outline-success">Ajouter l'objet</button>
+                <a class="btn btn-outline-secondary" href="shop.php">Annuler</a>
+            </div>
         </form>
 
     </div>

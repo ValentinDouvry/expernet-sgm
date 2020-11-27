@@ -75,9 +75,10 @@ else{
                 <label for="inputGroupChannel">Channel</label>
                 <input name="inputGroupChannel" type="text" class="form-control" id="inputGroupChannel" placeholder="Channel du groupe" required>
             </div>
-
-            <button type="submit" class="btn btn-outline-success">Valider</button>
-            <a class="btn btn-outline-secondary" role="button" href="list_group.php">Annuler</a>
+            <div class="text-center">
+                <button type="submit" class="btn btn-outline-success">Valider</button>
+                <a class="btn btn-outline-secondary" role="button" href="list_group.php">Annuler</a>
+            </div>
         </form>
         
 
