@@ -120,8 +120,9 @@
                         <!--image de l'objet-->
                         <div class="input-group">
                             <div class="custom-file">
-                                <input type="file" class="custom-file-input" id="inputItemImage" name = "inputItemImage" onchange="readURL(this);" value="<?php echo $itemImage ?>">
-                                <label class="custom-file-label" for="inputItemImage"><?php echo $itemImage ?></label>
+                            <label class="custom-file-label" for="inputItemImage" id="labelFileInput"><?php echo $itemImage ?></label>
+                                <input type="file" class="custom-file-input" id="inputItemImage" name = "inputItemImage" onchange="showImage(this);" value="<?php echo $itemImage ?>">
+                                
                             </div>
                             <div class="valid-feedback"></div>
                             <div class="invalid-feedback">Veuillez remplir ce champ</div>

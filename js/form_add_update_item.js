@@ -1,4 +1,5 @@
-function readURL(input) {
+function showImage(input) {
+    var labelFileInput = document.getElementById('labelFileInput');
     if (input.files && input.files[0]) {
         var reader = new FileReader();
 
@@ -10,6 +11,8 @@ function readURL(input) {
                 .height(200);
         };
 
+        labelFileInput.innerHTML = input.files[0].name;
         reader.readAsDataURL(input.files[0]);
+        
     }
 }

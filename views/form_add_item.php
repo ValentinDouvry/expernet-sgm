@@ -75,8 +75,9 @@
                 <!--image de l'objet-->
                 <div class="input-group">
                     <div class="custom-file">
-                        <input type="file" class="custom-file-input" id="inputItemImage" name ="inputItemImage" onchange="readURL(this);" required>
-                        <label class="custom-file-label" for="inputItemImage">Image de l'objet</label>
+                    <label class="custom-file-label" for="inputItemImage" id="labelFileInput">Image de l'objet</label>
+                        <input type="file" class="custom-file-input" id="inputItemImage" name ="inputItemImage" onchange="showImage(this);" data-buttonText="Coucou" required>
+                        
                     </div>
                 <div class="valid-feedback"></div>
                 <div class="invalid-feedback">Veuillez remplir ce champ</div>
