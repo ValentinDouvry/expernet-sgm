@@ -18,3 +18,7 @@ body{
 .progress{
     border: 1px solid black;
 }
+
+.p-shop-card{
+    margin-bottom: 0px;
+}

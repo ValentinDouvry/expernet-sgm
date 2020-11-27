@@ -100,15 +100,17 @@ $AvatarObj->base = '../img/avatars/' . $avatar->getImageName();
             <div class="col-sm">
                 <div class="row">
                     <h3><?= $group->getName(); ?></h3>
+                </div>
+                <div class="row ml-2 mb-2">
                     <?php
-                    if ($user->getIsAdmin() && $profileId !== $userId) :
-                    ?>
-                        <button class="btn btn-outline-dark ml-2" onClick="submitDeleteForm()">Supprimer</button>
-                        <form action="../actions/user_delete.php" method="GET" id="form-delete-user">
-                            <input id="inputUserIdDelete" name="inputUserIdDelete" type="hidden" value="<?= $profileUser->getId(); ?>">
-                        </form>
-                    <?php
-                    endif;
+                        if ($user->getIsAdmin() && $profileId !== $userId) :
+                        ?>
+                            <button class="btn btn-outline-danger ml-2" onClick="submitDeleteForm()">Supprimer l'utilisateur</button>
+                            <form action="../actions/user_delete.php" method="GET" id="form-delete-user">
+                                <input id="inputUserIdDelete" name="inputUserIdDelete" type="hidden" value="<?= $profileUser->getId(); ?>">
+                            </form>
+                        <?php
+                        endif;
                     ?>
                 </div>
                 <div class="row">
@@ -237,8 +239,9 @@ $AvatarObj->base = '../img/avatars/' . $avatar->getImageName();
                 <h5> LVL.<?= $profileUser->getLevel(); ?></h5>           
         </div>
         
-        <div class="row no-gutters">            
-            <h5>Portefeuille: <?= $profileUser->getMoney(); ?> €</h5>            
+        <div class="row no-gutters align-items-center">            
+            <h5 class="mt-2">Portefeuille: <?= $profileUser->getMoney(); ?></h5>     
+            <img style="width=2em;height:2em" src="../img/money.png"/>     
         </div>
 
         <?php
@@ -284,7 +287,7 @@ $AvatarObj->base = '../img/avatars/' . $avatar->getImageName();
                                                 if (!$inventory->getIsEquipped()) {
                                                     echo '<a href="../actions/inventory_equiped.php?id=' . $item->getId() . '" class="btn btn-outline-dark">Equipper</a>';
                                                 } else {
-                                                    echo '<a href="../actions/inventory_unequiped.php?id=' . $item->getId() . '" class="btn btn-outline-dark">Déséquipper</a> ';
+                                                    echo '<a href="../actions/inventory_unequiped.php?id=' . $item->getId() . '" class="btn btn-outline-danger">Déséquipper</a> ';
                                                     switch ($category->getName()) {
                                                         case ("Chapeaux"):
                                                             $AvatarObj->hat = '../img/items/' . $item->getImageName();
