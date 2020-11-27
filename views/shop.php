@@ -82,10 +82,6 @@ $categories = $query->fetchAll(PDO::FETCH_CLASS, "Category");
             </button>
             <strong><?= $_GET['text']; ?> </strong> 
             </div>
-        
-        <script>
-          $(".alert").alert();
-        </script>
         <?php endif; ?>
 
 
@@ -156,7 +152,7 @@ $categories = $query->fetchAll(PDO::FETCH_CLASS, "Category");
                                                 </form>
 
                                             <?php elseif(!$inventory===false) :?>
-                                                <button class="btn btn-outline-secondary" disabled="disabled">Posseder</button>
+                                                <button class="btn btn-outline-secondary" disabled="disabled">Possédé</button>
 
                                             <?php else :?>
                                                 <form action="../actions/item_buy.php" method="post">

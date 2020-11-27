@@ -16,10 +16,6 @@
         }
         require_once('components/navbar.php');
 
-        if((isset($_GET['err']))){
-            $err = $_GET['err'];
-            echo "<p style='text-align: center'>$err</p>";
-        }
         include ("../secret/connect_db.php");
         include ("../classes/Category.php");
 
@@ -29,15 +25,29 @@
         $data = $query->fetchall();
     ?>
     <div class="container">
-        <h1 class="text-center mb-4">Ajouter un item</h1>
+    <?php
+    if (isset($_GET['err'])) :
+    ?>
+
+        <div class="form-alert-login alert alert-danger alert-dismissible fade show" role="alert">
+            <strong><?= $_GET['err']; ?></strong>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+
+    <?php
+    endif;
+    ?>
+        <h1 class="text-center mb-4">Ajouter un objet</h1>
         <form method = 'POST' action="../actions/add_item.php" class="was-validated" enctype="multipart/form-data">
             <!--liste déroulante des categories-->
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
-                    <label class="input-group-text" for="categoryName">Categorie de l'objet</label>
+                    <label class="input-group-text" for="categoryName">Catégorie de l'objet</label>
                 </div>
                 <select class="custom-select" id="categoryName" name = "categoryName">
-                    <option disabled selected>Choisissez une categorie</option>
+                    <option disabled selected>Choisissez une catégorie</option>
                     <?php
                     foreach($data as $category){
                     ?>  
@@ -50,13 +60,13 @@
             <!--form classique-->
             <div class="form-group">
                 <label for="itemName">Nom de l'objet</label>
-                <input type="text" class="form-control" id="itemName" placeholder="Entrer le nom de l'objet" name="itemName" required>
+                <input type="text" class="form-control" id="itemName" placeholder="Entrez le nom de l'objet" name="itemName" required>
                 <div class="valid-feedback"></div>
                 <div class="invalid-feedback">Veuillez remplir ce champ</div>
             </div>
             <div class="form-group">
                 <label for="itemPrice">Prix de l'objet</label>
-                <input type="number" class="form-control" id="itemPrice" placeholder="Entrer le prix de l'objet" name="itemPrice" required>
+                <input type="number" class="form-control" id="itemPrice" placeholder="Entrez le prix de l'objet" name="itemPrice" required>
                 <div class="valid-feedback"></div>
                 <div class="invalid-feedback">champ vide ou contient un nombre à virgule</div>
             </div>

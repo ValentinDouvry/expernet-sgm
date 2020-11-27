@@ -47,22 +47,22 @@ if(isset($_POST['quantity']) && isset($_POST['id'])) {
 } 
 
 else {
-    header('Location:../views/shop.php?status=danger&text=erreur dans la saisie');
+    header("Location:../views/shop.php?status=danger&text=Erreur lors de l'achat !");
     exit;
 }
 
 if(!($inventory === false || $category->getIsBuyableMultiple())) {
-    header('Location: ../views/shop.php?status=danger&text=Vous posseder déja cette objet');
+    header('Location: ../views/shop.php?status=danger&text=Vous possédez déjà cet objet !');
     exit;
 }
 
 else if($_POST['quantity']*$item->getPrice() >= $user->getMoney()){
-    header('Location:../views/shop.php?status=danger&text=Trop pauvre !!');
+    header("Location:../views/shop.php?status=danger&text=Vous n'avez pas assez de gemmes pour acheter cet objet !");
     exit;
 } 
 
 else if(!($category->getIsBuyableMultiple() || intval($_POST['quantity']) === 1)){
-    header('Location:../views/shop.php?status=danger&text=Quantité incorecte');
+    header('Location:../views/shop.php?status=danger&text=Erreur, quantité incorrecte !');
     exit;
 } 
 
@@ -75,7 +75,7 @@ else {
         $is_success = $query->execute(array(":money"=>($user->getMoney() - ($_POST['quantity']*$item->getPrice())), ":id"=>$user->getId()));
 
         if(!$is_success) {
-            header('Location: ../views/shop.php?status=danger&text=Une erreur est survenu, veillez réesseyer');
+            header('Location: ../views/shop.php?status=danger&text=Une erreur est survenue, veuillez réessayer');
             exit();
         }
 
@@ -86,10 +86,10 @@ else {
 
 
         if($is_success) {
-            header('Location: ../views/shop.php?status=success&text=L\'achat effectuer avec success');
+            header("Location: ../views/shop.php?status=success&text=Achat effectué avec succès !");
             exit();
         } else {
-            header('Location: ../views/shop.php?status=danger&text=Une erreur est survenu, veillez réesseyer');
+            header('Location: ../views/shop.php?status=danger&text=Une erreur est survenue, veuillez réessayer !');
             exit();
         }
         
@@ -101,7 +101,7 @@ else {
         $is_success = $query->execute(array(":money"=>($user->getMoney() - ($_POST['quantity']*$item->getPrice())), ":id"=>$user->getId()));
 
         if(!$is_success) {
-            header('Location: ../views/shop.php?status=danger&text=Une erreur est survenu, veillez réesseyer');
+            header('Location: ../views/shop.php?status=danger&text=Une erreur est survenue, veuillez réessayer !');
             exit();
         }
 
@@ -118,10 +118,10 @@ else {
         $is_success = $query->execute(dismount($inventory));
 
         if($is_success) {
-            header('Location: ../views/shop.php?status=success&text=L\'achat effectuer avec success');
+            header('Location: ../views/shop.php?status=success&text=Achat effectué avec succès !');
             exit();
         } else {
-            header('Location: ../views/shop.php?status=danger&text=Une erreur est survenu, veillez réesseyer');
+            header('Location: ../views/shop.php?status=danger&text=Une erreur est survenue, veuillez réessayer');
             exit();
         }
 

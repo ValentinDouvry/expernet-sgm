@@ -16,12 +16,12 @@ $query->execute(array($_SESSION['userId']));
 $user = $query->fetchObject('User');
 
 if(!$user->getIsAdmin()){
-    header('Location:../views/shop.php?status=danger&text=pas admin');
+    header('Location:../views/shop.php');
     exit;
 } 
 
 if(!isset($_GET['id'])) {
-    header('Location:../views/shop.php?status=danger&text=pas d\'objet selectionner');
+    header('Location:../views/shop.php?status=danger&text=Erreur, veuillez sélectionner un objet à réactiver !');
     exit;
 }
 
@@ -30,9 +30,9 @@ $query = $db->prepare($sql);
 $is_success = $query->execute(array($_GET['id']));
 
 if($is_success) {
-    header('Location: ../views/shop.php?status=success&text=l\'objet a était désactivé avec success');
+    header('Location: ../views/shop.php?status=success&text=Objet réactvé !');
     exit();
 } else {
-    header('Location: ../views/shop.php?status=danger&text=Une erreur est survenu, veillez réesseyer');
+    header('Location: ../views/shop.php?status=danger&text=Une erreur est survenue, veuillez réessayer !');
     exit();
 }

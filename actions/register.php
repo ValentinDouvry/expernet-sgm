@@ -29,32 +29,32 @@ $avatar = $_POST['avatar'];
 
 if(!isset($username) || $username === "") 
 {
-    header('Location: ../views/form_register.php?err=Pseudo vide');
+    header('Location: ../views/form_register.php?err=Erreur, veuillez entrer un pseudonyme !');
 } 
 
 elseif(!isset($lastName) || $lastName === "") {
-    header('Location: ../views/form_register.php?err=Nom vide');
+    header('Location: ../views/form_register.php?err=Erreur, veuillez entrer un nom !');
 
 }
 
 elseif(!isset($name) || $name === "") {
-    header('Location: ../views/form_register.php?err=Prenom vide');
+    header('Location: ../views/form_register.php?err=Erreur, veuillez entrer un prénom !');
 }
 
 elseif(!isset($email) || $email === "") {
-    header('Location: ../views/form_register.php?err=email vide');
+    header('Location: ../views/form_register.php?err=Erreur, veuillez entrer un email !');
 }
 
 elseif(!isset($pass) || !isset($pass2) ||$pass === "" ||$pass2 === "" || $pass !== $pass) {
-    header('Location: ../views/form_register.php?err=mot de passe vide');
+    header('Location: ../views/form_register.php?err=Erreur, veuillez entrer un mot de passe !');
 }
 
 elseif(!isset($code) || $code === "") {
-    header('Location: ../views/form_register.php?err=code vide');
+    header('Location: ../views/form_register.php?err=Erreur, veuillez entrer un code de groupe !');
 }
 
 elseif(!isset($avatar) || $avatar === "") {
-    header('Location: ../views/form_register.php?err=avatar non choisie');
+    header('Location: ../views/form_register.php?err=Erreur, veuillez choisir un avatar !');
 }
 
 
@@ -65,7 +65,7 @@ else
     $is_exit = $query->fetch();
 
     if(!$is_exit===false) {
-        header('Location: ../views/form_register.php?err=le pseudo exite deja, veillez choisir un autre');
+        header('Location: ../views/form_register.php?err=Erreur, pseudonyme déjà utilisé !');
         exit();
     }
 
@@ -107,7 +107,7 @@ else
 
         } 
         else {
-            header('Location: ../views/form_register.php?err=une erreur est survenu, veillez recommencer');
+            header('Location: ../views/form_register.php?err=Une erreur est survenue, veuillez réessayer !');
         }
 
         
@@ -115,7 +115,7 @@ else
 
     else
     {
-        header('Location: ../views/form_register.php?err=code incorrect');
+        header('Location: ../views/form_register.php?err=Erreur, veuillez entrer un code de groupe valide !');
         exit();
     }
     

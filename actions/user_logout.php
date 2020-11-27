@@ -15,7 +15,7 @@ if($is_success) {
 } 
 
 else {
-    header('Location:../views/profile.php?status=danger&text=pas reussie a se déconnecter');
+    header('Location:../views/profile.php?status=danger&text=Une erreur est survenue, veuillez réessayer !');
     exit;
 }
 

@@ -25,7 +25,7 @@ $itemToEquipped = $query->fetchObject("Item");
 
 
 if($itemToEquipped===false) {
-    header('Location:../views/profile.php?status=danger&text=l\'objet selectionner n\'existe pas');
+    header("Location:../views/profile.php?status=danger&text=Erreur l'objet sélectionné n'existe pas");
     exit;
 }
 
@@ -53,7 +53,7 @@ foreach($inventories as $inventory) {
             $is_valid = $query->execute(array($inventory->getId()));
 
             if(!$is_valid){
-                header('Location:../views/profile.php?status=danger&text=erreur');
+                header('Location:../views/profile.php?status=danger&text=Erreur !');
             }
 
         }
@@ -65,8 +65,8 @@ $query = $db->prepare($sql);
 $is_valid = $query->execute(array(":itemId"=>$itemToEquipped->getId(), ":userId"=>$_SESSION['userId']));
 
 if($is_valid) {
-    header('Location:../views/profile.php?status=success&text=l\'objet equiper');
+    header("Location:../views/profile.php?status=success&text=Objet équipé !");
 } 
 else {
-    header('Location:../views/profile.php?status=danger&text=erreur');
+    header('Location:../views/profile.php?status=danger&text=Erreur !');
 }

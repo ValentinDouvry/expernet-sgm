@@ -96,6 +96,20 @@ $listGroups = $query->fetchAll(PDO::FETCH_CLASS, "Group");
     ?>
 
     <div class="container-fluid ml-3">
+    <?php
+    if (isset($_GET['err'])) :
+    ?>
+
+        <div class="form-alert-login alert alert-danger alert-dismissible fade show" role="alert">
+            <strong><?= $_GET['err']; ?></strong>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+
+    <?php
+    endif;
+    ?>
       <a class="btn btn-outline-primary" role="button" href="form_add_group.php">Créer un groupe</a>
       <h2>Liste des groupes</h2>
 

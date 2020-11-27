@@ -43,11 +43,26 @@
             
     ?>
             <div class="container">
+            <?php
+            if (isset($_GET['err'])) :
+            ?>
+
+                <div class="form-alert-login alert alert-danger alert-dismissible fade show" role="alert">
+                    <strong><?= $_GET['err']; ?></strong>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+            <?php
+            endif;
+            ?>
+            <h1 class="text-center mb-4">Modifier un objet</h1>
                 <form method = 'POST' action="../actions/update_item.php" class="was-validated" enctype="multipart/form-data">
                     <!--liste déroulante des categories-->
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
-                            <label class="input-group-text" for="categoryName">Categorie de l'objet</label>
+                            <label class="input-group-text" for="categoryName">Catégorie de l'objet</label>
                         </div>
                         <select class="custom-select" id="categoryName" name = "categoryName">
                             <?php
@@ -126,10 +141,7 @@
             </div>
     <?php
     }
-    if((isset($_GET['err']))){
-        $err = $_GET['err'];
-        echo "<p style='text-align: center'>$err</p>";
-    }
+    
     ?>
 
     <!-- Optional JavaScript -->
