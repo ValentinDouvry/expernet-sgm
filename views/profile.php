@@ -361,57 +361,13 @@ $AvatarObj->base = '../img/avatars/' . $avatar->getImageName();
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
-
-<script type="text/javascript">
-    // pass PHP variable declared above to JavaScript variable
-    var phpsource = <?= json_encode($AvatarObj); ?>;
-
-    $(document).ready(function() {
+    <script type="text/javascript">
+        // pass PHP variable declared above to JavaScript variable
+        var phpsource = <?= json_encode($AvatarObj); ?>;
+    </script>
 
 
-        const canvas = document.getElementById('canvasAvatar');
-        context = canvas.getContext('2d');
-
-
-        function loadImages(sources, callback) {
-            var images = {};
-            var loadedImages = 0;
-            var numImages = 0;
-            // get num of sources
-            for (var src in sources) {
-                numImages++;
-            }
-            for (var src in sources) {
-                images[src] = new Image();
-                images[src].onload = function() {
-                    if (++loadedImages >= numImages) {
-                        callback(images);
-                    }
-                };
-                images[src].src = sources[src];
-            }
-        }
-
-        loadImages(phpsource, function(images) {
-            for (const property in phpsource) {
-                if (property == "base") {
-                    context.drawImage(images.base, 25, 50, 200, 200);
-                }
-
-                if (property == "hat") {
-                    context.drawImage(images.hat, 35, -30, 180, 180);
-                }
-
-                if (property == "glase") {
-                    context.drawImage(images.glase, 75, 70, 100, 100);
-                }
-            }
-
-        });
-
-    });
-</script>
-
+<script defer src="../js/show_avatar.js"></script>
 </body>
 
 </html>
