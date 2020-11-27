@@ -128,6 +128,12 @@
                                         case ("Lunettes"):
                                             $AvatarObj->glase = '../img/items/'. $item['itemsImageName'] ;
                                             break;
+                                        case ("Barbes-Moustaches"):
+                                            $AvatarObj->beard = '../img/items/' . $item['itemsImageName'];
+                                            break;
+                                        case ("Noeuds"):
+                                            $AvatarObj->tie = '../img/items/' . $item['itemsImageName'];
+                                            break;
                                     }
             
                                 endif;
@@ -137,8 +143,10 @@
                             $arrayAvatarObj[] = [$user->getId(), $AvatarObj];
                             
                         ?>
-                        <canvas class="" id="canvasAvatar<?=$user->getId()?>" width="150" height="150" style="border:1px solid #000000; border-radius: 25px;">
-                        </canvas>
+                        <div class="mt-2">
+                            <canvas class="" id="canvasAvatar<?=$user->getId()?>" width="150" height="150" style="border:1px solid #EAE7DC; border-radius: 5px;">
+                            </canvas>
+                        </div>
                         <!-- <img src="../img/avatars/<?php echo $imageName ?>" class="card-img" alt="<?php echo $imageName ?>"> -->
                     </div>
                     <div class="col-md-6">

@@ -27,14 +27,22 @@ $(document).ready(function() {
         for (const property in phpsource) {
             if (property == "base") {
                 context.drawImage(images.base, 25, 50, 200, 200);
+            }          
+
+            if (property == "glase") {
+                context.drawImage(images.glase, 75, 70, 100, 100);
             }
 
             if (property == "hat") {
                 context.drawImage(images.hat, 35, -30, 180, 180);
             }
 
-            if (property == "glase") {
-                context.drawImage(images.glase, 75, 70, 100, 100);
+            if (property == "beard") {
+                context.drawImage(images.beard, 75, 120, 100, 100);
+            }
+            
+            if (property == "tie") {
+                context.drawImage(images.tie, 75, 150, 100, 100);
             }
         }
 

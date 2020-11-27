@@ -289,13 +289,19 @@ $AvatarObj->base = '../img/avatars/' . $avatar->getImageName();
                                                     echo '<a href="../actions/inventory_equiped.php?id=' . $item->getId() . '" class="btn btn-outline-dark">Equipper</a>';
                                                 } else {
                                                     echo '<a href="../actions/inventory_unequiped.php?id=' . $item->getId() . '" class="btn btn-outline-danger">Déséquipper</a> ';
+                                                    
                                                     switch ($category->getName()) {
                                                         case ("Chapeaux"):
                                                             $AvatarObj->hat = '../img/items/' . $item->getImageName();
                                                             break;
-
                                                         case ("Lunettes"):
                                                             $AvatarObj->glase = '../img/items/' . $item->getImageName();
+                                                            break;
+                                                        case ("Barbes-Moustaches"):
+                                                            $AvatarObj->beard = '../img/items/' . $item->getImageName();
+                                                            break;
+                                                        case ("Noeuds"):
+                                                            $AvatarObj->tie = '../img/items/' . $item->getImageName();
                                                             break;
                                                     }
                                                 }
@@ -333,14 +339,18 @@ $AvatarObj->base = '../img/avatars/' . $avatar->getImageName();
                         $query = $db->prepare($sql);
                         $query->execute(array($inventory->getItemId()));
                         $item = $query->fetch();
-                        
                         switch ($item['categoryName']) {
                             case ("Chapeaux"):
                                 $AvatarObj->hat = '../img/items/'. $item['itemsImageName'];
                                 break;
-
                             case ("Lunettes"):
                                 $AvatarObj->glase = '../img/items/'. $item['itemsImageName'] ;
+                                break;
+                            case ("Barbes-Moustaches"):
+                                $AvatarObj->beard = '../img/items/' . $item['itemsImageName'];
+                                break;
+                            case ("Noeuds"):
+                                $AvatarObj->tie = '../img/items/' . $item['itemsImageName'];
                                 break;
                         }
 
@@ -351,6 +361,8 @@ $AvatarObj->base = '../img/avatars/' . $avatar->getImageName();
             endif;
             ?>
     </div>
+
+    
 
 
 

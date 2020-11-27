@@ -33,11 +33,19 @@ $(document).ready(function() {
                     }
                     
                     if (property == "hat") {
-                        context.drawImage(images.hat, 32, -5, 90, 90);
+                        context.drawImage(images.hat, 30, 0, 90, 90);
                     }
                     
                     if (property == "glase") {
-                        context.drawImage(images.glase, 50, 50, 50, 50);
+                        context.drawImage(images.glase, 50, 55, 50, 50);
+                    }
+
+                    if (property == "beard") {
+                        context.drawImage(images.beard, 50, 78, 50, 50);
+                    }
+
+                    if (property == "tie") {
+                        context.drawImage(images.tie, 51, 100, 50, 50);
                     }
                 }
                 
