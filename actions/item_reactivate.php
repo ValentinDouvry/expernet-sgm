@@ -30,7 +30,7 @@ $query = $db->prepare($sql);
 $is_success = $query->execute(array($_GET['id']));
 
 if($is_success) {
-    header('Location: ../views/shop.php?status=success&text=Objet réactvé !');
+    header('Location: ../views/shop.php?status=success&text=Objet réactivé !');
     exit();
 } else {
     header('Location: ../views/shop.php?status=danger&text=Une erreur est survenue, veuillez réessayer !');

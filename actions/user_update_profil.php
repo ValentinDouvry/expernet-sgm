@@ -16,16 +16,17 @@ $query->execute(array($currentUserId));
 $currentUser = $query->fetchObject("User");
 
 if($currentUser===false) {
-    header('Location:../views/profile.php?status=danger&text=probleme pour l\'utilisateur');
+    header('Location:../views/profile.php?status=danger&text=Une erreur est survenue, veuillez réessayer !');
     exit;
 }
 
 if(!$currentUser->getIsAdmin() && $_POST["id"] !== $currentUser->getId()) {
-    header('Location:../views/profile.php?status=danger&text=vous n\'avez pas les droits');
+    header('Location:../views/profile.php?status=danger&text=Une erreur est survenue, veuillez réessayer !');
     exit;
 }
 
-if (isset($_POST["inputLastName"]) && isset($_POST["inputName"]) && isset($_POST["inputUsername"]) && isset($_POST["inputEmail"]) && isset($_POST["id"])) {
+if (isset($_POST["inputLastName"]) && isset($_POST["inputName"]) && isset($_POST["inputUsername"]) && isset($_POST["inputEmail"]) && isset($_POST["id"]) && $_POST["inputLastName"] = "" && $_POST["inputName"] != "" && $_POST["inputUsername"] != "" && $_POST["inputEmail"] != "" && $_POST["id"] != "") {
+
     $lastName = $_POST["inputLastName"];
     $name = $_POST["inputName"];
     $username = $_POST["inputUsername"];
@@ -47,17 +48,17 @@ if (isset($_POST["inputLastName"]) && isset($_POST["inputName"]) && isset($_POST
     $is_valid = $query->execute();
 
     if($is_valid) {
-        header('Location:../views/profile.php?profileId='.$id.'&status=success&text=OK');
+        header('Location:../views/profile.php?profileId='.$id.'&status=success&text=Modification effectuée !');
         exit;
     } 
     else {
-        header('Location:../views/profile.php?profileId='.$id.'&status=danger&text=une erreur est survenu');
+        header('Location:../views/profile.php?profileId='.$id.'&status=danger&text=Une erreur est survenue, veuillez réessayer !');
         exit;
     }
 }
 
 else {
-    header('Location:../views/profile.php?status=danger&text=probleme sur les champs rentre');
+    header('Location:../views/profile.php?status=danger&text=Une erreur est survenue, veuillez réessayer !');
     exit;
 
 }

@@ -76,7 +76,7 @@ $listGroups = $query->fetchAll(PDO::FETCH_CLASS, "Group");
     <!-- Bootstrap CSS -->
     
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    
+    <link rel="stylesheet" href="../css/style.css"/>
     <style>
       .group-modify-block {
         position: fixed;
@@ -110,8 +110,9 @@ $listGroups = $query->fetchAll(PDO::FETCH_CLASS, "Group");
     <?php
     endif;
     ?>
-      <a class="btn btn-outline-primary" role="button" href="form_add_group.php">Créer un groupe</a>
-      <h2>Liste des groupes</h2>
+    <h1 class="text-center">Liste des groupes</h1>
+    <a class="btn btn-outline-dark mb-4" role="button" href="form_add_group.php">Créer un groupe</a>
+      
 
       <div class="container-fluid row">
         <div class="col-lg-6">
@@ -142,8 +143,8 @@ $listGroups = $query->fetchAll(PDO::FETCH_CLASS, "Group");
                             <p class="card-text">'.$group->getCode().'</p>
                           </div>
                           <div class="col-sm-10 pt-2">
-                            <button type="button" class="btn btn-outline-warning mr-2" onclick="showForm('.$group->getId().','.'\''.$group->getName().'\''.','.'\''.$group->getChannel().'\''.')">Modifier</button>
-                            <button type="button" class="btn btn-outline-danger" onclick="submitDeleteForm('.$group->getId().')">Supprimer</button>                           
+                            <button type="button" class="btn btn-outline-dark mr-2" onclick="showForm('.$group->getId().','.'\''.$group->getName().'\''.','.'\''.$group->getChannel().'\''.')">Modifier</button>
+                            <button type="button" class="btn btn-outline-dark" onclick="submitDeleteForm('.$group->getId().')">Supprimer</button>                           
                             <form action="list_group.php" method="POST" id="form-delete-group-'.$group->getId().'">                                                              
                               <input id="inputIdGroupDelete" name="inputIdGroupDelete" type="hidden" value="'.$group->getId().'">                                              
                             </form>
@@ -169,8 +170,8 @@ $listGroups = $query->fetchAll(PDO::FETCH_CLASS, "Group");
                 <input type="text" class="form-control" id="inputGroupChannel" name="inputGroupChannel">
               </div>
               <input type="hidden" id="inputGroupId" name="inputGroupId" value="">
-              <button type="submit" class="btn btn-outline-primary mr-2">Modifier</button>
-              <button class="btn btn-outline-secondary" onclick="hideForm()">Cacher</button>
+              <button type="submit" class="btn btn-outline-dark mr-2">Modifier</button>
+              <button class="btn btn-outline-dark" onclick="hideForm()">Cacher</button>
             </form>        
           </div>
         </div>

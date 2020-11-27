@@ -64,6 +64,7 @@ $categories = $query->fetchAll(PDO::FETCH_CLASS, "Category");
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="../css/style.css"/>
 </head>
 
 <body>
@@ -87,8 +88,8 @@ $categories = $query->fetchAll(PDO::FETCH_CLASS, "Category");
 
         <?php if($user->getIsAdmin()) :?>
         <div class="mb-5">
-            <a class="btn btn-outline-primary" href="form_add_item.php">Ajouter un objet</a>
-            <a class="btn btn-outline-primary" href="form_add_category.php">Ajouter une catégorie</a>
+            <a class="btn btn-outline-dark" href="form_add_item.php">Ajouter un objet</a>
+            <a class="btn btn-outline-dark" href="form_add_category.php">Ajouter une catégorie</a>
         </div>
         <?php endif; ?>
 
@@ -104,8 +105,8 @@ $categories = $query->fetchAll(PDO::FETCH_CLASS, "Category");
             if($user->getIsAdmin()){
                 echo'
                 <div>
-                    <a class="btn btn-outline-warning ml-2" href="form_update_category.php?categoryId='.$categoryId.'" role="button">Modifier</a>
-                    <button type="button" class="btn btn-outline-danger ml-2" onclick="submitDeleteForm('.$categoryId.')" >Supprimer</button>
+                    <a class="btn btn-outline-dark ml-2" href="form_update_category.php?categoryId='.$categoryId.'" role="button">Modifier</a>
+                    <button type="button" class="btn btn-outline-dark ml-2" onclick="submitDeleteForm('.$categoryId.')" >Supprimer</button>
                     <form action="shop.php" method="POST" id="form-delete-category'.$categoryId.'">                                                              
                         <input id="inputIdCategoryDelete" name="inputIdCategoryDelete" type="hidden" value="'.$categoryId.'">                                              
                     </form>
@@ -137,22 +138,22 @@ $categories = $query->fetchAll(PDO::FETCH_CLASS, "Category");
                                     <div class="d-flex justify-content-around align-items-center">
                                         <?php if($user->getIsAdmin()) : ?>
                                             <?php if(!$item->getIsDesactivated()) : ?>
-                                                <a class="btn btn-outline-warning" href="form_update_item.php?id=<?= $item->getId();?>">Modifier</a>
-                                                <a class="btn btn-outline-secondary" href="../actions/item_deactivate.php?id=<?= $item->getId();?>">Désactiver</a>
+                                                <a class="btn btn-outline-dark" href="form_update_item.php?id=<?= $item->getId();?>">Modifier</a>
+                                                <a class="btn btn-outline-dark" href="../actions/item_deactivate.php?id=<?= $item->getId();?>">Désactiver</a>
                                             <?php else : ?>
-                                                <a class="btn btn-outline-success" href="../actions/item_reactivate.php?id=<?= $item->getId();?>">Réactiver</a>
-                                                <a class="btn btn-outline-danger" href="../actions/item_delete.php?id=<?= $item->getId();?>">Supprimer</a>
+                                                <a class="btn btn-outline-dark" href="../actions/item_reactivate.php?id=<?= $item->getId();?>">Réactiver</a>
+                                                <a class="btn btn-outline-dark" href="../actions/item_delete.php?id=<?= $item->getId();?>">Supprimer</a>
                                             <?php endif; ?>
                                         <?php else :?>
                                             <?php if($category->getIsBuyableMultiple()) :?>
                                                 <form action="../actions/item_buy.php" method="post">
                                                     <input style="width: 4rem;" type="number" min="1" name="quantity" value="1">
                                                     <input type="hidden" name="id" value="<?= $item->getId(); ?>">
-                                                    <input type="submit" nane="submit" class="btn btn-outline-primary" value="Acheter">
+                                                    <input type="submit" nane="submit" class="btn btn-outline-dark" value="Acheter">
                                                 </form>
 
                                             <?php elseif(!$inventory===false) :?>
-                                                <button class="btn btn-outline-secondary" disabled="disabled">Possédé</button>
+                                                <button class="btn btn-outline-dark" disabled="disabled">Possédé</button>
 
                                             <?php else :?>
                                                 <form action="../actions/item_buy.php" method="post">

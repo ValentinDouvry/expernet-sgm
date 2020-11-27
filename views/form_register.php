@@ -72,7 +72,7 @@ require_once("../secret/connect_db.php");
                     <img src="" class="form-avatars-img">
                 </div>
 
-                <button type="submit" class="btn btn-outline-primary my-2 mb-3">S'inscrire</button>
+                <button type="submit" class="btn btn-outline-dark my-2 mb-3">S'inscrire</button>
         </form>
         <p>Déjà un compte? <a href="log_in.php">Connectez-vous ici !</a></p>
 

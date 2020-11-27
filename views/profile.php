@@ -75,6 +75,7 @@ $AvatarObj->base = '../img/avatars/' . $avatar->getImageName();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="../css/style.css"/>
     <title>Expernet-sgm</title>
 </head>
 
@@ -102,7 +103,7 @@ $AvatarObj->base = '../img/avatars/' . $avatar->getImageName();
                     <?php
                     if ($user->getIsAdmin() && $profileId !== $userId) :
                     ?>
-                        <button class="btn btn-outline-danger ml-2" onClick="submitDeleteForm()">Supprimer</button>
+                        <button class="btn btn-outline-dark ml-2" onClick="submitDeleteForm()">Supprimer</button>
                         <form action="../actions/user_delete.php" method="GET" id="form-delete-user">
                             <input id="inputUserIdDelete" name="inputUserIdDelete" type="hidden" value="<?= $profileUser->getId(); ?>">
                         </form>
@@ -143,7 +144,7 @@ $AvatarObj->base = '../img/avatars/' . $avatar->getImageName();
                         </div>
                         <input type="hidden" name="id" value="<?= $profileUser->getId(); ?>">
                         <div class="row">
-                            <button type="submit" class="btn btn-outline-secondary">Modifier</button>
+                            <button type="submit" class="btn btn-outline-dark">Modifier</button>
                         </div>
                     </div>
                 </form>
@@ -195,7 +196,7 @@ $AvatarObj->base = '../img/avatars/' . $avatar->getImageName();
                     </div>
                     <input name="id" type="hidden" value="<?= $profileUser->getId(); ?>">
 
-                    <button type="submit" class="btn btn-primary">Valider</button>
+                    <button type="submit" class="btn btn-outline-dark">Valider</button>
                 </form>
 
             <?php
@@ -283,12 +284,11 @@ $AvatarObj->base = '../img/avatars/' . $avatar->getImageName();
                                             <div class="d-flex justify-content-around align-items-center">
                                                 <?php
                                                 if (!$inventory->getIsEquipped()) {
-                                                    echo '<a href="../actions/inventory_equiped.php?id=' . $item->getId() . '" class="btn btn-outline-success">Equipper</a>';
+                                                    echo '<a href="../actions/inventory_equiped.php?id=' . $item->getId() . '" class="btn btn-outline-dark">Equipper</a>';
                                                 } else {
-                                                    echo '<a href="../actions/inventory_unequiped.php?id=' . $item->getId() . '" class="btn btn-outline-warning">Déséquipper</a> ';
-
+                                                    echo '<a href="../actions/inventory_unequiped.php?id=' . $item->getId() . '" class="btn btn-outline-dark">Déséquipper</a> ';
                                                     switch ($category->getName()) {
-                                                        case ("Chapeau"):
+                                                        case ("Chapeaux"):
                                                             $AvatarObj->hat = '../img/items/' . $item->getImageName();
                                                             break;
 

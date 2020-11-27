@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="../css/style.css"/>
     <title>Ajouter un objet</title>
 </head>
 <body>
@@ -86,8 +87,8 @@
             </div>
             <!--submit-->
             <div class="text-center">
-                <button type="submit" class="btn btn-outline-success">Ajouter l'objet</button>
-                <a class="btn btn-outline-secondary" href="shop.php">Annuler</a>
+                <button type="submit" class="btn btn-outline-dark">Ajouter</button>
+                <a class="btn btn-outline-dark" href="shop.php">Annuler</a>
             </div>
         </form>
 

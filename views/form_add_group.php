@@ -37,6 +37,7 @@ else{
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="../css/style.css"/>
 </head>
 
 <body>
@@ -76,8 +77,8 @@ else{
                 <input name="inputGroupChannel" type="text" class="form-control" id="inputGroupChannel" placeholder="Channel du groupe" required>
             </div>
             <div class="text-center">
-                <button type="submit" class="btn btn-outline-success">Valider</button>
-                <a class="btn btn-outline-secondary" role="button" href="list_group.php">Annuler</a>
+                <button type="submit" class="btn btn-outline-dark">Valider</button>
+                <a class="btn btn-outline-dark" role="button" href="list_group.php">Annuler</a>
             </div>
         </form>
         
