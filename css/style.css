@@ -7,3 +7,14 @@ body{
     background-color: #d8c3a5;
 }
 
+.xpBar{
+    width: 19.7%;
+}
+
+.progress-bar{
+    background-color: #E85A4F;
+}
+
+.progress{
+    border: 1px solid black;
+}

@@ -203,44 +203,42 @@ $AvatarObj->base = '../img/avatars/' . $avatar->getImageName();
             endif;
             ?>
         </div>
+        
+        
+        <div class="row xpBar no-gutters mb-3 mt-3">
+            <div class="container-fluid">
+                <?php
+                $query = $db->prepare("SELECT experience FROM users WHERE id = :id");
+                $query->bindParam(":id", $userId);
+                $query->execute();
+                $data = $query->setFetchMode(PDO::FETCH_ASSOC);
+                $data = $query->fetch();
+                $userExperience = $data['experience'];
 
-        <div class="row">
-            <div class="row container-fluid align-items-center">
-                <div class="col-1">
-                    <h5> LVL.<?= $profileUser->getLevel(); ?></h5>
-                </div>
-                <div class="col-2">
-                    <?php
-                    $query = $db->prepare("SELECT experience FROM users WHERE id = :id");
-                    $query->bindParam(":id", $userId);
-                    $query->execute();
-                    $data = $query->setFetchMode(PDO::FETCH_ASSOC);
-                    $data = $query->fetch();
-                    $userExperience = $data['experience'];
-
-                    if ($userExperience <= 1000) {
-                    ?>
-                        <div class="progress">
-                            <div class="progress-bar bg-info" role="progressbar" style="width: <?php echo $userExperience / 10; ?>%" aria-valuenow="<?php $userExperience / 10 ?>" aria-valuemin="0" aria-valuemax="1000"><i class="fa fa-fw fa-star-o"></i></div>
-                        </div>
-                    <?php
-                    } else {
-                        $userExperience -= 1000;
-                        //on devrai augmente son lvl de 1
-                    ?>
-                        <div class="progress">
-                            <div class="progress-bar bg-info" role="progressbar" style="width: <?php echo $userExperience / 10; ?>%" aria-valuenow="<?php $userExperience / 10 ?>" aria-valuemin="0" aria-valuemax="1000"></div>
-                        </div>
-                    <?php
-                    }
-                    ?>
-                </div>
+                if ($userExperience <= 1000) {
+                ?>
+                    <div class="progress">
+                        <div class="progress-bar" role="progressbar" style="width: <?php echo $userExperience / 10; ?>%" aria-valuenow="<?php $userExperience / 10 ?>" aria-valuemin="0" aria-valuemax="1000"><i class="fa fa-fw fa-star-o"></i></div>
+                    </div>
+                <?php
+                } else {
+                    $userExperience -= 1000;
+                    //on devrai augmente son lvl de 1
+                ?>
+                    <div class="progress">
+                        <div class="progress-bar" role="progressbar" style="width: <?php echo $userExperience / 10; ?>%" aria-valuenow="<?php $userExperience / 10 ?>" aria-valuemin="0" aria-valuemax="1000"></div>
+                    </div>
+                <?php
+                }
+                ?>
             </div>
         </div>
-        <div class="row">
-            <div class="col-sm">
-                <h5>Portefeuille: <?= $profileUser->getMoney(); ?> €</h5>
-            </div>
+        <div class="row no-gutters">
+                <h5> LVL.<?= $profileUser->getLevel(); ?></h5>           
+        </div>
+        
+        <div class="row no-gutters">            
+            <h5>Portefeuille: <?= $profileUser->getMoney(); ?> €</h5>            
         </div>
 
         <?php
