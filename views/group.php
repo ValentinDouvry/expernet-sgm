@@ -1,6 +1,7 @@
 <?php
     require_once("../secret/connect_db.php");
     require_once("../classes/User.php");
+    require_once("../classes/Inventory.php");
     require_once("../classes/Group.php");
     session_start();
         
@@ -83,6 +84,9 @@
             $query->setFetchMode(PDO::FETCH_CLASS,'User');
             $data = $query->fetchall();
 
+            $arrayAvatarObj = [];
+
+
             foreach($data as $user){
         ?>
         
@@ -98,8 +102,44 @@
                             $query->setFetchMode(PDO::FETCH_ASSOC);
                             $data = $query->fetch();
                             $imageName = $data['imageName'];
+
+                            
+                            $AvatarObj = new stdClass();
+                            $AvatarObj->base = '../img/avatars/' . $imageName;
+
+                            $query = $db->prepare("SELECT * FROM `inventories` WHERE userId = :userId");
+                            $query->execute(array(":userId" => $user->getId()));
+                            $inventories = $query->fetchAll(PDO::FETCH_CLASS, "Inventory");
+
+                            foreach($inventories as $inventory):
+
+                                if($inventory->getIsEquipped()) :
+            
+                                    $sql = "SELECT `categories`.`name` as categoryName, `items`.`imageName` as itemsImageName FROM `items` INNER JOIN `categories` ON `items`.`categoryId` = `categories`.`id` WHERE `items`.`id`=?";
+                                    $query = $db->prepare($sql);
+                                    $query->execute(array($inventory->getItemId()));
+                                    $item = $query->fetch();
+                                    
+                                    switch ($item['categoryName']) {
+                                        case ("Chapeaux"):
+                                            $AvatarObj->hat = '../img/items/'. $item['itemsImageName'];
+                                            break;
+            
+                                        case ("Lunettes"):
+                                            $AvatarObj->glase = '../img/items/'. $item['itemsImageName'] ;
+                                            break;
+                                    }
+            
+                                endif;
+            
+                            endforeach;
+
+                            $arrayAvatarObj[] = [$user->getId(), $AvatarObj];
+                            
                         ?>
-                        <img src="../img/avatars/<?php echo $imageName ?>" class="card-img" alt="<?php echo $imageName ?>">
+                        <canvas class="" id="canvasAvatar<?=$user->getId()?>" width="150" height="150" style="border:1px solid #000000; border-radius: 25px;">
+                        </canvas>
+                        <!-- <img src="../img/avatars/<?php echo $imageName ?>" class="card-img" alt="<?php echo $imageName ?>"> -->
                     </div>
                     <div class="col-md-6">
                         <div class="card-body">
@@ -113,6 +153,8 @@
         
         <?php } ?>
         </div>
+
+
     </div> 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -122,11 +164,11 @@
 
     <script type="text/javascript">
         // pass PHP variable declared above to JavaScript variable
-        var phpsource = <?= json_encode($AvatarObj); ?>;
+        var phpsource = <?= json_encode($arrayAvatarObj); ?>;
     </script>
 
 
-<script defer src="../js/show_avatar.js"></script>
+<script defer src="../js/show_avatars.js"></script>
 
 </body>
 </html>
