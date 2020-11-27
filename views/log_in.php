@@ -13,8 +13,10 @@ if (isset($_SESSION['userId'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="../css/form.css"/>
+    <link rel="stylesheet" href="../css/style.css"/>
     <title>Connexion</title>
-    <link rel="stylesheet" href="../css/form.css" />
+    
 
 </head>
 
@@ -51,10 +53,10 @@ if (isset($_SESSION['userId'])) {
                 />
 
               </div>
-                <button type="submit" class="btn btn-outline-primary my-2 mb-3">Se connecter</button>
+                <button type="submit" class="btn btn-outline-dark my-2 mb-3">Se connecter</button>
 
               </form>
-              <p>Pas de compte? <a href="form_register.php">Inscrivez-vous ici !</a></p>
+              <p>Pas de compte? <a href="form_register.php"style = "color : #E85A4F">Inscrivez-vous ici !</a></p>
 
               <p class="mt-2 mb-2 text-muted">&copy; Expernet-sgm 2020</p>
         </div>

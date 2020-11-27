@@ -14,7 +14,7 @@ require_once("../secret/connect_db.php");
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="../css/form.css">
-
+    <link rel="stylesheet" href="../css/style.css"/>
 </head>
 
 <body class="text-center">
@@ -52,7 +52,7 @@ require_once("../secret/connect_db.php");
 
                 <input name="code" type="text" class="form-control input-custum" placeholder="Code accès au groupe" required />
 
-                <select class="custom-select input-custum" id="avatars" name="avatar">
+                <select class="custom-select input-custum" id="avatars" name="avatar" style = "color : rgb(121, 66, 66)">
 
                     <?php
 
@@ -74,7 +74,7 @@ require_once("../secret/connect_db.php");
 
                 <button type="submit" class="btn btn-outline-dark my-2 mb-3">S'inscrire</button>
         </form>
-        <p>Déjà un compte? <a href="log_in.php">Connectez-vous ici !</a></p>
+        <p>Déjà un compte? <a href="log_in.php"style = "color : #E85A4F">Connectez-vous ici !</a></p>
 
         <p class="mt-2 mb-2 text-muted">&copy; Expernet-sgm 2020</p>
     </div>
