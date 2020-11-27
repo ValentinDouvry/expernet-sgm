@@ -51,6 +51,11 @@ $query = $db->prepare($sql);
 $query->execute();
 $categories = $query->fetchAll(PDO::FETCH_CLASS, "Category");
 
+$sql = "SELECT * FROM `avatars`";
+$query = $db->prepare($sql);
+$query->execute();
+$listAvatar = $query->fetchAll(PDO::FETCH_CLASS, "Avatar");
+
 
 $query = $db->prepare("SELECT * FROM `avatars` WHERE id = :avatarId");
 $avatarId = $profileUser->getAvatarId();
@@ -144,9 +149,34 @@ $AvatarObj->base = '../img/avatars/' . $avatar->getImageName();
                                 <input type="text" class="form-control" name="inputEmail" placeholder="Email" value="<?= $profileUser->getEmail(); ?>">
                             </div>
                         </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text" for="inputavatar">Avatar</label>
+                            </div>
+                            <select class="custom-select" id="inputavatar" name="inputavatar">
+                                <?php
+                                foreach($listAvatar as $avatarInput){
+                                    if($avatarInput->getId() === $profileUser->getAvatarId()){                            
+                                        ?>
+                                        <option value = "<?php echo $profileUser->getAvatarId(); ?>" selected><?php echo $avatar->getImageName() ?></option>
+                                    
+                                        <?php
+                                    }
+                                    else
+                                    {
+                                        ?>  
+                                        <option value = "<?php echo $avatarInput->getId();?>"><?php echo $avatarInput->getImageName(); ?></option>
+                                    <?php
+                                    }
+                                }
+                                ?>
+                            </select>
+                        </div>
                         <input type="hidden" name="id" value="<?= $profileUser->getId(); ?>">
-                        <div class="row">
-                            <button type="submit" class="btn btn-outline-dark">Modifier</button>
+                        <div class="row justify-content-center">
+                            <div class="">
+                                <button type="submit" class="btn btn-outline-dark">Modifier</button>
+                            </div>
                         </div>
                     </div>
                 </form>
@@ -197,8 +227,9 @@ $AvatarObj->base = '../img/avatars/' . $avatar->getImageName();
                         <input name="password2" type="password" class="form-control" id="password2" placeholder="Nouveau Mot de passe">
                     </div>
                     <input name="id" type="hidden" value="<?= $profileUser->getId(); ?>">
-
-                    <button type="submit" class="btn btn-outline-dark">Valider</button>
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-outline-dark">Valider</button>
+                    </div>
                 </form>
 
             <?php

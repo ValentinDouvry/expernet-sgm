@@ -77,7 +77,7 @@
 
                                 
                             ?>
-                                <option selected><?php echo $categoryName ?></option>
+                                <option value = "<?php echo $categoryName; ?>" selected><?php echo $categoryName ?></option>
                             
                             <?php
                                 }

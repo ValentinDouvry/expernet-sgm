@@ -25,25 +25,28 @@ if(!$currentUser->getIsAdmin() && $_POST["id"] !== $currentUser->getId()) {
     exit;
 }
 
-if (isset($_POST["inputLastName"]) && isset($_POST["inputName"]) && isset($_POST["inputUsername"]) && isset($_POST["inputEmail"]) && isset($_POST["id"]) && $_POST["inputLastName"] = "" && $_POST["inputName"] != "" && $_POST["inputUsername"] != "" && $_POST["inputEmail"] != "" && $_POST["id"] != "") {
+if (isset($_POST["inputLastName"]) && isset($_POST["inputName"]) && isset($_POST["inputUsername"]) && isset($_POST["inputEmail"]) && isset($_POST["id"]) && isset($_POST["inputavatar"]) && $_POST["inputLastName"] != "" && $_POST["inputName"] != "" && $_POST["inputUsername"] != "" && $_POST["inputEmail"] != "" && $_POST["id"] != "" && $_POST["inputavatar"] != "") {
 
     $lastName = $_POST["inputLastName"];
     $name = $_POST["inputName"];
     $username = $_POST["inputUsername"];
     $email = $_POST["inputEmail"];
     $id = $_POST["id"];
+    $avatarId = $_POST["inputavatar"];
 
 
     $query = $db->prepare("UPDATE users SET lastName = :lastName,
                 name = :name, 
                 email = :email, 
-                username = :username
+                username = :username,
+                avatarId = :avatarId
                 WHERE id = :userId");
 
     $query->bindParam(":lastName", $lastName, PDO::PARAM_STR);
     $query->bindParam(":name", $name, PDO::PARAM_STR);
     $query->bindParam(":username", $username, PDO::PARAM_STR);
     $query->bindParam(":email", $email, PDO::PARAM_STR);
+    $query->bindParam(":avatarId", $avatarId, PDO::PARAM_STR);
     $query->bindParam(":userId", $id, PDO::PARAM_INT);
     $is_valid = $query->execute();
 
