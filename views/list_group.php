@@ -97,7 +97,7 @@ $listGroups = $query->fetchAll(PDO::FETCH_CLASS, "Group");
               $query->bindParam(":groupId",$groupId, PDO::PARAM_STR);
               $query->execute();
               $nbUser = $query->fetchColumn();
-?>
+          ?>
 
               
                 <div class="card mb-3" style="max-width: 30rem;">
@@ -105,7 +105,7 @@ $listGroups = $query->fetchAll(PDO::FETCH_CLASS, "Group");
                     <div class="col-sm-12">
                       <div class="card-body">
                         <div>
-                          <a class="card-link text-dark" href="group.php?groupId='<?= $group->getId(); ?>">
+                          <a class="card-link text-dark" href="group.php?groupId=<?=$group->getId();?>">
                             <h5 class="card-title"><?= $group->getName(); ?></h5>
                           </a>
                         </div>                       
@@ -145,7 +145,7 @@ $listGroups = $query->fetchAll(PDO::FETCH_CLASS, "Group");
               </div>
               <input type="hidden" id="inputGroupId" name="inputGroupId" value="">
               <button type="submit" class="btn btn-outline-dark mr-2">Modifier</button>
-              <button class="btn btn-outline-dark" onclick="hideForm()">Cacher</button>
+              <button type="button" class="btn btn-outline-dark" onclick="hideForm()">Cacher</button>
             </form>        
           </div>
         </div>
