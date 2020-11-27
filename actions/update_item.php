@@ -4,8 +4,8 @@
     if(!isset($_SESSION['userId'])){
         header('Location:../index.php');
     }
-    include ("../secret/connect_db.php");
-    include ("../classes/Category.php");
+    require_once("../secret/connect_db.php");
+    require_once("../classes/Category.php");
 
     
     $itemId = $_POST['itemId'];

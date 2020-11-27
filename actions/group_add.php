@@ -1,7 +1,7 @@
 <?php
-include_once("../secret/connect_db.php");
-include_once("../classes/User.php");
-include_once("../classes/Group.php");
+require_once("../secret/connect_db.php");
+require_once("../classes/User.php");
+require_once("../classes/Group.php");
 
 session_start();
 

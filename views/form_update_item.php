@@ -23,9 +23,9 @@
             header('Location: shop.php');
         }else{
             $itemId = $_GET['id'];
-            include ("../secret/connect_db.php");
-            include ("../classes/Item.php");
-            include ("../classes/Category.php");
+            require_once("../secret/connect_db.php");
+            require_once("../classes/Item.php");
+            require_once("../classes/Category.php");
 
             $query = $db->prepare("SELECT categoryId FROM items WHERE id = :id");
             $query->bindParam(":id",$itemId);

@@ -5,9 +5,9 @@ if(!isset($_SESSION['userId'])){
     header('Location:../index.php');
 }
 
-include ("../secret/connect_db.php");
-include ("../classes/Category.php");
-include ("../classes/Item.php");
+require_once("../secret/connect_db.php");
+require_once("../classes/Category.php");
+require_once("../classes/Item.php");
 
 $target_dir = "../img/items/";
 $target_file = $target_dir . basename($_FILES["inputItemImage"]["name"]);
