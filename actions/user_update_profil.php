@@ -43,6 +43,22 @@ if (isset($_POST["inputLastName"]) && isset($_POST["inputName"]) && isset($_POST
     $query->bindParam(":name", $name, PDO::PARAM_STR);
     $query->bindParam(":username", $username, PDO::PARAM_STR);
     $query->bindParam(":email", $email, PDO::PARAM_STR);
-    $query->bindParam(":userId", $profileId, PDO::PARAM_INT);
-    $query->execute();
+    $query->bindParam(":userId", $id, PDO::PARAM_INT);
+    $is_valid = $query->execute();
+
+    if($is_valid) {
+        header('Location:../views/profile.php?profileId='.$id.'&status=success&text=OK');
+        exit;
+    } 
+    else {
+        header('Location:../views/profile.php?profileId='.$id.'&status=danger&text=une erreur est survenu');
+        exit;
+    }
 }
+
+else {
+    header('Location:../views/profile.php?status=danger&text=probleme sur les champs rentre');
+    exit;
+
+}
+

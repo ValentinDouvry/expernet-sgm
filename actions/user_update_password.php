@@ -1,5 +1,4 @@
 <?php
-
 require_once('../secret/connect_db.php');
 require_once('../classes/User.php');
 session_start();

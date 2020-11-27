@@ -16,87 +16,27 @@ if (!isset($userId) || $userId === "") {
     exit;
 }
 
-if (isset($_GET["profileId"])) {
+if (isset($_GET["profileId"]) && $_GET["profileId"] !== "") {
 
     $profileId = $_GET["profileId"];
-
-    /********************************************************************************************************/
-    //UPDATE USER
-    if (isset($_POST["inputLastName"]) && isset($_POST["inputName"]) && isset($_POST["inputUsername"]) && isset($_POST["inputEmail"])) {
-        $lastName = $_POST["inputLastName"];
-        $name = $_POST["inputName"];
-        $username = $_POST["inputUsername"];
-        $email = $_POST["inputEmail"];
-
-
-        $query = $db->prepare("UPDATE users SET lastName = :lastName,
-                name = :name, 
-                email = :email, 
-                username = :username
-                WHERE id = :userId");
-
-        $query->bindParam(":lastName", $lastName, PDO::PARAM_STR);
-        $query->bindParam(":name", $name, PDO::PARAM_STR);
-        $query->bindParam(":username", $username, PDO::PARAM_STR);
-        $query->bindParam(":email", $email, PDO::PARAM_STR);
-        $query->bindParam(":userId", $profileId, PDO::PARAM_INT);
-        $query->execute();
-    }
-    /********************************************************************************************************/
-
-
-    $query = $db->prepare("SELECT * FROM users WHERE id = :userId");
-    $query->bindParam(":userId", $profileId);
-    $query->execute();
-    $profileUser = $query->fetchObject("User");
-    if (!$profileUser) {
-        header('Location: profile.php');
-        exit();
-    }
-
-    $query = $db->prepare("SELECT * FROM `users` WHERE id = :userId");
-    $query->bindParam(":userId", $userId);
-    $query->execute();
-    $user = $query->fetchObject("User");
 } else {
+
     $profileId = $userId;
-
-    /********************************************************************************************************/
-    //UPDATE USER
-    if (isset($_POST["inputLastName"]) && isset($_POST["inputName"]) && isset($_POST["inputUsername"]) && isset($_POST["inputEmail"]) && isset($_POST["id"])) {
-        $lastName = $_POST["inputLastName"];
-        $name = $_POST["inputName"];
-        $username = $_POST["inputUsername"];
-        $email = $_POST["inputEmail"];
-        $id = $_POST["id"];
-
-
-        $query = $db->prepare("UPDATE users SET lastName = :lastName,
-                name = :name, 
-                email = :email, 
-                username = :username
-                WHERE id = :userId");
-
-        $query->bindParam(":lastName", $lastName, PDO::PARAM_STR);
-        $query->bindParam(":name", $name, PDO::PARAM_STR);
-        $query->bindParam(":username", $username, PDO::PARAM_STR);
-        $query->bindParam(":email", $email, PDO::PARAM_STR);
-        $query->bindParam(":userId", $id, PDO::PARAM_INT);
-        $query->execute();
-    }
-    /********************************************************************************************************/
-
-    $query = $db->prepare("SELECT * FROM users WHERE id = :userId");
-    $query->bindParam(":userId", $profileId);
-    $query->execute();
-    $profileUser = $query->fetchObject("User");
-
-    $query = $db->prepare("SELECT * FROM `users` WHERE id = :userId");
-    $query->bindParam(":userId", $userId);
-    $query->execute();
-    $user = $query->fetchObject("User");
 }
 
+$query = $db->prepare("SELECT * FROM users WHERE id = :userId");
+$query->bindParam(":userId", $profileId);
+$query->execute();
+$profileUser = $query->fetchObject("User");
+if (!$profileUser) {
+    header('Location: profile.php');
+    exit();
+}
+
+$query = $db->prepare("SELECT * FROM `users` WHERE id = :userId");
+$query->bindParam(":userId", $userId);
+$query->execute();
+$user = $query->fetchObject("User");
 
 
 $query = $db->prepare("SELECT * FROM `groups` WHERE id = :groupId");
@@ -105,15 +45,12 @@ $query->bindParam(":groupId", $groupId);
 $query->execute();
 $group = $query->fetchObject("Group");
 
-/* $sql = "SELECT * FROM `items`";
-    $query = $db->prepare($sql);
-    $query->execute();
-    $items = $query->fetchAll(PDO::FETCH_CLASS, "Item"); */
 
 $sql = "SELECT * FROM `categories`";
 $query = $db->prepare($sql);
 $query->execute();
 $categories = $query->fetchAll(PDO::FETCH_CLASS, "Category");
+
 
 $query = $db->prepare("SELECT * FROM `avatars` WHERE id = :avatarId");
 $avatarId = $profileUser->getAvatarId();
@@ -197,7 +134,7 @@ $AvatarObj->base = '../img/avatars/' . $avatar->getImageName();
                         <div class="row">
                             <div class="col-sm form-group">
                                 <label for="inputUsername">Pseudonyme</label>
-                                <input type="text" class="form-control" name="inputUsername" placeholder="Username" value="<?= $profileUser->getUsername();?>">
+                                <input type="text" class="form-control" name="inputUsername" placeholder="Username" value="<?= $profileUser->getUsername(); ?>">
                             </div>
                             <div class="col-sm form-group">
                                 <label for="inputEmail">Email</label>
@@ -247,11 +184,10 @@ $AvatarObj->base = '../img/avatars/' . $avatar->getImageName();
                         </div>
                     <?php endif; ?>
 
-
-                <div class="form-group">
-                    <label for="password2">Vérifier le mot de passe</label>
-                    <input name="password2" type="password" class="form-control" id="password2" placeholder="Nouveau Mot de passe">
-                </div>
+                    <div class="form-group">
+                        <label for="password1">Nouveau mot de passe</label>
+                        <input name="password1" type="password" class="form-control" id="password1" placeholder="Nouveau Mot de passe">
+                    </div>
 
                     <div class="form-group">
                         <label for="password2">Verifier le mot de passe</label>
@@ -309,87 +245,85 @@ $AvatarObj->base = '../img/avatars/' . $avatar->getImageName();
         <?php
 
         if ($profileUser->getId() === $userId) :
-            $listItemEqquiped = [];
+
             $query = $db->prepare("SELECT * FROM `inventories` WHERE userId = :userId");
             $query->bindParam(":userId", $userId);
             $query->execute();
-            $inventory = $query->fetchAll(PDO::FETCH_CLASS, "Inventory");
+            $inventories = $query->fetchAll(PDO::FETCH_CLASS, "Inventory");
         ?>
 
-            <div class="container-fluid">
-                <h2 class="text-center">Inventaire</h2>
+        <div class="container-fluid">
+            <h2 class="text-center">Inventaire</h2>
                 <div class="container">
 
                     <?php
                     foreach ($categories as $category) :
                         $countItem = 0;
-                        echo '
-                    <h3>' . $category->getName() . '</h3>
-                    <div class="row">';
-                        foreach ($inventory as $row) :
-                            $rowId = $row->getItemId();
+                    ?>
+
+                    <h3><?= $category->getName(); ?></h3>
+                    <div class="row">
+                        <?php
+                        foreach ($inventories as $inventory) :
+                            $rowId = $inventory->getItemId();
                             $query = $db->prepare("SELECT * FROM `items` WHERE id = :itemId");
                             $query->bindParam(":itemId", $rowId);
                             $query->execute();
                             $item = $query->fetchObject("Item");
 
-
                             if ($item->getcategoryId() === $category->getId()) :
                                 $countItem++;
-                                echo '
+                                ?>
+                                    
                                 <div class="col-md-4 card-deck">
                                     <div class="card mb-4 box-shadow">
-                                        <img style="max-width: 8rem;"class="card-img-top mx-auto d-block" src="../img/items/' . $item->getImageName() . '">
+                                        <img style="max-width: 8rem;"class="card-img-top mx-auto d-block" src="../img/items/<?=$item->getImageName()?>">
                                         <div class="card-body">
-                                            <h3 class="card-title text-center font-weight-bold">' . $item->getName() . '</h3>
-                                            <div class="d-flex justify-content-around align-items-center">';
+                                            <h3 class="card-title text-center font-weight-bold"><?=$item->getName()?></h3>
+                                            <div class="d-flex justify-content-around align-items-center">
+                                                <?php
+                                                if (!$inventory->getIsEquipped()) {
+                                                    echo '<a href="../actions/inventory_equiped.php?id=' . $item->getId() . '" class="btn btn-outline-success">Equipper</a>';
+                                                } else {
+                                                    echo '<a href="../actions/inventory_unequiped.php?id=' . $item->getId() . '" class="btn btn-outline-warning">Déséquipper</a> ';
 
-                                if (!$row->getIsEquipped()) {
-                                    echo '<a href="../actions/inventory_equiped.php?id=' . $item->getId() . '" class="btn btn-outline-success">Equipper</a>';
-                                } else {
-                                    echo '<a href="../actions/inventory_unequiped.php?id=' . $item->getId() . '" class="btn btn-outline-warning">Déséquipper</a> ';
+                                                    switch ($category->getName()) {
+                                                        case ("Chapeau"):
+                                                            $AvatarObj->hat = '../img/items/' . $item->getImageName();
+                                                            break;
 
-                                    switch ($category->getName()) {
-                                        case ("Chapeau"):
-                                            $AvatarObj->hat = '../img/items/' . $item->getImageName();
-                                            break;
+                                                        case ("Lunettes"):
+                                                            $AvatarObj->glase = '../img/items/' . $item->getImageName();
+                                                            break;
+                                                    }
+                                                }
+                                                ?>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
 
-                                        case ("Lunettes"):
-                                            $AvatarObj->glase = '../img/items/' . $item->getImageName();
-                                            break;
-                                    }
-                                }
-                    ?>
-
-                </div>
-            </div>
-    </div>
-    </div>
-
-<?php
+                            <?php
+                            
                             endif;
-                        endforeach;
-                        if ($countItem < 1) {
-                            echo "Vous ne possédez pas encore d'item de cette catégorie !";
-                        }
+                            endforeach;
+                            if ($countItem < 1) {
+                                echo "Vous ne possédez pas encore d'item de cette catégorie !";
+                            }
 
-?>
+                            ?>
 
-</div>;
-<?php
+                    </div>
+                    <?php
                     endforeach;
-?>
-</div>
-</div>
-
-<?php
-        endif;
-?>
-</div>
-
-
-
-
+                    ?>
+                    
+                </div>
+        </div>
+            <?php
+            endif;
+            ?>
+    </div>
 
 
 
@@ -399,8 +333,6 @@ $AvatarObj->base = '../img/avatars/' . $avatar->getImageName();
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-
-
 
 
 <script type="text/javascript">
