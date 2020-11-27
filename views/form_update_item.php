@@ -90,13 +90,13 @@
                     <!--form classique-->
                     <div class="form-group">
                     <label for="itemName">Nom de l'objet</label>
-                    <input type="text" class="form-control" id="itemName" placeholder="<?php echo $itemName ?>" name="itemName" required>
+                    <input type="text" class="form-control" id="itemName" value="<?php echo $itemName ?>" name="itemName" required>
                     <div class="valid-feedback"></div>
                     <div class="invalid-feedback">Veuillez remplir ce champ</div>
                     </div>
                     <div class="form-group">
                     <label for="itemPrice">Prix de l'objet</label>
-                    <input type="number" class="form-control" id="itemPrice" placeholder="<?php echo $itemPrice ?>" name="itemPrice" required>
+                    <input type="number" class="form-control" id="itemPrice" value="<?php echo $itemPrice ?>" name="itemPrice" required>
                     <div class="valid-feedback"></div>
                     <div class="invalid-feedback">champ vide ou contient un nombre à virgule</div>
                     </div>
