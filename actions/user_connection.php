@@ -15,7 +15,7 @@ session_start();
         $user = $query->fetchObject("User");
         
         if($user===false) {
-            header('Location:../views/log_in.php?status=danger&text=ce pseudo n\'existe pas');
+            header('Location:../views/log_in.php?status=danger&text=Erreur, pseudonyme incorrect !');
             exit;
         }
 
@@ -26,10 +26,10 @@ session_start();
         }
 
         else{
-            header('Location:../views/log_in.php?status=danger&text=Mot de passe incorrecte');
+            header('Location:../views/log_in.php?status=danger&text=Erreur, mot de passe incorrect !');
             exit;
         }
 
     } else {
-        header('Location:../views/log_in.php?status=danger&text=Mot de passe ou nom d\'utilisateur vide');
+        header('Location:../views/log_in.php?status=danger&text=Erreur, veuillez entrer un pseudonyme et un mot de passe !');
     }

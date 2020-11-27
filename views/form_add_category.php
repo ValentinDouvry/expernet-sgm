@@ -16,19 +16,30 @@
         require_once('../secret/connect_db.php');
         require_once('components/navbar.php');
 
-        if((isset($_GET['err']))){
-            $err = $_GET['err'];
-            echo "<p style='text-align: center'>$err</p>";
-        }
         
     ?>
 
     <div class="container">
+    <?php
+    if (isset($_GET['err'])) :
+    ?>
+
+        <div class="form-alert-login alert alert-danger alert-dismissible fade show" role="alert">
+            <strong><?= $_GET['err']; ?></strong>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+
+    <?php
+    endif;
+    ?>
+    <h1 class="text-center mb-4">Ajouter une catégorie</h1>
         <form method = 'POST' action="../actions/add_category.php" class="was-validated">
             <!--form classique-->
             <div class="form-group">
-                <label for="categoryName">Nom de la categorie</label>
-                <input type="text" class="form-control" id="categoryName" placeholder="Entrer le nom de la categorie" name="categoryName" required>
+                <label for="categoryName">Nom de la catégorie</label>
+                <input type="text" class="form-control" id="categoryName" placeholder="Entrez le nom de la catégorie" name="categoryName" required>
                 <div class="valid-feedback"></div>
                 <div class="invalid-feedback">Veuillez remplir ce champ</div>
             </div>

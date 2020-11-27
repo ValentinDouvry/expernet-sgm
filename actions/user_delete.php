@@ -49,7 +49,7 @@ if(!$inventories === false) {
             header('Location: ../views/groupId.php?id='.$userToDelete->getGroupId());
             exit();
         } else {
-            header('Location: ../views/profileId.php?id='.$userToDelete->getId().'?status=danger&text=Une erreur est survenue, veuillez réessayer');
+            header('Location: ../views/profileId.php?id='.$userToDelete->getId().'?status=danger&text=Une erreur est survenue, veuillez réessayer !');
             exit();
         }
     }
@@ -63,6 +63,6 @@ if($is_success) {
     header('Location: ../views/group.php?groupId='.$userToDelete->getGroupId());
     exit();
 } else {
-    header('Location: ../views/profile.php?profileId='.$userToDelete->getId().'?status=danger&text=Une erreur est survenue, veuillez réessayer');
+    header('Location: ../views/profile.php?profileId='.$userToDelete->getId().'?status=danger&text=Une erreur est survenue, veuillez réessayer !');
     exit();
 }

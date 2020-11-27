@@ -17,12 +17,12 @@ $query->execute(array($_SESSION['userId']));
 $curentUser = $query->fetchObject('User');
 
 if(!$curentUser->getIsAdmin()){
-    header('Location:../views/shop.php?status=danger&text=pas admin');
+    header('Location:../views/shop.php');
     exit;
 } 
 
 if(!isset($_GET['id'])) {
-    header('Location:../views/shop.php?status=danger&text=pas d\'objet selectionner');
+    header('Location:../views/shop.php?status=danger&text=Erreur, veuillez sélectionner un objet à supprimer !');
     exit;
 }
 
@@ -40,7 +40,7 @@ if(!$inventories === false) {
         $user = $query->fetchObject('User');
 
         if($user === false) {
-            header('Location: ../views/shop.php?status=danger&text=Une erreur est survenu sur la table user, veillez réesseyer');
+            header('Location: ../views/shop.php?status=danger&text=Une erreur est survenue, veuillez réessayer !');
             exit();
         }
 
@@ -50,7 +50,7 @@ if(!$inventories === false) {
         $item = $query->fetchObject('Item');
 
         if($item === false) {
-            header('Location: ../views/shop.php?status=danger&text=Une erreur est survenu sur la table item, veillez réesseyer');
+            header('Location: ../views/shop.php?status=danger&text=Une erreur est survenue, veuillez réessayer !');
             exit();
         }
 
@@ -59,7 +59,7 @@ if(!$inventories === false) {
         $is_success = $query->execute(array(":money"=>($user->getMoney()+$item->getPrice()), ":id"=>$user->getId()));
 
         if(!$is_success) {
-            header('Location: ../views/shop.php?status=danger&text=Une erreur est survenu pour insertion money user, veillez réesseyer');
+            header('Location: ../views/shop.php?status=danger&text=Une erreur est survenue, veuillez réessayer !');
             exit();
         }
 
@@ -68,7 +68,7 @@ if(!$inventories === false) {
         $is_success = $query->execute(array(':userID'=>$user->getId(),':itemId'=>$item->getId()));
 
         if(!$is_success) {
-            header('Location: ../views/shop.php?status=danger&text=Une erreur est survenu pour la suppresion d\' un item dans l\'inventaire, veillez réesseyer');
+            header('Location: ../views/shop.php?status=danger&text=Une erreur est survenue, veuillez réessayer !');
             exit();
         }
     }
@@ -79,9 +79,9 @@ $query = $db->prepare($sql);
 $is_success = $query->execute(array($_GET['id']));
 
 if($is_success) {
-    header('Location: ../views/shop.php?status=success&text=l\'objet a était corectement supprimer');
+    header('Location: ../views/shop.php?status=success&text=Objet supprimé !');
     exit();
 } else {
-    header('Location: ../views/shop.php?status=danger&text=Une erreur est survenu, veillez réesseyer');
+    header('Location: ../views/shop.php?status=danger&text=Une erreur est survenue, veuillez réessayer !');
     exit();
 }

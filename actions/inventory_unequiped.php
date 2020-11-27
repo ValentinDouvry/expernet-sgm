@@ -20,10 +20,10 @@ $query = $db->prepare($sql);
 $is_valid = $query->execute(array(":itemId"=>$_GET['id'], ":userId"=>$_SESSION['userId']));
 
 if($is_valid) {
-    header('Location:../views/profile.php?status=success&text=l\'objet equiper');
+    header('Location:../views/profile.php?status=success&text=Objet déséquipé !');
 } 
 else {
-    header('Location:../views/profile.php?status=danger&text=erreur');
+    header('Location:../views/profile.php?status=danger&text=Erreur !');
 }
 
 var_dump($_GET);

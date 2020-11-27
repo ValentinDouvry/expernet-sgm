@@ -20,13 +20,13 @@
         $query->bindParam(":isBuyableMultiple",$isBuyableMultiple);
         $data = $query->execute();
         if(!$data){
-            header('Location: ../views/form_add_category.php?err=erreur lors de votre ajout');
+            header('Location: ../views/form_add_category.php?err=Erreur lors de votre ajout de catégorie');
             
         }else{
             header('Location: ../views/shop.php');
         }
     
     }else{
-        header('Location: ../views/form_add_category.php?err=erreur lors de votre ajout');
+        header('Location: ../views/form_add_category.php?err=Erreur lors de votre ajout de catégorie');
     }
 ?>

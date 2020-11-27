@@ -34,10 +34,25 @@
 
         ?>
             <div class="container">
+            <?php
+            if (isset($_GET['err'])) :
+            ?>
+
+                <div class="form-alert-login alert alert-danger alert-dismissible fade show" role="alert">
+                    <strong><?= $_GET['err']; ?></strong>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+            <?php
+            endif;
+            ?>
+            <h1 class="text-center mb-4">Modifier une catégorie</h1>
                 <form method = 'POST' action="../actions/update_category.php" class="was-validated">
                     <!--form classique-->
                     <div class="form-group">
-                        <label for="categoryName">Nom de la categorie</label>
+                        <label for="categoryName">Nom de la catégorie</label>
                         <input type="text" class="form-control" id="categoryName" value="<?php echo $categoryName ?>" name="categoryName" required>
                         <div class="valid-feedback"></div>
                         <div class="invalid-feedback">Veuillez remplir ce champ</div>
@@ -66,11 +81,6 @@
                 
             </div>
     <?php
-        }
-
-        if((isset($_GET['err']))){
-            $err = $_GET['err'];
-            echo "<p style='text-align: center'>$err</p>";
         }
     ?>
 

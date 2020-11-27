@@ -51,10 +51,10 @@ if (isset($_SESSION['userId'])) {
                 />
 
               </div>
-                <button type="submit" class="btn btn-outline-primary my-2 mb-3">Se Connecter</button>
+                <button type="submit" class="btn btn-outline-primary my-2 mb-3">Se connecter</button>
 
               </form>
-              <p>Pas de compte? <a href="form_register.php">inscrivez vous, ici</a></p>
+              <p>Pas de compte? <a href="form_register.php">Inscrivez-vous ici !</a></p>
 
               <p class="mt-2 mb-2 text-muted">&copy; Expernet-sgm 2020</p>
         </div>

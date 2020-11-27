@@ -42,13 +42,13 @@ require_once("../secret/connect_db.php");
 
                 <input name="last-name" type="text" class="form-control input-custum" placeholder="Nom" required />
 
-                <input name="name" type="text" class="form-control input-custum" placeholder="Prenom" required />
+                <input name="name" type="text" class="form-control input-custum" placeholder="Prénom" required />
 
-                <input name="email" type="email" class="form-control input-custum" placeholder="email" required />
+                <input name="email" type="email" class="form-control input-custum" placeholder="Email" required />
 
                 <input name="password" type="password" class="form-control input-custum" placeholder="Mot de passe" required />
 
-                <input name="password2" type="password" class="form-control input-custum" placeholder="Verification du mot de passe" required />
+                <input name="password2" type="password" class="form-control input-custum" placeholder="Vérification du mot de passe" required />
 
                 <input name="code" type="text" class="form-control input-custum" placeholder="Code accès au groupe" required />
 
@@ -72,9 +72,9 @@ require_once("../secret/connect_db.php");
                     <img src="" class="form-avatars-img">
                 </div>
 
-                <button type="submit" class="btn btn-outline-primary my-2 mb-3">Creer le compte</button>
+                <button type="submit" class="btn btn-outline-primary my-2 mb-3">S'inscrire</button>
         </form>
-        <p>Dejà un compte? <a href="log_in.php">Connectez vous, ici</a></p>
+        <p>Déjà un compte? <a href="log_in.php">Connectez-vous ici !</a></p>
 
         <p class="mt-2 mb-2 text-muted">&copy; Expernet-sgm 2020</p>
     </div>

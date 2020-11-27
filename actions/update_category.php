@@ -31,7 +31,7 @@
             header('Location: ../views/shop.php');
 
         }else{
-            header('Location: ../views/form_update_category.php?err=erreur lors de votre modification');
+            header('Location: ../views/form_update_category.php?err=Une erreur est survenue, veuillez réessayer !');
         }
     ?>
 </body>
