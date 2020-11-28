@@ -151,7 +151,7 @@
                     </div>
                     <div class="col-md-6">
                         <div class="card-body">
-                            <h5 class="card-title"><?php echo $user->getLastName()." ",$user->getName(); ?></h5>
+                            <h5 class="card-title"><?php echo $user->getName()." ",$user->getLastName(); ?></h5>
                             <p class="card-text"><?php echo $user->getUsername();?></p>
                             <p class="card-text"><small class="text-muted"><?php echo"Level : ".$user->getLevel();?></small></p>
                         </div>

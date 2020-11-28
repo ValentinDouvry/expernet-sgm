@@ -186,12 +186,12 @@ $AvatarObj->base = '../img/avatars/' . $avatar->getImageName();
             ?>
                 <div class="col-md mt-4 row flex-column w-50">
                         <div class="col-md d-flex justify-content-between align-items-baseline">
-                            <h3> Nom : </h3>
-                            <p class="h5"><?= $profileUser->getLastName(); ?></p>
+                            <h3> Prénom : </h3>
+                            <p class="h5"><?= $profileUser->getName(); ?></p>
                         </div>
                         <div class="col-md d-flex justify-content-between align-items-baseline">
-                            <h3> Prenom : </h3>
-                            <p class="h5"><?= $profileUser->getName(); ?></p>
+                            <h3> Nom : </h3>
+                            <p class="h5"><?= $profileUser->getLastName(); ?></p>
                         </div>
                         <div class="col-md d-flex justify-content-between align-items-baseline">
                             <h3> Pseudonyme : </h3>
