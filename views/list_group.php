@@ -55,23 +55,9 @@ $listGroups = $query->fetchAll(PDO::FETCH_CLASS, "Group");
     <?php 
       require_once('components/navbar.php');
     ?>
-    <div class="container">
-      <?php
-      if (isset($_GET['err'])) :
-      ?>
-
-        <div class="form-alert-login alert alert-danger alert-dismissible fade show" role="alert">
-            <strong><?= $_GET['err']; ?></strong>
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-
-      <?php
-      endif;
-      ?>
-
+      
     <?php if (isset($_GET['status']) && isset($_GET['text'])) : ?>
+    <div class="container">
 
       <div class="form-alert-login alert alert-<?= $_GET['status']; ?> alert-dismissible fade show" role="alert">
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -79,15 +65,12 @@ $listGroups = $query->fetchAll(PDO::FETCH_CLASS, "Group");
         </button>
         <strong><?= $_GET['text']; ?> </strong>
       </div>
-    <?php endif; ?>
-
     </div>
 
+    <?php endif; ?>
+
+
     <div class="container-fluid ml-3">
-  
-
-     
-
 
     <h1 class="text-center">Liste des groupes</h1>
     <a class="btn btn-outline-dark mb-4" role="button" href="form_add_group.php">Créer un groupe</a>

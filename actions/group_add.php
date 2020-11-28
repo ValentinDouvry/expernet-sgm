@@ -22,7 +22,7 @@ if(!isset($userId)){
       header('Location: ../index.php');
     }
     else{
-        if(isset($_POST["inputGroupName"]) && isset($_POST["inputGroupChannel"]))
+        if(isset($_POST["inputGroupName"]) && $_POST["inputGroupName"] !== "" && isset($_POST["inputGroupChannel"]) && $_POST["inputGroupChannel"] !== "" )
         {
             $groupName = $_POST["inputGroupName"];
             $groupChannel = $_POST["inputGroupChannel"];  
@@ -35,7 +35,7 @@ if(!isset($userId)){
             if($nbGroupWithName != 0)
             {
             
-            header('Location: ../views/form_add_group.php?err=Erreur, ce nom de groupe existe déjà !');
+            header('Location: ../views/form_add_group.php?status=danger&text=Erreur, ce nom de groupe existe déjà !');
             }
             else
             {
@@ -66,6 +66,11 @@ if(!isset($userId)){
             }
     
         }
+        else {
+            header('Location: ../views/form_add_group.php?status=danger&text=Erreur, les champs ne doivent pas être vide');
+
+        }
+
     }
     
 

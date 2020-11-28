@@ -19,20 +19,16 @@ require_once("../secret/connect_db.php");
 
 <body class="text-center">
 
-    <?php
-    if (isset($_GET['err'])) :
-    ?>
+    <?php if (isset($_GET['status']) && isset($_GET['text'])) : ?>
 
-        <div class="form-alert-login alert alert-danger alert-dismissible fade show" role="alert">
-            <strong><?= $_GET['err']; ?></strong>
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
+    <div class="alert alert-<?= $_GET['status']; ?> alert-dismissible fade show" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <strong><?= $_GET['text']; ?> </strong>
+    </div>
 
-    <?php
-    endif;
-    ?>
+    <?php endif; ?>
 
     <div class="form-div border border-dark bg-custum-color shadow">
         <h1 class="h2 mb-3 font-weight-normal form-title">S'inscrire</h1>

@@ -35,20 +35,18 @@
 
         ?>
             <div class="container">
-            <?php
-            if (isset($_GET['err'])) :
-            ?>
+           
+            <?php if (isset($_GET['status']) && isset($_GET['text'])) : ?>
 
-                <div class="form-alert-login alert alert-danger alert-dismissible fade show" role="alert">
-                    <strong><?= $_GET['err']; ?></strong>
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
+            <div class="alert alert-<?= $_GET['status']; ?> alert-dismissible fade show" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <strong><?= $_GET['text']; ?> </strong>
+            </div>
 
-            <?php
-            endif;
-            ?>
+            <?php endif; ?>
+
             <h1 class="text-center mb-4">Modifier une catégorie</h1>
                 <form method = 'POST' action="../actions/update_category.php" class="was-validated">
                     <!--form classique-->

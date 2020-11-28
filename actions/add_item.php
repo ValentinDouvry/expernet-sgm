@@ -22,7 +22,7 @@ if(isset($_POST["inputItemImage"])) {
         echo "File is an image - " . $check["mime"] . ".";
         $uploadOk = 1;
     } else {
-        header("Location: ../views/form_add_item.php?err=Erreur, le fichier n'est pas une image !");
+        header("Location: ../views/form_add_item.php?status=danger&text=Erreur, le fichier n'est pas une image !");
         $uploadOk = 0;
         exit();
     }
@@ -30,14 +30,14 @@ if(isset($_POST["inputItemImage"])) {
 
 // Check if file already exists
 if (file_exists($target_file)) {
-    header("Location: ../views/form_add_item.php?err=Erreur, le fichier existe déjà !");
+    header("Location: ../views/form_add_item.php?status=danger&text=Erreur, le fichier existe déjà !");
     $uploadOk = 0;
     exit();
 }
 
 // Check file size
 if ($_FILES["inputItemImage"]["size"] > 500000) {
-    header("Location: ../views/form_add_item.php?err=Erreur, le fichier est trop lourd !");
+    header("Location: ../views/form_add_item.php?status=danger&text=Erreur, le fichier est trop lourd !");
     $uploadOk = 0;
     exit();
 }
@@ -45,14 +45,14 @@ if ($_FILES["inputItemImage"]["size"] > 500000) {
 // Allow certain file formats
 if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
 && $imageFileType != "gif" ) {
-    header("Location: ../views/form_add_item.php?err=Erreur, seuls les fichiers JPG, JPEG, PNG OU GIF sont acceptés !");
+    header("Location: ../views/form_add_item.php?status=danger&text=Erreur, seuls les fichiers JPG, JPEG, PNG OU GIF sont acceptés !");
     $uploadOk = 0;
     exit();
 }
 
 // Check if $uploadOk is set to 0 by an error
 if ($uploadOk == 0) {
-    header("Location: ../views/form_add_item.php?err=Erreur, le fichier n'a pas été upload !");
+    header("Location: ../views/form_add_item.php?status=danger&text=Erreur, le fichier n'a pas été upload !");
     exit();
 // if everything is ok, try to upload file
 } else {
@@ -68,7 +68,7 @@ if ($uploadOk == 0) {
         }
         else
         {
-            header("Location: ../views/form_add_item.php?err=Veuillez choisir une catégorie !");
+            header("Location: ../views/form_add_item.php?status=danger&text=Veuillez choisir une catégorie !");
             exit();
         }
         
@@ -92,7 +92,7 @@ if ($uploadOk == 0) {
             $query->bindParam(":categoryId",$categoryId);
             $result = $query->execute();
             if(!$result){
-                header("Location: ../views/form_add_item.php?err=Erreur lors de votre ajout d'objet !");
+                header("Location: ../views/form_add_item.php?status=danger&text=Erreur lors de votre ajout d'objet !");
                 exit();
                 
             }else{
@@ -104,7 +104,7 @@ if ($uploadOk == 0) {
     }
     else{
 
-        header("Location: ../views/form_add_item.php?err=Erreur lors de votre ajout d'objet !");
+        header("Location: ../views/form_add_item.php?status=danger&text=Erreur lors de votre ajout d'objet !");
         exit();
     }
 

@@ -46,20 +46,16 @@ else{
     <div class="container">
 
 
-    <?php 
-        if(isset($_GET['err'])) :
-    ?>
+    <?php if (isset($_GET['status']) && isset($_GET['text'])) : ?>
 
-    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-        <strong><?= $_GET['err']; ?></strong>
+    <div class="alert alert-<?= $_GET['status']; ?> alert-dismissible fade show" role="alert">
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>
+        <strong><?= $_GET['text']; ?> </strong>
     </div>
 
-    <?php
-        endif;
-    ?>
+    <?php endif; ?>
     
 
         <h1 class="text-center mb-4">Créer un groupe</h1>

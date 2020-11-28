@@ -9,7 +9,7 @@ if(!isset($_SESSION['userId'])){
     exit;
 } 
 
-if (isset($_POST["inputGroupId"]) && isset($_POST["inputGroupName"]) && isset($_POST["inputGroupChannel"])) {
+if (isset($_POST["inputGroupId"]) && $_POST["inputGroupId"] !== "" && isset($_POST["inputGroupName"]) && $_POST["inputGroupName"] !== "" && isset($_POST["inputGroupChannel"]) && $_POST["inputGroupChannel"] !== "") {
   $groupName = $_POST["inputGroupName"];
   $groupChannel = $_POST["inputGroupChannel"];
   $groupId = $_POST["inputGroupId"];
