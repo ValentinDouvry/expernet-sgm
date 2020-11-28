@@ -242,7 +242,7 @@ $AvatarObj->base = '../img/avatars/' . $avatar->getImageName();
             <div class="container-fluid">
                 <?php
                 $query = $db->prepare("SELECT experience FROM users WHERE id = :id");
-                $query->bindParam(":id", $userId);
+                $query->bindParam(":id", $profileId);
                 $query->execute();
                 $data = $query->setFetchMode(PDO::FETCH_ASSOC);
                 $data = $query->fetch();
