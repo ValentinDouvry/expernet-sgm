@@ -21,7 +21,7 @@ require_once("../secret/connect_db.php");
 
     <?php if (isset($_GET['status']) && isset($_GET['text'])) : ?>
 
-    <div class="alert alert-<?= $_GET['status']; ?> alert-dismissible fade show" role="alert">
+    <div class="form-alert-login alert alert-<?= $_GET['status']; ?> alert-dismissible fade show" role="alert">
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>
